@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歌曲生产系统</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- ==================== LOGIN PAGE ==================== -->
+<div id="login-page" class="login-page">
+    <div class="login-left">
+        <img src="https://illustrations.popsy.co/amber/work-from-home.svg" alt="illustration" class="login-illustration">
+    </div>
+    <div class="login-right">
+        <div class="login-form-container">
+            <h1>登录</h1>
+            <div class="form-group">
+                <label>手机号</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" placeholder="输入你的手机号" id="login-phone">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="输入你的密码" id="login-password">
+                    <i class="fas fa-eye-slash toggle-password"></i>
+                </div>
+            </div>
+            <a href="#" class="forgot-link" onclick="showPage('forgot-password-page')">忘记密码</a>
+            <button class="btn-primary btn-full" onclick="doLogin()">登录</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== FORGOT PASSWORD PAGE ==================== -->
+<div id="forgot-password-page" class="login-page" style="display:none">
+    <div class="login-left">
+        <img src="https://illustrations.popsy.co/amber/work-from-home.svg" alt="illustration" class="login-illustration">
+    </div>
+    <div class="login-right">
+        <div class="login-form-container">
+            <h1>忘记密码</h1>
+            <div class="form-group">
+                <label>手机号</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" placeholder="输入你的手机号">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>验证码</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-shield-alt"></i>
+                    <input type="text" placeholder="输入验证码">
+                    <button class="btn-sms">获取验证码</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>新密码</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="输入新密码">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>确认密码</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="再次输入新密码">
+                </div>
+            </div>
+            <button class="btn-primary btn-full" onclick="showPage('login-page')">确认重置</button>
+            <a href="#" class="back-link" onclick="showPage('login-page')">← 返回登录</a>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MAIN APP ==================== -->
+<div id="app-shell" class="app-shell" style="display:none">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">系统菜单</div>
+        <nav class="sidebar-nav">
+            <div class="nav-group open">
+                <a class="nav-item nav-group-toggle" onclick="toggleNavGroup(this)">
+                    <i class="fas fa-desktop"></i><span>工作台</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                <div class="nav-group-children">
+                    <a class="nav-item sub active" data-page="workbench-page" onclick="navigateTo('workbench-page', this)">
+                        <i class="fas fa-pen"></i><span>人工写词</span>
+                    </a>
+                    <a class="nav-item sub" data-page="lyrics-review-page" onclick="navigateTo('lyrics-review-page', this)">
+                        <i class="fas fa-check-double"></i><span>词审核</span>
+                    </a>
+                    <a class="nav-item sub" data-page="manual-composition-page" onclick="navigateTo('manual-composition-page', this)">
+                        <i class="fas fa-music"></i><span>跑曲</span>
+                    </a>
+                    <a class="nav-item sub" data-page="song-review-page" onclick="navigateTo('song-review-page', this)">
+                        <i class="fas fa-headphones"></i><span>曲审核</span>
+                    </a>
+                </div>
+            </div>
+            <a class="nav-item" data-page="order-page" onclick="navigateTo('order-page', this)">
+                <i class="fas fa-file-alt"></i><span>订单管理</span>
+            </a>
+            <a class="nav-item" data-page="batch-page" onclick="navigateTo('batch-page', this)">
+                <i class="fas fa-layer-group"></i><span>批次管理</span>
+            </a>
+            <a class="nav-item" data-page="customer-page" onclick="navigateTo('customer-page', this)">
+                <i class="fas fa-users"></i><span>客户管理</span>
+            </a>
+            <div class="nav-group">
+                <a class="nav-item nav-group-toggle" onclick="toggleNavGroup(this)">
+                    <i class="fas fa-folder-open"></i><span>资产管理</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                <div class="nav-group-children">
+                    <a class="nav-item sub" data-page="singer-library-page" onclick="navigateTo('singer-library-page', this)">
+                        <i class="fas fa-microphone"></i><span>歌手名称表</span>
+                    </a>
+                    <a class="nav-item sub" data-page="reference-library-page" onclick="navigateTo('reference-library-page', this)">
+                        <i class="fas fa-music"></i><span>对标曲库</span>
+                    </a>
+                </div>
+            </div>
+            <div class="nav-group">
+                <a class="nav-item nav-group-toggle" onclick="toggleNavGroup(this)">
+                    <i class="fas fa-cubes"></i><span>节点配置管理</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                <div class="nav-group-children">
+                    <a class="nav-item sub" data-page="node-types-page" onclick="navigateTo('node-types-page', this)">
+                        <i class="fas fa-project-diagram"></i><span>节点管理</span>
+                    </a>
+                    <a class="nav-item sub" data-page="node-configs-page" onclick="navigateTo('node-configs-page', this)">
+                        <i class="fas fa-sliders-h"></i><span>节点配置库</span>
+                    </a>
+                </div>
+            </div>
+            <a class="nav-item" data-page="workflow-page" onclick="navigateTo('workflow-page', this)">
+                <i class="fas fa-project-diagram"></i><span>工作流配置库</span>
+            </a>
+            <div class="nav-group">
+                <a class="nav-item nav-group-toggle" onclick="toggleNavGroup(this)">
+                    <i class="fas fa-user-shield"></i><span>权限用户管理</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                <div class="nav-group-children">
+                    <a class="nav-item sub" data-page="staff-page" onclick="navigateTo('staff-page', this)">
+                        <i class="fas fa-user-friends"></i><span>人员管理</span>
+                    </a>
+                    <a class="nav-item sub" data-page="menu-page" onclick="navigateTo('menu-page', this)">
+                        <i class="fas fa-bars"></i><span>菜单管理</span>
+                    </a>
+                    <a class="nav-item sub" data-page="role-page" onclick="navigateTo('role-page', this)">
+                        <i class="far fa-circle"></i><span>角色管理</span>
+                    </a>
+                </div>
+            </div>
+            <div class="nav-group">
+                <a class="nav-item nav-group-toggle" onclick="toggleNavGroup(this)">
+                    <i class="fas fa-box-open"></i><span>成品版权管理</span>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                <div class="nav-group-children">
+                    <a class="nav-item sub" data-page="product-page" onclick="navigateTo('product-page', this)">
+                        <i class="fas fa-user-friends"></i><span>成品管理</span>
+                    </a>
+                    <a class="nav-item sub" data-page="copyright-page" onclick="navigateTo('copyright-page', this)">
+                        <i class="fas fa-copyright"></i><span>版权管理</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-bar">
+            <h2 id="page-title">订单管理</h2>
+            <div class="user-avatar" data-current-user="张三">
+                <img src="https://i.pravatar.cc/40?img=3" alt="avatar">
+            </div>
+        </header>
+        <div class="content-body" id="content-body">
+            <!-- Pages injected here by JS -->
+        </div>
+    </main>
+</div>
+
+<!-- ==================== MODALS ==================== -->
+<!-- Add Order Modal -->
+<div class="modal-overlay" id="modal-add-order" style="display:none">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>新增订单</h3>
+            <button class="modal-close" onclick="closeModal('modal-add-order')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group"><label>订单号 *</label><input type="text" value="DJ-260425-0001" disabled class="input-disabled"></div>
+            <div class="form-group"><label>客户名称 *</label><select><option value="">请选择客户</option><option>客户A</option><option>客户B</option><option>客户C</option></select></div>
+            <div class="form-group"><label>订单名称 *</label><input type="text" placeholder="请输入订单内容"></div>
+            <div class="form-group"><label>生产类型 *</label><select><option value="">请选择</option><option>DJ</option><option>Beat</option><option>Hit</option><option>Test</option><option>全案</option><option>demo</option></select></div>
+            <div class="form-group"><label>订单性质 *</label><select><option value="">请选择</option><option>买断</option><option>分成</option><option>独家</option><option>分成-独家</option><option>非独家</option></select></div>
+            <div class="form-group"><label>生产周期 *</label><select><option value="">请选择</option><option>长期</option><option>批次</option><option>单次</option></select></div>
+            <div class="form-group"><label>备注</label><textarea placeholder="请输入备注信息" rows="3"></textarea></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-add-order')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-add-order')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Customer Modal -->
+<div class="modal-overlay" id="modal-add-customer" style="display:none">
+    <div class="modal modal-lg">
+        <div class="modal-header"><h3>新增客户</h3><button class="modal-close" onclick="closeModal('modal-add-customer')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group"><label>客户编号</label><input type="text" value="MP-005" disabled class="input-disabled"></div>
+                <div class="form-group"><label>客户名称 *</label><input type="text" placeholder="请输入客户名称"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>公司名称</label><input type="text" placeholder="请输入公司名称"></div>
+                <div class="form-group"><label>客户类型 *</label><select><option>平台方</option><option>版权方</option><option>制作方</option><option>艺人</option></select></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>制作需求</label><input type="text" placeholder="例：DJ, 伴奏"></div>
+                <div class="form-group"><label>客户业务线</label><input type="text" placeholder="例：音乐, 乐器"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>推进状态</label><select><option>长期合作中</option><option>合同签署</option><option>确定意向</option><option>制作进行</option><option>内部未推</option></select></div>
+                <div class="form-group"><label>优先级</label><select><option>P0</option><option>P1</option><option>P2</option></select></div>
+            </div>
+            <div class="form-group">
+                <label>对接人</label>
+                <select id="add-customer-contact">
+                    <option value="">请选择对接人</option>
+                    <option value="张三">张三</option>
+                    <option value="李四">李四</option>
+                </select>
+            </div>
+            <div class="form-group"><label>沟通记录</label><textarea rows="2" placeholder="请输入沟通记录"></textarea></div>
+            <div class="form-group"><label>进度备注</label><textarea rows="2" placeholder="请输入备注"></textarea></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-add-customer')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-add-customer')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Staff Maintenance Modal -->
+<div class="modal-overlay" id="modal-staff-maintenance" style="display:none">
+    <div class="modal modal-lg">
+        <div class="modal-header"><h3>批次人员维护</h3><button class="modal-close" onclick="closeModal('modal-staff-maintenance')">&times;</button></div>
+        <div class="modal-body">
+            <h4 style="font-size:15px; font-weight:600; margin-bottom:12px;">基础信息</h4>
+            <table class="data-table" style="margin-bottom: 24px; border: 1px solid var(--gray-200);">
+                <tbody>
+                    <tr><td style="background:var(--gray-100);width:15%;text-align:right;">批次名称</td><td style="width:35%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:15%;text-align:right;">批次编号</td><td style="width:35%">PC-20260422-5687</td></tr>
+                    <tr><td style="background:var(--gray-100);text-align:right;">生产数量</td><td>25</td><td style="background:var(--gray-100);text-align:right;">生产类型</td><td>全案</td></tr>
+                    <tr><td style="background:var(--gray-100);text-align:right;">制作方式</td><td>制作方式名称</td><td style="background:var(--gray-100);text-align:right;">预计交付周期(天)</td><td>全案</td></tr>
+                    <tr><td style="background:var(--gray-100);text-align:right;">客户需求</td><td colspan="3">这里是客户需求，有很多哦，多看看多学学</td></tr>
+                    <tr><td style="background:var(--gray-100);text-align:right;">客户定制化自动化</td><td colspan="3">客户要求这么做，按照说的做吧</td></tr>
+                    <tr><td style="background:var(--gray-100);text-align:right;">备注</td><td colspan="3">重要信息哦！！！！！！</td></tr>
+                </tbody>
+            </table>
+
+            <h4 style="font-size:15px; font-weight:600; margin-bottom:12px;">工作流配置</h4>
+            <p style="color:var(--primary); font-size:14px; margin-bottom: 12px;">当前工作流：全案工作流</p>
+            <div style="background: #F0F5FF; padding: 20px; border-radius: 8px; margin-bottom: 8px;">
+                <div style="display:flex; align-items:center; margin-bottom:12px;">
+                    <span style="width:60px; font-size:13px; color:var(--gray-800);">step1:</span>
+                    <span style="background:#D6E4FF; color:#1D39C4; padding:6px 16px; border-radius:6px; margin-right:16px; width:90px; text-align:center; font-size:13px;">作词</span>
+                    <select style="flex:1; padding:8px 12px; border:1px solid #D9D9D9; border-radius:6px; font-size:13px; background:#fff;"><option>请选择人员</option><option>张三</option></select>
+                </div>
+                <div style="display:flex; align-items:center; margin-bottom:12px;">
+                    <span style="width:60px; font-size:13px; color:var(--gray-800);">step2:</span>
+                    <span style="background:#D6E4FF; color:#1D39C4; padding:6px 16px; border-radius:6px; margin-right:16px; width:90px; text-align:center; font-size:13px;">作词审核</span>
+                    <select style="flex:1; padding:8px 12px; border:1px solid #D9D9D9; border-radius:6px; font-size:13px; background:#fff;"><option>请选择人员</option><option>李四</option></select>
+                </div>
+                <div style="display:flex; align-items:center; margin-bottom:12px;">
+                    <span style="width:60px; font-size:13px; color:var(--gray-800);">step3:</span>
+                    <span style="background:#D6E4FF; color:#1D39C4; padding:6px 16px; border-radius:6px; margin-right:16px; width:90px; text-align:center; font-size:13px;">作曲</span>
+                    <select style="flex:1; padding:8px 12px; border:1px solid #D9D9D9; border-radius:6px; font-size:13px; background:#fff;"><option>请选择人员</option><option>王五</option></select>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <span style="width:60px; font-size:13px; color:var(--gray-800);">step4:</span>
+                    <span style="background:#D6E4FF; color:#1D39C4; padding:6px 16px; border-radius:6px; margin-right:16px; width:90px; text-align:center; font-size:13px;">作曲审核</span>
+                    <select style="flex:1; padding:8px 12px; border:1px solid #D9D9D9; border-radius:6px; font-size:13px; background:#fff;"><option>请选择人员</option><option>赵六</option></select>
+                </div>
+            </div>
+            <p style="font-size:12px; color:var(--gray-500);">* 以上为所选工作流的配置步骤，请选择人员信息。</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-staff-maintenance')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-staff-maintenance')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Staff Modal -->
+<div class="modal-overlay" id="modal-add-staff" style="display:none">
+    <div class="modal">
+        <div class="modal-header"><h3>新增人员</h3><button class="modal-close" onclick="closeModal('modal-add-staff')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>姓名 *</label><input type="text" placeholder="请输入姓名"></div>
+            <div class="form-group"><label>手机号 *</label><input type="text" placeholder="请输入手机号"></div>
+            <div class="form-group"><label>角色 *</label><select><option>系统管理员</option><option>项目经理</option><option>普通用户</option></select></div>
+            <div class="form-group"><label>擅长标签</label><input type="text" placeholder="例：React, TypeScript"></div>
+            <div class="form-group"><label>最大任务数</label><input type="number" value="10"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-add-staff')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-add-staff')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Confirm Dialog -->
+<div class="modal-overlay" id="modal-confirm" style="display:none">
+    <div class="modal modal-sm">
+        <div class="modal-header"><h3 id="confirm-title">确认操作</h3><button class="modal-close" onclick="closeModal('modal-confirm')">&times;</button></div>
+        <div class="modal-body"><p id="confirm-message" style="line-height:1.6; color:var(--gray-800);">确定要执行此操作吗？</p></div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-confirm')">取消</button>
+            <button class="btn-primary" id="confirm-btn" onclick="closeModal('modal-confirm')">确认</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Menu Modal -->
+<div class="modal-overlay" id="modal-add-menu" style="display:none">
+    <div class="modal">
+        <div class="modal-header"><h3>新增菜单</h3><button class="modal-close" onclick="closeModal('modal-add-menu')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group"><label>父级ID</label><select><option>请选择父级ID（不选则为根级菜单）</option><option>权限用户管理</option><option>人员管理</option></select></div>
+            <div class="form-group"><label>名称 <span style="color:#F5222D">*</span></label><input type="text" placeholder="请输入菜单名称"></div>
+            <div class="form-group"><label>类型 <span style="color:#F5222D">*</span></label><select><option>请选择类型</option><option>菜单</option><option>目录</option><option>按钮</option></select></div>
+            <div class="form-group"><label>前端路径</label><input type="text" placeholder="请输入前端路径"></div>
+            <div class="form-group"><label>路由地址</label><input type="text" placeholder="请输入路由地址"></div>
+            <div class="form-group"><label>权限编码</label><input type="text" placeholder="如：menu:list、staff:add"></div>
+            <div class="form-group"><label>备注</label><textarea placeholder="请输入备注信息" rows="3"></textarea></div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-add-menu')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-add-menu')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Role Form Modal -->
+<div class="modal-overlay" id="modal-role-form" style="display:none">
+    <div class="modal">
+        <div class="modal-header"><h3 id="role-form-title">新增角色</h3><button class="modal-close" onclick="closeModal('modal-role-form')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>角色名称 <span style="color:#F5222D">*</span></label>
+                <input type="text" id="role-name-input" placeholder="请输入角色名称">
+            </div>
+            <div class="form-group">
+                <label>菜单权限 <span style="color:#F5222D">*</span></label>
+                <div id="role-perm-tree" style="border:1px solid #D9D9D9; border-radius:8px; padding:8px 16px; max-height:320px; overflow-y:auto;">
+                    <!-- 需求管理 -->
+                    <div class="perm-row" style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F5F5F5;">
+                        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;">
+                            <input type="checkbox" class="role-chk perm-leaf" onchange="updatePermCount()" style="width:16px;height:16px;accent-color:var(--primary);">
+                            <span style="font-size:14px;">需求管理</span>
+                        </label>
+                        <span style="color:#2F54EB; background:#F0F5FF; padding:2px 8px; border-radius:4px; font-size:12px;">菜单</span>
+                    </div>
+                    <!-- 项目管理 -->
+                    <div class="perm-row" style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F5F5F5;">
+                        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;">
+                            <input type="checkbox" class="role-chk perm-leaf" onchange="updatePermCount()" style="width:16px;height:16px;accent-color:var(--primary);">
+                            <span style="font-size:14px;">项目管理</span>
+                        </label>
+                        <span style="color:#2F54EB; background:#F0F5FF; padding:2px 8px; border-radius:4px; font-size:12px;">菜单</span>
+                    </div>
+                    <!-- 批次管理 -->
+                    <div class="perm-row" style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F5F5F5;">
+                        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;">
+                            <input type="checkbox" class="role-chk perm-leaf" onchange="updatePermCount()" style="width:16px;height:16px;accent-color:var(--primary);">
+                            <span style="font-size:14px;">批次管理</span>
+                        </label>
+                        <span style="color:#2F54EB; background:#F0F5FF; padding:2px 8px; border-radius:4px; font-size:12px;">菜单</span>
+                    </div>
+                    <!-- 权限用户管理（目录，可折叠） -->
+                    <div>
+                        <div class="perm-row" style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F5F5F5;">
+                            <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;" onclick="togglePermGroup('perm-group-auth', event)">
+                                <i id="perm-icon-auth" class="fas fa-chevron-down" style="font-size:11px; color:var(--gray-500); width:14px;"></i>
+                                <input type="checkbox" class="role-chk perm-parent" data-group="perm-group-auth" onchange="toggleGroupCheck(this, 'perm-group-auth')" style="width:16px;height:16px;accent-color:var(--primary);">
+                                <span style="font-size:14px;">权限用户管理</span>
+                            </label>
+                            <span style="color:#722ED1; background:#F9F0FF; padding:2px 8px; border-radius:4px; font-size:12px;">目录</span>
+                        </div>
+                        <!-- 子节点 -->
+                        <div id="perm-group-auth" style="padding-left:40px;">
+                            <!-- 人员管理（有子按钮，可折叠） -->
+                            <div>
+                                <div class="perm-row" style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F5F5F5;">
+                                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;" onclick="togglePermGroup('perm-group-staff', event)">
+                                        <i id="perm-icon-staff" class="fas fa-chevron-right" style="font-size:11px; color:var(--gray-500); width:14px;"></i>
+                                        <input type="checkbox" class="role-chk perm-parent" data-group="perm-group-staff" data-parent="perm-group-auth" onchange="toggleGroupCheck(this, 'perm-group-staff')" style="width:16px;height:16px;accent-color:var(--primary);">
+                                        <span style="font-size:14px;">人员管理</span>
+                                    </label>
+                                    <span style="color:#2F54EB; background:#F0F5FF; padding:2px 8px; border-radius:4px; font-size:12px;">菜单</span>
+                                </div>
+                                <div id="perm-group-staff" style="padding-left:40px; display:none;">
+                                    <div class="perm-row" style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F5F5F5;">
+                                        <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;">
+                                            <span style="width:14px;"></span>
+                                            <input type="checkbox" class="role-chk perm-leaf" data-parent="perm-group-staff" onchange="updatePermCount()" style="width:16px;height:16px;accent-color:var(--primary);">
+                                            <span style="font-size:14px;">新增人员</span>
+                                        </label>
+                                        <span style="color:#EB2F96; background:#FFF0F6; padding:2px 8px; border-radius:4px; font-size:12px;">按钮</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="perm-row" style="display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid #F5F5F5;">
+                                <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;">
+                                    <span style="width:14px;"></span>
+                                    <input type="checkbox" class="role-chk perm-leaf" data-parent="perm-group-auth" onchange="updatePermCount()" style="width:16px;height:16px;accent-color:var(--primary);">
+                                    <span style="font-size:14px;">菜单管理</span>
+                                </label>
+                                <span style="color:#2F54EB; background:#F0F5FF; padding:2px 8px; border-radius:4px; font-size:12px;">菜单</span>
+                            </div>
+                            <div class="perm-row" style="display:flex; align-items:center; justify-content:space-between; padding:10px 0;">
+                                <label style="display:flex; align-items:center; gap:10px; cursor:pointer; flex:1;">
+                                    <span style="width:14px;"></span>
+                                    <input type="checkbox" class="role-chk perm-leaf" data-parent="perm-group-auth" onchange="updatePermCount()" style="width:16px;height:16px;accent-color:var(--primary);">
+                                    <span style="font-size:14px;">角色管理</span>
+                                </label>
+                                <span style="color:#2F54EB; background:#F0F5FF; padding:2px 8px; border-radius:4px; font-size:12px;">菜单</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="font-size:12px; color:var(--gray-500); margin-top:8px;" id="role-auth-count">已选择 0 个菜单权限</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-role-form')">取消</button>
+            <button class="btn-primary" id="role-form-btn" onclick="closeModal('modal-role-form')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Remake Modal -->
+<div class="modal-overlay" id="modal-remake" style="display:none">
+    <div class="modal modal-sm" style="width: 500px;">
+        <div class="modal-header"><h3>重新制作确认</h3><button class="modal-close" onclick="closeModal('modal-remake')">&times;</button></div>
+        <div class="modal-body">
+            <p style="font-size:16px; color:var(--gray-800); line-height:1.6; margin-bottom: 24px;">确定对该流水发起重新制作吗？确认后流水将重回进行中状态，需从指定节点重新开展后续流程制作。</p>
+            <div class="form-group">
+                <label style="font-size:14px; font-weight:500;">从指定节点重启<span style="color:#F5222D;">*</span></label>
+                <select style="width:100%; padding: 8px 12px; border: 1px solid #D9D9D9; border-radius: 6px;"><option>请选节点</option><option>作词</option><option>作曲</option><option>编曲</option></select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-remake')">取消</button>
+            <button class="btn-primary" style="background:#F5222D; border-color:#F5222D;" onclick="closeModal('modal-remake')">确认重新制作</button>
+        </div>
+    </div>
+</div>
+
+<!-- Change Batch Modal -->
+<div class="modal-overlay" id="modal-change-batch" style="display:none">
+    <div class="modal modal-sm">
+        <div class="modal-header"><h3>变更批次</h3><button class="modal-close" onclick="closeModal('modal-change-batch')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>选择新批次</label>
+                <select><option>请选择批次</option><option>25 年 4 月 300首</option><option>25 年 5 月 200首</option></select>
+            </div>
+            <p style="font-size:12px; color:var(--gray-500); margin-top:8px;">变更后，该流水的归属将转移至新批次中。</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-change-batch')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-change-batch')">确认变更</button>
+        </div>
+    </div>
+</div>
+
+<!-- Operation Log Modal -->
+<div class="modal-overlay" id="modal-log" style="display:none">
+    <div class="modal">
+        <div class="modal-header"><h3>操作日志</h3><button class="modal-close" onclick="closeModal('modal-log')">&times;</button></div>
+        <div class="modal-body">
+            <table class="data-table"><thead><tr><th>操作时间</th><th>操作人</th><th>操作类型</th><th>操作内容</th></tr></thead>
+            <tbody>
+                <tr><td>2026-04-22 14:30</td><td>张三</td><td>新增订单</td><td>创建订单 DJ-260425-0001</td></tr>
+                <tr><td>2026-04-22 15:00</td><td>张三</td><td>编辑订单</td><td>修改订单名称</td></tr>
+                <tr><td>2026-04-23 09:00</td><td>李四</td><td>新增批次</td><td>创建批次 PC-20260420-0001</td></tr>
+                <tr><td>2026-04-23 10:30</td><td>王五</td><td>编辑授权</td><td>更新版权信息</td></tr>
+                <tr><td>2026-04-24 11:00</td><td>张三</td><td>交付确认</td><td>确认交付 30 首</td></tr>
+            </tbody></table>
+        </div>
+    </div>
+</div>
+
+<!-- Add Product Modal -->
+<div class="modal-overlay" id="modal-add-product" style="display:none">
+    <div class="modal">
+        <div class="modal-header"><h3>新增成品</h3><button class="modal-close" onclick="closeModal('modal-add-product')">&times;</button></div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group" style="flex: 1;"><label>歌名 <span style="color:#F5222D">*</span></label><input type="text" placeholder="请输入歌名"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>歌曲编号</label><input type="text" placeholder="系统自动生成" disabled class="input-disabled"></div>
+                <div class="form-group"><label>歌手</label><input type="text" placeholder="请输入歌手名"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>作词人</label><input type="text" placeholder="请输入作词人"></div>
+                <div class="form-group"><label>作曲人</label><input type="text" placeholder="请输入作曲人"></div>
+            </div>
+            <div class="form-group"><label>词信息</label><textarea rows="2" placeholder="请输入歌词信息"></textarea></div>
+            <div class="form-group">
+                <label>曲信息</label>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <input type="file" id="add-product-file" style="display:none" onchange="document.getElementById('file-name-span').innerText = this.files[0] ? this.files[0].name : ''">
+                    <button class="btn-default" type="button" onclick="document.getElementById('add-product-file').click()" style="display:inline-flex; align-items:center; gap:6px;">
+                        <i class="fas fa-upload"></i> 选择文件
+                    </button>
+                    <span id="file-name-span" style="font-size: 13px; color: var(--gray-600);">未选择任何文件</span>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-add-product')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-add-product')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Claim Product Modal -->
+<div class="modal-overlay" id="modal-claim-product" style="display:none">
+    <div class="modal modal-lg">
+        <div class="modal-header"><h3>成品库领用</h3><button class="modal-close" onclick="closeModal('modal-claim-product')">&times;</button></div>
+        <div class="modal-body" style="padding-bottom:12px;">
+            <div style="border:1px solid #E8E8E8; border-radius:8px; padding:16px; margin-bottom:16px;">
+                <div style="display:flex; gap:16px; margin-bottom:12px;">
+                    <div style="flex:1;"><label style="display:block; margin-bottom:8px; font-size:14px; color:var(--gray-700)">批次</label><select style="width:100%; padding:8px 12px; border:1px solid #D9D9D9; border-radius:6px; background:#F5F5F5;"><option>请选择</option></select></div>
+                    <div style="flex:1;"><label style="display:block; margin-bottom:8px; font-size:14px; color:var(--gray-700)">风格</label><select style="width:100%; padding:8px 12px; border:1px solid #D9D9D9; border-radius:6px; background:#F5F5F5;"><option>请选择</option></select></div>
+                    <div style="flex:1;"><label style="display:block; margin-bottom:8px; font-size:14px; color:var(--gray-700)">歌名</label><div class="input-with-icon" style="border:1px solid #D9D9D9; border-radius:6px; padding:6px 12px; background:#F5F5F5;"><i class="fas fa-search" style="color:var(--gray-400)"></i><input type="text" placeholder="搜索订单编号" style="background:transparent; border:none; font-size:14px; margin-left:8px; width:calc(100% - 24px); outline:none;"></div></div>
+                    <div style="display:flex; align-items:flex-end; gap:8px;">
+                        <button class="btn-primary" style="height:36px; padding: 0 16px;">查询</button>
+                        <button class="btn-default" style="height:36px; padding: 0 16px;">重置</button>
+                    </div>
+                </div>
+            </div>
+            
+            <table class="data-table" style="font-size:13px;">
+                <thead>
+                    <tr>
+                        <th style="width:40px; text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></th>
+                        <th>批次名称</th>
+                        <th>歌曲原名</th>
+                        <th>交付歌名</th>
+                        <th>风格</th>
+                        <th>作词信息</th>
+                        <th>作曲信息</th>
+                        <th>制作时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>2 月 300 首</td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>古风</td><td>执红烛轻扫眉笔...</td><td>文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>6 月 300 首</td><td>这一路</td><td>这一路</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>4 月 300 首</td><td>执念</td><td>执念</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>300 首</td><td>惦记</td><td>惦记</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>第一批次</td><td>义气</td><td>义气</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-claim-product')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-claim-product')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Import Copyright Modal -->
+<div class="modal-overlay" id="modal-import-copyright" style="display:none">
+    <div class="modal">
+        <div class="modal-header"><h3>导入版权信息</h3><button class="modal-close" onclick="closeModal('modal-import-copyright')">&times;</button></div>
+        <div class="modal-body">
+            <div style="background:#FAFAFA; border-radius:8px; padding:20px; margin-bottom:20px;">
+                <p style="font-weight:600; margin-bottom:12px;">1. 请按按照以下流程准备导图文件：</p>
+                <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px; padding-left:8px;">
+                    <span style="color:#52C41A; font-size:16px;">●</span>
+                    <span style="color:var(--gray-600); font-size:14px;">将要导入的歌曲信息。</span>
+                </div>
+                <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px; padding-left:8px;">
+                    <span style="color:#52C41A; font-size:16px;">●</span>
+                    <span style="color:var(--gray-600); font-size:14px;">确定歌曲的音频文件格式为 .wav 或.mp4,将音频文件按照歌名_歌曲 id 进行命名。</span>
+                </div>
+                <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:12px; padding-left:8px;">
+                    <span style="color:#52C41A; font-size:16px;">●</span>
+                    <span style="color:var(--gray-600); font-size:14px;">将所有的音频文件上传</span>
+                </div>
+                <p style="font-weight:600; color:var(--gray-800); font-size:13px;">说明：上传的excel 中的数据要与音频文件的数量进行一一对应，若对应不上会导致信息无法上传</p>
+            </div>
+            <p style="font-weight:600; margin-bottom:12px;">2. 上传excel：</p>
+            <div style="border:2px dashed var(--primary); border-radius:8px; padding:40px; text-align:center; margin-bottom:20px; cursor:pointer; background:#FAFBFF;" onclick="alert('上传Excel文件')">
+                <i class="fas fa-file-alt" style="font-size:40px; color:var(--primary); margin-bottom:8px; display:block;"></i>
+                <span style="color:var(--primary); font-size:14px;">点击或将文件拖拽到这里上传</span>
+            </div>
+            <p style="font-weight:600; margin-bottom:12px;">3. 上传音频文件：</p>
+            <div style="border:2px dashed var(--primary); border-radius:8px; padding:40px; text-align:center; cursor:pointer; background:#FAFBFF;" onclick="alert('上传音频文件')">
+                <i class="fas fa-file-audio" style="font-size:40px; color:var(--primary); margin-bottom:8px; display:block;"></i>
+                <span style="color:var(--primary); font-size:14px;">点击或将文件拖拽到这里上传</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-import-copyright')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-import-copyright'); navigateTo('copyright-confirm-page');">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Batch Edit Staff Modal -->
+<div class="modal-overlay" id="modal-batch-edit-staff" style="display:none">
+    <div class="modal">
+        <div class="modal-header"><h3>批量修改人员</h3><button class="modal-close" onclick="closeModal('modal-batch-edit-staff')">&times;</button></div>
+        <div class="modal-body">
+            <p style="font-size: 13px; color: var(--gray-600); margin-bottom: 16px;">为选中的任务批量分配或修改人员。留空则保持原配置。</p>
+            <div class="form-row">
+                <div class="form-group"><label>词作</label><select><option value="">不修改</option><option>李四</option><option>王五</option></select></div>
+                <div class="form-group"><label>曲作</label><select><option value="">不修改</option><option>李四</option><option>王五</option></select></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>制作人</label><select><option value="">不修改</option><option>赵六</option><option>钱七</option></select></div>
+                <div class="form-group"><label>混音</label><select><option value="">不修改</option><option>钱七</option></select></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-batch-edit-staff')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-batch-edit-staff')">确认修改</button>
+        </div>
+    </div>
+</div>
+
+<!-- Copyright Maintain Modal -->
+<div class="modal-overlay" id="modal-copyright-maintain" style="display:none">
+    <div class="modal modal-lg" style="max-height: 90vh; display: flex; flex-direction: column;">
+        <div class="modal-header"><h3>版权维护</h3><button class="modal-close" onclick="closeModal('modal-copyright-maintain')">&times;</button></div>
+        <div class="modal-body" style="overflow-y: auto; flex: 1; padding: 20px;">
+            <div class="info-card" style="margin-bottom:16px; box-shadow:none; border:1px solid var(--gray-200);">
+                <h4 style="font-size:14px; margin-bottom: 12px;">成品基本信息</h4>
+                <div class="info-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div class="info-item"><span class="info-label">所属订单名：</span><span class="info-value">订单 1</span></div>
+                    <div class="info-item"><span class="info-label">所属批次名：</span><span class="info-value">001</span></div>
+                    <div class="info-item"><span class="info-label">歌名：</span><span class="info-value">窗外</span></div>
+                    <div class="info-item"><span class="info-label">成品编号：</span><span class="info-value">AIBeat-recuGx37YKvfkw</span></div>
+                    <div class="info-item"><span class="info-label">制作完成时间：</span><span class="info-value">2026-05-15 11:22:23</span></div>
+                    <div class="info-item"><span class="info-label">作词人：</span><span class="info-value">张三</span></div>
+                    <div class="info-item"><span class="info-label">作曲人：</span><span class="info-value">张三</span></div>
+                    <div class="info-item" style="grid-column: span 3;"><span class="info-label">词信息：</span><span class="info-value">这是歌词...</span></div>
+                    <div class="info-item" style="grid-column: span 3;"><span class="info-label">曲信息：</span><span class="info-value">这里是曲音频/MIDI等关联信息</span></div>
+                </div>
+            </div>
+            
+            <h4 style="font-size:14px; margin-bottom: 16px; border-left: 4px solid var(--primary); padding-left: 8px;">授权及发布维护</h4>
+            
+            <div class="form-row">
+                <div class="form-group"><label>交付编号 <span style="color:#F5222D">*</span></label><input type="text" placeholder="请输入交付编号" value="JF-2605-001"></div>
+                <div class="form-group"><label>版权状态 <span style="color:#F5222D">*</span></label><select><option value="已维护" selected>已维护</option><option value="未维护">未维护</option></select></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>授权时间</label><input type="date" value="2026-05-15"></div>
+                <div class="form-group"><label>授权开始时间</label><input type="date" value="2026-05-15"></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>授权结束时间</label><input type="date" value="2029-05-15"></div>
+                <div class="form-group"><label>授权期限（天）</label><input type="number" placeholder="请输入授权期限" value="1095"></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>发行日期</label><input type="date" value="2026-05-16"></div>
+                <div class="form-group"><label>上线日期</label><input type="date" value="2026-05-17"></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>下架日期</label><input type="date"></div>
+                <div class="form-group"><label>授权地区 (枚举)</label><select><option>请选择授权地区</option><option selected>中国大陆</option><option>港澳台</option><option>全球</option></select></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>发行地区 (枚举)</label><select><option>请选择发行地区</option><option selected>全球</option><option>中国大陆</option></select></div>
+                <div class="form-group"><label>版权情况 (枚举)</label><select><option>请选择版权情况</option><option selected>独家</option><option>非独家</option><option>买断</option></select></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>在线状态 (枚举)</label><select><option>请选择在线状态</option><option selected>在线</option><option>下线</option></select></div>
+                <div class="form-group"><label>上架平台 (枚举)</label><select><option>请选择上架平台</option><option selected>网易云音乐</option><option>QQ音乐</option><option>酷狗音乐</option><option>抖音</option><option>番茄畅听</option></select></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>端口应上线平台 (枚举)</label><select><option>请选择端口应上线平台</option><option selected>网易云/QQ音乐</option><option>网易云</option><option>QQ音乐</option><option>番茄畅听</option></select></div>
+                <div class="form-group"><label>发行端口 (枚举)</label><select><option>请选择发行端口</option><option selected>网页端</option><option>移动端</option><option>全端口</option></select></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>分成比例 (字符串)</label><input type="text" placeholder="请输入分成比例" value="50%"></div>
+                <div class="form-group"><label>商用情况 (枚举)</label><select><option>请选择商用情况</option><option selected>可商用</option><option>不可商用</option></select></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>外显歌手 (枚举)</label><select><option>请选择外显歌手</option><option selected>张杰</option><option>周杰伦</option><option>陈奕迅</option></select></div>
+                <div class="form-group"><label>外显词作者 (枚举)</label><select><option>请选择外显词作者</option><option selected>王五</option><option>李四</option><option>张三</option></select></div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group"><label>外显曲作者 (枚举)</label><select><option>请选择外显曲作者</option><option selected>王五</option><option>李四</option><option>张三</option></select></div>
+                <div class="form-group"><label>上线外显 (字符串)</label><input type="text" placeholder="请输入上线外显" value="已上线"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-copyright-maintain')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-copyright-maintain')">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Pipeline Suspend Modal -->
+<div class="modal-overlay" id="modal-suspend" style="display:none">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <h3 style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--danger); font-size: 20px;"></span> 中止流水线</h3>
+            <button class="modal-close" onclick="closeModal('modal-suspend')">&times;</button>
+        </div>
+        <div class="modal-body" style="font-size:14px; padding:20px 0;">
+            <p style="color: var(--gray-900); font-size: 15px; margin-bottom: 8px;">是否确认中止当前流水线？</p>
+            <p style="color: var(--danger); font-weight: 500; margin-bottom: 16px;">当前未完成节点的进度将丢失！</p>
+            
+            <div style="background: #FFF7E6; border: 1px solid #FFE58F; padding: 12px; border-radius: 6px;">
+                <div style="font-size: 13px; margin-bottom: 8px;"><strong>当前进度快照：</strong></div>
+                <div style="font-size: 13px; color: var(--gray-600);">✓ 需求单 (已完成)</div>
+                <div style="font-size: 13px; color: var(--gray-600);">✓ 参考资产 (已完成)</div>
+                <div style="font-size: 13px; color: var(--primary); font-weight: 500; margin-top: 4px;">➤ 作词 (正在进行中)</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-suspend')">取消</button>
+            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmSuspend()">确认中止</button>
+        </div>
+    </div>
+</div>
+
+<!-- Pipeline Resume Modal -->
+<div class="modal-overlay" id="modal-resume" style="display:none">
+    <div class="modal modal-sm">
+        <div class="modal-header">
+            <h3>恢复流水线</h3>
+            <button class="modal-close" onclick="closeModal('modal-resume')">&times;</button>
+        </div>
+        <div class="modal-body" style="font-size:14px; padding:20px 0;">
+            <p style="color: var(--gray-900); font-size: 15px;">是否确认恢复该流水线？</p>
+            <p style="color: var(--gray-600); margin-top: 8px; font-size: 13px;">恢复后，流水线将重新进入可调度状态，已挂起的任务将重新进入待分配池。</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-resume')">取消</button>
+            <button class="btn-primary" onclick="confirmResume()">确认恢复</button>
+        </div>
+    </div>
+</div>
+
+<!-- Pipeline Personnel Modal -->
+<div class="modal-overlay" id="modal-pipeline-personnel" style="display:none">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <h3>节点人员维护</h3>
+            <button class="modal-close" onclick="closeModal('modal-pipeline-personnel')">&times;</button>
+        </div>
+        <div class="modal-body" style="padding:20px 0;">
+            <div class="node-list" style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Completed Node -->
+                <div class="node-item" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border: 1px solid var(--gray-200); border-radius: 6px; background: var(--gray-50);">
+                    <div class="node-info">
+                        <div class="node-title" style="font-weight: 500; font-size: 14px; margin-bottom: 4px;">1. 需求单与参考节点</div>
+                        <div class="node-status" style="color: var(--green); font-size: 12px;">已完成</div>
+                    </div>
+                    <div class="node-action" style="width: 160px;">
+                        <select disabled style="width:100%; border: 1px solid var(--gray-300); border-radius:6px; padding:6px; background:var(--gray-100); color:var(--gray-500);">
+                            <option selected>张三 (制作人)</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Ongoing Node -->
+                <div class="node-item" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border: 1px solid var(--primary); border-radius: 6px; background: #fff;">
+                    <div class="node-info">
+                        <div class="node-title" style="font-weight: 500; font-size: 14px; margin-bottom: 4px;">2. 作词节点</div>
+                        <div class="node-status" style="color: var(--primary); font-size: 12px;">进行中</div>
+                    </div>
+                    <div class="node-action" style="width: 160px;">
+                        <select style="width:100%; border: 1px solid var(--gray-300); border-radius:6px; padding:6px; background:#fff;">
+                            <option selected>李四 (作词人)</option>
+                            <option>王五 (作词人)</option>
+                            <option>赵六 (作词人)</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Unstarted Node -->
+                <div class="node-item" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border: 1px solid var(--gray-200); border-radius: 6px; background: var(--gray-50);">
+                    <div class="node-info">
+                        <div class="node-title" style="font-weight: 500; font-size: 14px; margin-bottom: 4px;">3. 作曲节点</div>
+                        <div class="node-status" style="color: var(--gray-400); font-size: 12px;">未开始</div>
+                    </div>
+                    <div class="node-action" style="width: 160px;">
+                        <select style="width:100%; border: 1px solid var(--gray-300); border-radius:6px; padding:6px; background:#fff;">
+                            <option value="">请分配人员</option>
+                            <option selected>陈七 (作曲人)</option>
+                            <option>周八 (作曲人)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeModal('modal-pipeline-personnel')">取消</button>
+            <button class="btn-primary" onclick="closeModal('modal-pipeline-personnel')">确认修改</button>
+        </div>
+    </div>
+</div>
+
+<!-- Pipeline Detail Drawer Overlay -->
+<div class="modal-overlay" id="detailDrawerOverlay" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeDrawer()">
+    <!-- Drawer is modal-right -->
+    <div class="modal modal-right" id="detailDrawer" style="width: 500px; padding: 24px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; border-bottom: 1px solid var(--gray-200); padding-bottom: 16px;">
+            <h3 style="font-size:16px; font-weight:600;">流水线详情与进度</h3>
+            <button class="modal-close" style="border:none; background:none; font-size:18px; cursor:pointer;" onclick="closeDrawer()">&times;</button>
+        </div>
+        <div style="font-size: 16px; font-weight: 600; margin-bottom: 20px;" id="detail-pipeline-id">PL-20260514-001</div>
+        
+        <div class="timeline" style="position: relative; padding-left: 20px; margin-top: 10px;">
+            <div style="position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--gray-200);"></div>
+            
+            <!-- Node 1 -->
+            <div class="timeline-item" style="position: relative; margin-bottom: 24px;">
+                <div class="timeline-dot completed" style="position: absolute; left: -20px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 2px solid var(--primary); z-index: 1;"></div>
+                <div class="timeline-content" style="background: var(--gray-50); padding: 14px; border-radius: 6px; border: 1px solid var(--gray-200);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500;">
+                        <span>1. 需求单与参考资产</span>
+                        <span class="badge badge-green" style="padding: 0 6px;">已完成</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 12px;">负责人: 张三 | 完成时间: 2026-05-14 09:30</div>
+                    <div style="font-size: 13px; color: var(--gray-800); display: flex; flex-direction: column; gap: 8px;">
+                        <div><strong style="color: var(--gray-500); font-weight: normal; width: 60px; display: inline-block;">输入：</strong>客户原始需求文档.docx</div>
+                        <div><strong style="color: var(--gray-500); font-weight: normal; width: 60px; display: inline-block;">输出：</strong>标准参考资产 [ID:1001], 工作流 [全案生成]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Node 2 -->
+            <div class="timeline-item" style="position: relative; margin-bottom: 24px;">
+                <div class="timeline-dot completed" style="position: absolute; left: -20px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: var(--primary); border: 2px solid var(--primary); z-index: 1;"></div>
+                <div class="timeline-content" style="background: var(--gray-50); padding: 14px; border-radius: 6px; border: 1px solid var(--gray-200);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500;">
+                        <span>2. 项目配置与下发</span>
+                        <span class="badge badge-green" style="padding: 0 6px;">已完成</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 12px;">负责人: 王经理 | 完成时间: 2026-05-14 10:00</div>
+                    <div style="font-size: 13px; color: var(--gray-800); display: flex; flex-direction: column; gap: 8px;">
+                        <div><strong style="color: var(--gray-500); font-weight: normal; width: 60px; display: inline-block;">输入：</strong>需求流转单</div>
+                        <div><strong style="color: var(--gray-500); font-weight: normal; width: 60px; display: inline-block;">输出：</strong>作词任务下发成功</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="timeline-item" style="position: relative; margin-bottom: 24px;">
+                <div class="timeline-dot ongoing" style="position: absolute; left: -20px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--warning); z-index: 1;"></div>
+                <div class="timeline-content" style="background: var(--gray-50); padding: 14px; border-radius: 6px; border: 1px solid var(--primary);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500;">
+                        <span style="color: var(--primary);">3. 作词</span>
+                        <span class="badge badge-blue" style="padding: 0 6px;">进行中</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 12px;">负责人: 李四 | 接收时间: 2026-05-14 10:05</div>
+                    <div style="font-size: 13px; color: var(--gray-800); display: flex; flex-direction: column; gap: 8px;">
+                        <div><strong style="color: var(--gray-500); font-weight: normal; width: 60px; display: inline-block;">输入：</strong>作词任务说明, 歌词框架建议</div>
+                        <div><strong style="color: var(--gray-500); font-weight: normal; width: 60px; display: inline-block;">流转：</strong>等待负责人提交歌词文档产物...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Node 4 -->
+            <div class="timeline-item" style="position: relative; margin-bottom: 24px;">
+                <div class="timeline-dot" style="position: absolute; left: -20px; top: 4px; width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 2px solid var(--gray-300); z-index: 1;"></div>
+                <div class="timeline-content" style="background: var(--gray-50); padding: 14px; border-radius: 6px; border: 1px solid var(--gray-200); opacity: 0.6;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500;">
+                        <span>4. 作曲与编曲</span>
+                        <span class="badge badge-gray" style="padding: 0 6px;">未开始</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--gray-500); margin-bottom: 12px;">负责人: 待定</div>
+                    <div style="font-size: 13px; color: var(--gray-800); display: flex; flex-direction: column; gap: 8px;">
+                        <div><strong style="color: var(--gray-500); font-weight: normal; width: 60px; display: inline-block;">前置依赖：</strong>作词节点的歌词文档</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Workbench Abort Modal -->
+<div class="modal-overlay" id="abortModalOverlay" style="display:none">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <h3>是否确认中止任务？</h3>
+            <button class="modal-close" onclick="closeAbortModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="padding:20px 0;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>请选择中止任务的原因：(选填)</label>
+                <div style="display: flex; gap: 16px; margin-bottom: 12px; margin-top: 8px;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
+                        <input type="radio" name="abortReasonType" value="style" onclick="document.getElementById('otherReasonContainer').style.display='none'"> 对标词风格不对
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
+                        <input type="radio" name="abortReasonType" value="other" onclick="document.getElementById('otherReasonContainer').style.display='block'"> 其他
+                    </label>
+                </div>
+                <div id="otherReasonContainer" style="display: none;">
+                    <textarea id="abortReason" class="input" style="min-height: 80px; width: 100%; padding: 8px; border: 1px solid var(--gray-300); border-radius: 6px;" placeholder="请填写详细原因..."></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeAbortModal()">取消</button>
+            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmAbort()">确认中止</button>
+        </div>
+    </div>
+</div>
+
+<!-- Workbench Submit Modal -->
+<div class="modal-overlay" id="submitModalOverlay" style="display:none">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <h3>确认提交填词结果</h3>
+            <button class="modal-close" onclick="closeSubmitModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="padding:20px 0;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>任务备注 (选填)：</label>
+                <textarea id="submitRemark" class="input" style="min-height: 80px; width: 100%; padding: 8px; border: 1px solid var(--gray-300); border-radius: 6px;" placeholder="如有需要，可填写任务备注..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeSubmitModal()">取消</button>
+            <button class="btn-primary" onclick="confirmSubmit()">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Composition Abort Modal -->
+<div class="modal-overlay" id="compAbortModalOverlay" style="display:none">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <h3>中止任务</h3>
+            <button class="modal-close" onclick="closeCompositionAbortModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="padding:20px 0;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label>请输入中止任务的原因：</label>
+                <textarea id="compAbortReason" class="input" style="min-height: 80px; width: 100%; padding: 8px; border: 1px solid var(--gray-300); border-radius: 6px;" placeholder="例如：参考音频质量太差，无法跑曲..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeCompositionAbortModal()">取消</button>
+            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmCompositionAbort()">确认中止</button>
+        </div>
+    </div>
+</div>
+
+<!-- Composition Submit Modal -->
+<div class="modal-overlay" id="compSubmitModalOverlay" style="display:none">
+    <div class="modal modal-md" style="width: 480px;">
+        <div class="modal-header">
+            <h3>确认提交结果</h3>
+            <button class="modal-close" onclick="closeCompositionSubmitModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 20px 24px 24px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">任务备注 (选填)：</label>
+                <textarea id="compSubmitRemark" class="input" style="min-height: 96px; width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300); border-radius: 6px; outline: none; resize: none; font-size: 13px; line-height: 1.6;" placeholder="可填写关于本次跑曲的补充说明..."></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeCompositionSubmitModal()">取消</button>
+            <button class="btn-primary" onclick="confirmCompositionSubmit()">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Composition Audio Resource Modal -->
+<div class="modal-overlay" id="compAudioResourceModalOverlay" style="display:none">
+    <div class="modal modal-md">
+        <div class="modal-header">
+            <h3 id="compAudioResourceModalTitle">添加音频资源</h3>
+            <button class="modal-close" onclick="closeCompositionAudioResourceModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="padding:20px 24px;">
+            <input type="hidden" id="compAudioResourceType" value="file">
+            <div id="compAudioFileForm">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>上传文件</label>
+                    <input id="compAudioFileInput" class="input" type="file" accept="audio/*">
+                </div>
+            </div>
+            <div id="compAudioLinkForm" style="display:none;">
+                <div class="form-group">
+                    <label>链接名称</label>
+                    <input id="compAudioLinkName" class="input" type="text" placeholder="请输入链接名称，例如：参考音频 URL">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label>链接地址</label>
+                    <input id="compAudioLinkUrl" class="input" type="text" placeholder="请输入音频链接地址">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeCompositionAudioResourceModal()">取消</button>
+            <button class="btn-primary" onclick="confirmCompositionAudioResource()">确认添加</button>
+        </div>
+    </div>
+</div>
+
+<!-- Reference Library Playlist Import Modal -->
+<div class="modal-overlay" id="importModal" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeModal('importModal')">
+    <div class="modal" style="width: 540px; max-height: 85vh; display: flex; flex-direction: column;" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>QQ 音乐歌单导入</h3>
+            <button class="modal-close" onclick="closeModal('importModal')">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 0; display: flex; flex-direction: column; overflow-y: hidden;">
+            <div style="padding: 20px 24px 10px 24px; border-bottom: 1px solid var(--gray-200);">
+                <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                    <input type="text" class="input" id="inputPlaylistUrl" placeholder="粘贴 QQ 音乐歌单链接或 ID（例如：7713574197）" value="7713574197" style="flex: 1;">
+                    <button class="btn-primary" onclick="simulateParsePlaylist()">解析</button>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--gray-600);">
+                    <span id="importModalSummary">共 3 首 · 已选 2 首</span>
+                    <button class="btn-default" style="padding: 4px 8px; font-size: 12px;" onclick="toggleAllImportSongs()">全选/反选</button>
+                </div>
+            </div>
+            
+            <div id="importSongList" style="flex: 1; overflow-y: auto; max-height: 250px;">
+                <!-- Song Item 1 -->
+                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px;">
+                    <input type="checkbox" class="table-checkbox" name="importSongCheck" value="0" checked onchange="updateImportModalSummary()">
+                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=qilixiang" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;" alt="cover">
+                    <div class="song-info" style="flex: 1;">
+                        <div class="song-title" style="font-weight: 500;">七里香</div>
+                        <div class="song-author" style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">周杰伦</div>
+                    </div>
+                </div>
+                <!-- Song Item 2 -->
+                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px;">
+                    <input type="checkbox" class="table-checkbox" name="importSongCheck" value="1" checked onchange="updateImportModalSummary()">
+                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=yequ" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;" alt="cover">
+                    <div class="song-info" style="flex: 1;">
+                        <div class="song-title" style="font-weight: 500;">夜曲</div>
+                        <div class="song-author" style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">周杰伦</div>
+                    </div>
+                </div>
+                <!-- Song Item 3 (Imported) -->
+                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px; background: #fafafa;">
+                    <input type="checkbox" class="table-checkbox" disabled name="importSongCheck" value="2">
+                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=qinghuaci" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover; opacity: 0.5;" alt="cover">
+                    <div class="song-info" style="flex: 1;">
+                        <div class="song-title" style="font-weight: 500; color: var(--gray-400);">青花瓷</div>
+                        <div class="song-author" style="font-size: 12px; color: var(--gray-400); margin-top: 4px;">周杰伦</div>
+                    </div>
+                    <span class="song-imported" style="font-size: 12px; color: var(--success); background: var(--success-light); border: 1px solid var(--success); padding: 2px 6px; border-radius: 4px;">已导入</span>
+                </div>
+            </div>
+
+            <div style="padding: 16px 24px; border-top: 1px solid var(--gray-200);">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">统一附加风格标签（用逗号分隔）</label>
+                <input type="text" class="input" id="inputImportTags" placeholder="例如：流行, 华语, 经典" value="经典, 华语">
+            </div>
+        </div>
+        <div class="modal-footer" style="background: #fafafa; border-top: 1px solid var(--gray-200); padding: 12px 24px; display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
+            <span style="font-size: 12px; color: var(--gray-500); margin-right: auto;">将自动抓取歌词并清洗入库</span>
+            <button class="btn-default" onclick="closeModal('importModal')">取消</button>
+            <button class="btn-primary" id="btnConfirmImport" onclick="confirmImportPlaylist()">导入 2 首</button>
+        </div>
+    </div>
+</div>
+
+<!-- Reference Library Detail Drawer Overlay -->
+<div class="modal-overlay" id="refLibDrawerOverlay" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeRefLibDrawer()">
+    <!-- Drawer is modal-right -->
+    <div class="modal modal-right" id="refLibDrawer" style="width: 480px; padding: 24px;" onclick="event.stopPropagation()">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; border-bottom: 1px solid var(--gray-200); padding-bottom: 16px;">
+            <h3 style="font-size:16px; font-weight:600;">资产详情</h3>
+            <button class="modal-close" style="border:none; background:none; font-size:18px; cursor:pointer;" onclick="closeRefLibDrawer()">&times;</button>
+        </div>
+        <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 80px;">
+            <input type="hidden" id="refLibEditId">
+            <div class="form-group">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">歌名 <span style="color: var(--danger);">*</span></label>
+                <input type="text" class="input" id="inputRefSongName" placeholder="例如：七里香">
+            </div>
+            <div class="form-group">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">歌手 <span style="color: var(--danger);">*</span></label>
+                <input type="text" class="input" id="inputRefSingerName" placeholder="例如：周杰伦">
+            </div>
+            <div class="form-group">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">歌词 <span style="color: var(--danger);">*</span></label>
+                <textarea class="textarea" id="inputRefLyrics" style="width: 100%; min-height: 160px; padding: 8px 12px; border: 1px solid var(--gray-300); border-radius: 6px; outline: none; font-family: inherit; font-size: 13px; resize: vertical;" placeholder="请输入歌词..."></textarea>
+            </div>
+            <div class="form-group">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">风格</label>
+                <input type="text" class="input" id="inputRefStyles" placeholder="例如：流行, 经典 (使用逗号分隔)">
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #fafafa; padding: 16px 24px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 12px;">
+            <button class="btn-default" onclick="closeRefLibDrawer()">取消</button>
+            <button class="btn-primary" onclick="saveRefLibDrawer()">保存修改</button>
+        </div>
+    </div>
+</div>
+
+<!-- Singer Library Detail/Add Drawer Overlay -->
+<div class="modal-overlay" id="singerDrawerOverlay" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeSingerDrawer()">
+    <!-- Drawer is modal-right -->
+    <div class="modal modal-right" id="singerDrawer" style="width: 480px; padding: 24px;" onclick="event.stopPropagation()">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; border-bottom: 1px solid var(--gray-200); padding-bottom: 16px;">
+            <h3 id="singerDrawerTitle" style="font-size:16px; font-weight:600;">歌手详情</h3>
+            <button class="modal-close" style="border:none; background:none; font-size:18px; cursor:pointer;" onclick="closeSingerDrawer()">&times;</button>
+        </div>
+        <div style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 80px;">
+            <input type="hidden" id="singerEditId">
+            <div class="form-group">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">歌手名称 <span style="color: var(--danger);">*</span></label>
+                <input type="text" class="input" id="inputSingerName" placeholder="例如：苏星瑶">
+            </div>
+            <div class="form-group">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">内部名称</label>
+                <input type="text" class="input" id="inputSingerInternalName" placeholder="例如：欣瑶">
+            </div>
+            <div class="form-group">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">歌手性别</label>
+                <select class="input" id="inputSingerGender">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                    <option value="组合">组合</option>
+                    <option value="未知">未知</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">风格</label>
+                <input type="text" class="input" id="inputSingerStyle" placeholder="例如：年轻下沉 (使用逗号分隔)">
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #fafafa; padding: 16px 24px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 12px; border-radius: 0 0 var(--radius) var(--radius);">
+            <button class="btn-default" onclick="closeSingerDrawer()">取消</button>
+            <button class="btn-primary" id="btnSingerSubmit" onclick="saveSingerDrawer()">保存修改</button>
+        </div>
+    </div>
+</div>
+
+<!-- Node Type Detail Drawer -->
+<div class="modal-overlay" id="nodeTypeDrawerOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeNodeTypeDrawer()">
+    <div class="modal modal-right node-type-drawer" id="nodeTypeDrawer" style="z-index:1001;" onclick="event.stopPropagation()">
+        <div class="node-type-drawer-header">
+            <h3 id="nodeTypeDrawerTitle">新增节点</h3>
+            <button class="modal-close" onclick="closeNodeTypeDrawer()">&times;</button>
+        </div>
+        <div class="node-type-drawer-body">
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">基础信息</div>
+                <div class="node-type-field-grid two">
+                    <div class="node-type-field">
+                        <label>节点名称 <span style="color: var(--danger);">*</span></label>
+                        <input type="text" class="input" id="inputNodeType_typeName" placeholder="请输入节点名称">
+                    </div>
+                    <div class="node-type-field">
+                        <label>生产环节</label>
+                        <select class="input" id="inputNodeType_nodeType">
+                            <option>作词</option>
+                            <option>作曲</option>
+                        </select>
+                    </div>
+                    <div class="node-type-field">
+                        <label>节点属性</label>
+                        <select class="input" id="inputNodeType_typeAttr">
+                            <option>人工节点</option>
+                            <option>机器节点</option>
+                        </select>
+                    </div>
+                    <div class="node-type-field">
+                        <label>状态</label>
+                        <select class="input" id="inputNodeType_status">
+                            <option>正常</option>
+                            <option>已禁用</option>
+                        </select>
+                    </div>
+                    <div class="node-type-field">
+                        <label>版本</label>
+                        <input type="text" class="input" id="inputNodeType_version" placeholder="例如：V1.0.0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">字段规格</div>
+                <div class="node-type-field">
+                    <label>输入字段</label>
+                    <textarea class="textarea" id="inputNodeType_inputFields" style="font-family: monospace;" placeholder='例如：&#10;{&#10;  "task_desc": "string"&#10;}'></textarea>
+                </div>
+                <div class="node-type-field">
+                    <label>配置字段</label>
+                    <textarea class="textarea" id="inputNodeType_configFields" style="font-family: monospace;" placeholder='例如：&#10;{&#10;  "word_count": "integer"&#10;}'></textarea>
+                </div>
+                <div class="node-type-field">
+                    <label>输出字段</label>
+                    <textarea class="textarea" id="inputNodeType_outputFields" style="font-family: monospace;" placeholder='例如：&#10;{&#10;  "lyrics_doc": "object"&#10;}'></textarea>
+                </div>
+                <div class="node-type-field">
+                    <label>变更日志 <span style="color: var(--danger);">*</span></label>
+                    <textarea class="textarea" id="inputNodeType_changelog" style="min-height: 72px;" placeholder="必填：记录本次版本的修改细节"></textarea>
+                </div>
+            </div>
+
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">执行控制参数</div>
+                <div class="node-type-field-grid three">
+                    <div class="node-type-field">
+                        <label>重试次数</label>
+                        <input type="number" class="input" id="inputNodeType_retryCount" value="3" disabled>
+                    </div>
+                    <div class="node-type-field">
+                        <label>重试逻辑</label>
+                        <select class="input" id="inputNodeType_retryLogic" disabled>
+                            <option value="FIXED">FIXED</option>
+                            <option value="EXPONENTIAL_BACKOFF">EXPONENTIAL_BACKOFF</option>
+                        </select>
+                    </div>
+                    <div class="node-type-field">
+                        <label>重试间隔 (秒)</label>
+                        <input type="number" class="input" id="inputNodeType_retryDelay" value="10" disabled>
+                    </div>
+                    <div class="node-type-field">
+                        <label>超时时间 (秒)</label>
+                        <input type="number" class="input" id="inputNodeType_timeout" value="3600" disabled>
+                    </div>
+                    <div class="node-type-field">
+                        <label>响应超时 (秒)</label>
+                        <input type="number" class="input" id="inputNodeType_responseTimeout" value="600" disabled>
+                    </div>
+                    <div class="node-type-field">
+                        <label>超时策略</label>
+                        <select class="input" id="inputNodeType_timeoutPolicy" disabled>
+                            <option value="TIME_OUT_WF">TIME_OUT_WF</option>
+                            <option value="ALERT_ONLY">ALERT_ONLY</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">审计信息</div>
+                <div class="node-type-field-grid">
+                    <div class="node-type-field">
+                        <label>创建人</label>
+                        <input type="text" class="input" id="inputNodeType_creator" placeholder="填写创建人">
+                    </div>
+                    <div class="node-type-field">
+                        <label>创建时间</label>
+                        <input type="text" class="input" id="inputNodeType_createTime" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="node-type-drawer-footer">
+            <button class="btn-default" onclick="closeNodeTypeDrawer()">取消</button>
+            <button class="btn-primary" id="btnNodeTypeSubmit" onclick="saveNodeTypeDrawer()">确认新增</button>
+        </div>
+    </div>
+</div>
+
+<!-- Node Type Export Modal -->
+<div class="modal-overlay" id="nodeTypeExportModal" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeNodeTypeExportModal()">
+    <div class="modal modal-sm" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>导出节点数据</h3>
+            <button class="modal-close" onclick="closeNodeTypeExportModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">选择节点</label>
+                <select class="input" id="exportNodeTypeSelect" onchange="updateNodeTypeExportCount()">
+                    <option value="all">全部节点</option>
+                </select>
+            </div>
+            <div style="font-size: 13px; color: var(--gray-600); background: var(--gray-100); padding: 12px; border-radius: 6px; line-height: 1.6;">
+                是否导出该节点的输入、配置、输出数据？<br>
+                当前共有 <span id="exportNodeTypeCount" style="color: var(--primary); font-weight: 600;">--</span> 条数据。
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeNodeTypeExportModal()">取消</button>
+            <button class="btn-primary" onclick="confirmNodeTypeExport()">确认导出</button>
+        </div>
+    </div>
+</div>
+
+<!-- Node Config Export Modal -->
+<div class="modal-overlay" id="nodeConfigExportModal" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeNodeConfigExportModal()">
+    <div class="modal modal-sm" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>导出配置数据</h3>
+            <button class="modal-close" onclick="closeNodeConfigExportModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">选择节点名称</label>
+                <select class="input" id="exportNodeConfigSelect" onchange="updateNodeConfigExportCount()">
+                    <option value="all">全部节点</option>
+                </select>
+            </div>
+            <div style="font-size: 13px; color: var(--gray-600); background: var(--gray-100); padding: 12px; border-radius: 6px; line-height: 1.6;">
+                是否导出该节点下的全部配置数据？<br>
+                当前共有 <span id="exportNodeConfigCount" style="color: var(--primary); font-weight: 600;">--</span> 条数据。
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeNodeConfigExportModal()">取消</button>
+            <button class="btn-primary" onclick="confirmNodeConfigExport()">确认导出</button>
+        </div>
+    </div>
+</div>
+
+<!-- Node Config Detail Drawer -->
+<div class="modal-overlay" id="nodeConfigDrawerOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeNodeConfigDrawer()">
+    <div class="modal modal-right node-type-drawer" id="nodeConfigDrawer" style="z-index:1001;" onclick="event.stopPropagation()">
+        <div class="node-type-drawer-header">
+            <h3 id="nodeConfigDrawerTitle">新增配置</h3>
+            <button class="modal-close" onclick="closeNodeConfigDrawer()">&times;</button>
+        </div>
+        <div class="node-type-drawer-body">
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">节点信息</div>
+                <div class="node-type-field-grid three">
+                    <div class="node-type-field">
+                        <label>节点名称</label>
+                        <input type="text" class="input" id="inputNodeConfig_nodeName" disabled>
+                    </div>
+                    <div class="node-type-field">
+                        <label>节点版本号</label>
+                        <input type="text" class="input" id="inputNodeConfig_nodeVersion" disabled>
+                    </div>
+                    <div class="node-type-field">
+                        <label>执行模式</label>
+                        <input type="text" class="input" id="inputNodeConfig_executionMode" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nodeConfig_dynamicArea"></div>
+        </div>
+        <div class="node-type-drawer-footer">
+            <button class="btn-default" onclick="closeNodeConfigDrawer()">取消</button>
+            <button class="btn-primary" id="btnNodeConfigSubmit" onclick="saveNodeConfigDrawer()">确认新增</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- ==================== Workflow Template Drawer ==================== -->
+<div class="modal-overlay" id="wfTemplateDrawerOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeWfTemplateDrawer()">
+    <div class="modal-right" id="wfTemplateDrawer" style="width: 640px; z-index:1001;" onclick="event.stopPropagation()">
+        <div style="padding: 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-200);">
+            <h3 style="margin: 0; font-size: 16px;" id="wfTemplateDrawerTitle">新增工作流模版</h3>
+            <button onclick="closeWfTemplateDrawer()" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--gray-400);"><i class="fas fa-times"></i></button>
+        </div>
+        <div style="padding: 24px 24px 80px 24px; overflow-y: auto; height: calc(100% - 70px);">
+            <div class="form-row" style="display: flex; gap: 16px; margin-bottom: 20px;">
+                <div style="flex: 1;">
+                    <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">模版名称 <span style="color: var(--danger);">*</span></label>
+                    <input type="text" class="input" id="wf_inputTplName" placeholder="例如：标准音乐生产流">
+                </div>
+                <div style="flex: 1;">
+                    <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">版本 <span style="color: var(--danger);">*</span></label>
+                    <input type="text" class="input" id="wf_inputTplVersion" placeholder="例如：V1.0.0">
+                </div>
+            </div>
+            <div class="form-row" style="display: flex; gap: 16px; margin-bottom: 20px;">
+                <div style="flex: 1;">
+                    <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">状态</label>
+                    <select class="input" id="wf_inputTplStatus"><option>正常</option><option>已禁用</option></select>
+                </div>
+                <div style="flex: 1;">
+                    <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">创建人</label>
+                    <input type="text" class="input" id="wf_inputTplCreator" placeholder="填写创建人">
+                </div>
+            </div>
+            <div class="form-row" style="display: flex; gap: 16px; margin-bottom: 20px;">
+                <div style="flex: 1;">
+                    <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">创建时间</label>
+                    <input type="text" class="input" id="wf_inputTplCreateTime" disabled>
+                </div>
+                <div style="flex: 1;"></div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">变更日志 <span style="color: var(--danger);">*</span></label>
+                <textarea class="textarea" id="wf_inputTplChangelog" placeholder="记录本次版本的变更内容..." style="min-height: 80px;"></textarea>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">模版定义 (JSON格式) <span style="color: var(--danger);">*</span></label>
+                <textarea class="textarea" id="wf_inputTplDefinition" placeholder='{"nodes": [...], "edges": [...]}' style="min-height: 350px; font-family: monospace; background: var(--gray-100);"></textarea>
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #fafafa; padding: 16px 24px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 12px;">
+            <button class="btn-default" onclick="closeWfTemplateDrawer()">取消</button>
+            <button class="btn-primary" id="wf_btnTplSubmit" onclick="submitWfTemplateForm()">确认新增</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== Workflow Wizard Modal ==================== -->
+<div class="modal-overlay" id="wfWizardOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.45); z-index:1000;">
+    <div class="wizard-modal" id="wfWizardModal" onclick="event.stopPropagation()">
+        <div style="padding: 16px 24px; border-bottom: 1px solid var(--gray-200); font-size: 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; background: #fff;">
+            <span id="wfWizardTitle">新增工作流配置</span>
+            <button onclick="closeWfWizard()" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--gray-400);"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="wizard-progress">
+            <div class="progress-text">
+                <span id="wfWizardStepLabel">步骤 1/1：基本信息</span>
+                <span id="wfWizardStepDesc">配置基本信息</span>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="wfWizardProgressBar" style="width: 0%;"></div></div>
+        </div>
+        <div class="wizard-viewport">
+            <div class="wizard-track" id="wfWizardTrack"></div>
+        </div>
+        <div style="padding: 12px 24px; border-top: 1px solid var(--gray-200); background: #fafafa; display: flex; justify-content: space-between; gap: 12px;">
+            <button class="btn-default" id="wf_btnWizardPrev" onclick="wfWizardPrev()" style="visibility: hidden;">上一步</button>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn-default" onclick="closeWfWizard()">取消</button>
+                <button class="btn-primary" id="wf_btnWizardNext" onclick="wfWizardNext()">下一步</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== Workflow Export Modal ==================== -->
+<div class="modal-overlay" id="wfExportModal" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeWfExportModal()">
+    <div class="modal" style="width: 460px;" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>导出流水线运行数据</h3>
+            <button class="modal-close" onclick="closeWfExportModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="margin-bottom: 16px;">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">导出维度</label>
+                <div style="display: flex; gap: 16px;">
+                    <label style="cursor:pointer; display:flex; align-items:center; gap:4px;"><input type="radio" name="wfExportType" value="template" onchange="onWfExportTypeChange()" checked> 按工作流模版</label>
+                    <label style="cursor:pointer; display:flex; align-items:center; gap:4px;"><input type="radio" name="wfExportType" value="workflow" onchange="onWfExportTypeChange()"> 按工作流实例</label>
+                </div>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">选择目标</label>
+                <select class="input" id="wf_exportTargetSelect" onchange="onWfExportTargetChange()"></select>
+            </div>
+            <div style="font-size: 13px; color: var(--gray-600); background: var(--gray-100); padding: 12px; border-radius: 6px; line-height: 1.6;">
+                即将导出基于所选配置在流水线中执行过的<strong>全流程数据表</strong>。<br>
+                预计包含：<span id="wf_exportDataCount" style="color: var(--primary); font-weight: 600;">--</span> 条流转记录。
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeWfExportModal()">取消</button>
+            <button class="btn-primary" onclick="confirmWfExport()">确认导出</button>
+        </div>
+    </div>
+</div>
+
+<script src="workflow_configs.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
