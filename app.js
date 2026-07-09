@@ -771,8 +771,7 @@ const pages = {
 
                     <div style="color: #5b6b8a; font-size: 15px; font-weight: 700; margin: 18px 0 8px;">生成配置</div>
                     <div style="padding: 16px 18px; border: 1px solid var(--gray-200); border-radius: 12px; background: #fff;">
-                      <div style="display: grid; grid-template-columns: minmax(144px, 0.6fr) minmax(0, 1.8fr); gap: 16px; min-height: 172px; font-size: 13px;">
-                        <div style="display: grid; grid-template-rows: repeat(4, 1fr); gap: 10px; min-width: 0;">
+                      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; font-size: 13px;">
                           <div data-tooltip="提示词获取" onmouseenter="showNodeSpecTooltip(event, this.dataset.tooltip)" onmousemove="moveNodeSpecTooltip(event)" onmouseleave="hideNodeSpecTooltip()" style="min-width: 0; padding: 8px 10px; border: 1px solid var(--gray-200); border-radius: 6px; background: var(--gray-50);">
                             <div style="color: var(--gray-500); margin-bottom: 4px;">配置名称</div>
                             <div style="max-width: 100%; color: var(--gray-900); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">提示词获取</div>
@@ -789,13 +788,6 @@ const pages = {
                             <div style="color: var(--gray-500); margin-bottom: 4px;">生成方式</div>
                             <div style="max-width: 100%; color: var(--primary); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">inspo</div>
                           </div>
-                        </div>
-                        <div data-tooltip="Style: Chinese sad ballad, elderly sink, world-weary melancholic. Vocal: Male, age 60-70, baritone, Voice is weathered, dry, and husky with natural rasp and crackle, Timbre is dark, loose, and slightly breathy, lacking youthful power but rich in emotional depth. Instruments: piano, soft bass, light drums, clean electric guitar, strings pad. Mix: warm plate reverb" onmouseenter="showNodeSpecTooltip(event, this.dataset.tooltip)" onmousemove="moveNodeSpecTooltip(event)" onmouseleave="hideNodeSpecTooltip()" style="min-width: 0; height: 172px; padding: 10px 12px; border: 1px solid var(--gray-200); border-radius: 6px; background: var(--gray-50); display: flex; flex-direction: column;">
-                          <div style="color: var(--gray-500); margin-bottom: 6px; flex-shrink: 0;">提示词（style 内容）</div>
-                          <div style="color: var(--gray-900); font-weight: 500; line-height: 1.55; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical;">
-                            Style: Chinese sad ballad, elderly sink, world-weary melancholic. Vocal: Male, age 60-70, baritone, Voice is weathered, dry, and husky with natural rasp and crackle, Timbre is dark, loose, and slightly breathy, lacking youthful power but rich in emotional depth. Instruments: piano, soft bass, light drums, clean electric guitar, strings pad. Mix: warm plate reverb
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
