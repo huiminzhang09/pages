@@ -1038,7 +1038,7 @@ const pages = {
                         <table class="data-table" id="refLibTable">
                             <thead>
                                 <tr>
-                                    <th style="width: 160px;">歌单链接</th>
+                                    <th style="width: 160px;">歌单 ID</th>
                                     <th style="width: 90px;">对标ID</th>
                                     <th style="width: 180px;">歌名</th>
                                     <th style="width: 140px;">歌手</th>
@@ -1636,13 +1636,13 @@ const pages = {
                     <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
                 </div>
             </div>
-            <div class="action-bar"><button class="btn-primary" onclick="openModal('modal-add-customer')"><i class="fas fa-plus"></i> 新增客户</button></div>
+            <div class="action-bar"><button class="btn-primary" onclick="openCustomerDrawer()"><i class="fas fa-plus"></i> 新增客户</button></div>
             <div class="table-container">
                 <table class="data-table">
                     <thead><tr><th>客户编号</th><th>客户名称</th><th>公司名称</th><th>客户类型</th><th>制作需求</th><th>客户业务线</th><th>推进状态</th><th>优先级</th><th>对接人</th><th>进展备注</th><th>状态</th><th>创建时间</th><th>创建人</th><th>操作</th></tr></thead>
                     <tbody>
-                        <tr><td>OP-001</td><td>番茄畅听</td><td>番茄畅听</td><td><span class="badge badge-blue">平台方</span></td><td>DJ、伴奏</td><td>AI音乐线</td><td>长期合作中</td><td><span class="badge badge-red">P0</span></td><td>王武</td><td>备注示例</td><td><span class="badge badge-green">启用</span></td><td>2026-04-12</td><td>张三</td><td><button class="btn-text" onclick="openModal('modal-add-customer')">编辑</button><button class="btn-text danger" onclick="openConfirmDialog('确定要禁用该客户吗？')">禁用</button></td></tr>
-                        <tr><td>MP-001</td><td>客户六</td><td>公司</td><td><span class="badge badge-gray">版权方</span></td><td>抢热度、翻译</td><td>仅需要配合/接收</td><td>合同签署</td><td><span class="badge badge-red">P0</span></td><td>孙尚香</td><td>备注示例</td><td><span class="badge badge-red">禁用</span></td><td>2026-04-15</td><td>李四</td><td><button class="btn-text" onclick="openModal('modal-add-customer')">编辑</button><button class="btn-text success" onclick="openConfirmDialog('确定要启用该客户吗？')">启用</button></td></tr>
+                        <tr><td>OP-001</td><td>番茄畅听</td><td>番茄畅听</td><td><span class="badge badge-blue">平台方</span></td><td>DJ、伴奏</td><td>AI音乐线</td><td>长期合作中</td><td><span class="badge badge-red">P0</span></td><td>王武</td><td>备注示例</td><td><span class="badge badge-green">启用</span></td><td>2026-04-12</td><td>张三</td><td><button class="btn-text" onclick="openCustomerDrawer()">编辑</button><button class="btn-text danger" onclick="openConfirmDialog('确定要禁用该客户吗？')">禁用</button></td></tr>
+                        <tr><td>MP-001</td><td>客户六</td><td>公司</td><td><span class="badge badge-gray">版权方</span></td><td>抢热度、翻译</td><td>仅需要配合/接收</td><td>合同签署</td><td><span class="badge badge-red">P0</span></td><td>孙尚香</td><td>备注示例</td><td><span class="badge badge-red">禁用</span></td><td>2026-04-15</td><td>李四</td><td><button class="btn-text" onclick="openCustomerDrawer()">编辑</button><button class="btn-text success" onclick="openConfirmDialog('确定要启用该客户吗？')">启用</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2243,6 +2243,148 @@ function openModal(id) {
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.style.display = 'none';
+}
+
+const existingCustomerNames = ['番茄畅听', '客户六'];
+let customerCodeCounters = { OP: 1, MP: 1 };
+
+function openCustomerDrawer() {
+    const overlay = document.getElementById('modal-add-customer');
+    const drawer = document.getElementById('customerDrawer');
+    if (!overlay || !drawer) return;
+
+    resetCustomerDrawerForm();
+    overlay.style.display = 'flex';
+    setTimeout(() => drawer.classList.add('active'), 10);
+}
+
+function closeCustomerDrawer() {
+    const overlay = document.getElementById('modal-add-customer');
+    const drawer = document.getElementById('customerDrawer');
+    if (!overlay || !drawer) return;
+
+    drawer.classList.remove('active');
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 220);
+}
+
+function resetCustomerDrawerForm() {
+    const fields = [
+        'customerNameInput',
+        'customerCompanyInput',
+        'customerTypeSelect',
+        'customerBusinessLineInput',
+        'customerOtherDemandInput',
+        'customerProgressRemark',
+        'customerCommunicationRecord'
+    ];
+    fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+
+    document.querySelectorAll('#customerDemandGroup input[type="checkbox"]').forEach(box => {
+        box.checked = false;
+    });
+
+    const otherWrap = document.getElementById('customerOtherDemandWrap');
+    if (otherWrap) otherWrap.style.display = 'none';
+
+    const contact = document.getElementById('add-customer-contact');
+    if (contact) contact.value = '张三';
+
+    const status = document.getElementById('customerProgressStatus');
+    if (status) status.value = '初步接触';
+
+    const priority = document.getElementById('customerPrioritySelect');
+    if (priority) priority.value = 'P2';
+
+    const hint = document.getElementById('customerNameHint');
+    if (hint) {
+        hint.textContent = '';
+        hint.className = 'field-hint';
+    }
+}
+
+function validateCustomerName() {
+    const input = document.getElementById('customerNameInput');
+    const hint = document.getElementById('customerNameHint');
+    if (!input || !hint) return true;
+
+    const name = input.value.trim();
+    hint.className = 'field-hint';
+    if (!name) {
+        hint.textContent = '';
+        return false;
+    }
+
+    if (existingCustomerNames.includes(name)) {
+        hint.textContent = '该客户名称已存在，请确认后再录入';
+        hint.classList.add('error');
+        return false;
+    }
+
+    hint.textContent = '客户名称可用';
+    hint.classList.add('success');
+    return true;
+}
+
+function toggleCustomerOtherDemand(checkbox) {
+    const wrap = document.getElementById('customerOtherDemandWrap');
+    if (wrap) wrap.style.display = checkbox.checked ? 'block' : 'none';
+}
+
+function handleCustomerProgressChange() {
+    const status = document.getElementById('customerProgressStatus')?.value;
+    const priority = document.getElementById('customerPrioritySelect');
+    if (status === '长期合作中' && priority) {
+        priority.value = 'P1';
+    }
+}
+
+function submitCustomerDrawer() {
+    const requiredFields = [
+        ['customerNameInput', '请填写客户名称'],
+        ['customerCompanyInput', '请填写公司名称'],
+        ['customerTypeSelect', '请选择客户类型'],
+        ['customerBusinessLineInput', '请填写客户业务线'],
+        ['add-customer-contact', '请选择对接人'],
+        ['customerProgressStatus', '请选择推进状态'],
+        ['customerPrioritySelect', '请选择推进优先级']
+    ];
+
+    for (const [id, message] of requiredFields) {
+        const el = document.getElementById(id);
+        if (!el || !String(el.value || '').trim()) {
+            alert(message);
+            if (el) el.focus();
+            return;
+        }
+    }
+
+    if (!validateCustomerName()) {
+        document.getElementById('customerNameInput')?.focus();
+        return;
+    }
+
+    const demands = Array.from(document.querySelectorAll('#customerDemandGroup input[type="checkbox"]:checked')).map(item => item.value);
+    if (demands.length === 0) {
+        alert('请选择制作需求');
+        return;
+    }
+
+    if (demands.includes('其他') && !document.getElementById('customerOtherDemandInput')?.value.trim()) {
+        alert('请补充其他制作需求');
+        document.getElementById('customerOtherDemandInput')?.focus();
+        return;
+    }
+
+    const type = document.getElementById('customerTypeSelect').value;
+    const prefix = type === '平台方' ? 'OP' : 'MP';
+    customerCodeCounters[prefix] = (customerCodeCounters[prefix] || 0) + 1;
+    existingCustomerNames.push(document.getElementById('customerNameInput').value.trim());
+    closeCustomerDrawer();
 }
 
 function openConfirmDialog(title = '确认操作', message = '确定要执行此操作吗？', btnText = '确认', isDanger = false, callback = null) {
@@ -3592,6 +3734,11 @@ function normalizeRefSongStatus(status) {
     return status === '使用中' ? '已使用' : status;
 }
 
+function normalizePlaylistId(value) {
+    const match = String(value || '').match(/\d+/g);
+    return match ? match.join('') : '';
+}
+
 function getRefSongStyleOptions() {
     return [...new Set(refSongsData.flatMap(item => item.styles || []))].filter(Boolean);
 }
@@ -3652,7 +3799,7 @@ function renderRefSongsTable() {
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td style="color: var(--gray-600); font-family: monospace;">${item.playlistId}</td>
+            <td style="color: var(--gray-600); font-family: monospace;">${normalizePlaylistId(item.playlistId)}</td>
             <td style="color: var(--gray-600);">${item.id}</td>
             <td style="font-weight: 500;">《${item.name}》</td>
             <td style="color: var(--gray-700);">${item.singer}</td>
@@ -3850,7 +3997,7 @@ function updateImportModalSummary() {
 }
 
 function confirmImportPlaylist() {
-    const playlistId = document.getElementById('inputPlaylistUrl').value || '7713574197';
+    const playlistId = normalizePlaylistId(document.getElementById('inputPlaylistUrl').value || '7713574197');
     const tagStr = document.getElementById('inputImportTags').value || '';
     const styles = tagStr.split(',').map(s => s.trim()).filter(Boolean);
 

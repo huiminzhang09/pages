@@ -220,41 +220,121 @@
     </div>
 </div>
 
-<!-- Add Customer Modal -->
-<div class="modal-overlay" id="modal-add-customer" style="display:none">
-    <div class="modal modal-lg">
-        <div class="modal-header"><h3>新增客户</h3><button class="modal-close" onclick="closeModal('modal-add-customer')">&times;</button></div>
-        <div class="modal-body">
-            <div class="form-row">
-                <div class="form-group"><label>客户编号</label><input type="text" value="MP-005" disabled class="input-disabled"></div>
-                <div class="form-group"><label>客户名称 *</label><input type="text" placeholder="请输入客户名称"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>公司名称</label><input type="text" placeholder="请输入公司名称"></div>
-                <div class="form-group"><label>客户类型 *</label><select><option>平台方</option><option>版权方</option><option>制作方</option><option>艺人</option></select></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>制作需求</label><input type="text" placeholder="例：DJ, 伴奏"></div>
-                <div class="form-group"><label>客户业务线</label><input type="text" placeholder="例：音乐, 乐器"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>推进状态</label><select><option>长期合作中</option><option>合同签署</option><option>确定意向</option><option>制作进行</option><option>内部未推</option></select></div>
-                <div class="form-group"><label>优先级</label><select><option>P0</option><option>P1</option><option>P2</option></select></div>
-            </div>
-            <div class="form-group">
-                <label>对接人</label>
-                <select id="add-customer-contact">
-                    <option value="">请选择对接人</option>
-                    <option value="张三">张三</option>
-                    <option value="李四">李四</option>
-                </select>
-            </div>
-            <div class="form-group"><label>沟通记录</label><textarea rows="2" placeholder="请输入沟通记录"></textarea></div>
-            <div class="form-group"><label>进度备注</label><textarea rows="2" placeholder="请输入备注"></textarea></div>
+<!-- Add Customer Drawer -->
+<div class="modal-overlay" id="modal-add-customer" style="display:none" onclick="closeCustomerDrawer()">
+    <div class="modal modal-right node-type-drawer customer-drawer" id="customerDrawer" onclick="event.stopPropagation()">
+        <div class="node-type-drawer-header">
+            <h3>新增客户</h3>
+            <button class="modal-close" onclick="closeCustomerDrawer()">&times;</button>
         </div>
-        <div class="modal-footer">
-            <button class="btn-default" onclick="closeModal('modal-add-customer')">取消</button>
-            <button class="btn-primary" onclick="closeModal('modal-add-customer')">确认提交</button>
+        <div class="node-type-drawer-body">
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">客户主体信息</div>
+                <div class="customer-form-grid">
+                    <div class="form-group">
+                        <label>客户名称 <span class="required">*</span></label>
+                        <input type="text" id="customerNameInput" maxlength="50" placeholder="请输入客户名称" oninput="validateCustomerName()">
+                        <div class="field-hint" id="customerNameHint"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>公司名称 <span class="required">*</span></label>
+                        <input type="text" id="customerCompanyInput" maxlength="50" placeholder="请输入公司名称">
+                    </div>
+                    <div class="form-group">
+                        <label>客户类型 <span class="required">*</span></label>
+                        <select id="customerTypeSelect">
+                            <option value="">请选择客户类型</option>
+                            <option value="平台方">平台方</option>
+                            <option value="渠道方">渠道方</option>
+                            <option value="版权方">版权方</option>
+                            <option value="制作方">制作方</option>
+                            <option value="艺人">艺人</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">客户业务属性</div>
+                <div class="form-group">
+                    <label>客户业务线 <span class="required">*</span></label>
+                    <input type="text" id="customerBusinessLineInput" maxlength="200" placeholder="例如：短视频音乐授权、直播背景音乐">
+                </div>
+                <div class="form-group">
+                    <label>制作需求 <span class="required">*</span></label>
+                    <div class="customer-checkbox-grid" id="customerDemandGroup">
+                        <label><input type="checkbox" value="DJ"> DJ</label>
+                        <label><input type="checkbox" value="伴奏"> 伴奏</label>
+                        <label><input type="checkbox" value="抢热度"> 抢热度</label>
+                        <label><input type="checkbox" value="翻译"> 翻译</label>
+                        <label><input type="checkbox" value="人声"> 人声</label>
+                        <label><input type="checkbox" value="分发端口"> 分发端口</label>
+                        <label><input type="checkbox" value="销售渠道"> 销售渠道</label>
+                        <label><input type="checkbox" value="混音"> 混音</label>
+                        <label><input type="checkbox" value="全案"> 全案</label>
+                        <label><input type="checkbox" value="其他" onchange="toggleCustomerOtherDemand(this)"> 其他</label>
+                    </div>
+                </div>
+                <div class="form-group" id="customerOtherDemandWrap" style="display:none;">
+                    <label>其他制作需求</label>
+                    <input type="text" id="customerOtherDemandInput" maxlength="100" placeholder="请补充说明其他制作需求">
+                </div>
+            </div>
+
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">客户跟进管理</div>
+                <div class="customer-form-grid">
+                    <div class="form-group">
+                        <label>对接人 <span class="required">*</span></label>
+                        <select id="add-customer-contact">
+                            <option value="">请选择对接人</option>
+                            <option value="张三">张三</option>
+                            <option value="李四">李四</option>
+                            <option value="王武">王武</option>
+                            <option value="孙尚香">孙尚香</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>推进状态 <span class="required">*</span></label>
+                        <select id="customerProgressStatus" onchange="handleCustomerProgressChange()">
+                            <option value="商务推进">商务推进</option>
+                            <option value="合同签署">合同签署</option>
+                            <option value="确定意向">确定意向</option>
+                            <option value="持续合作">持续合作</option>
+                            <option value="初步接触" selected>初步接触</option>
+                            <option value="制作进行">制作进行</option>
+                            <option value="内部决策">内部决策</option>
+                            <option value="前置合作待后置推进">前置合作待后置推进</option>
+                            <option value="长期合作中">长期合作中</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>推进优先级 <span class="required">*</span></label>
+                        <select id="customerPrioritySelect">
+                            <option value="P0">P0</option>
+                            <option value="P1">P1</option>
+                            <option value="P2" selected>P2</option>
+                            <option value="P3">P3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="node-type-form-card">
+                <div class="node-type-form-section-title">补充信息</div>
+                <div class="form-group">
+                    <label>进展备注</label>
+                    <textarea id="customerProgressRemark" maxlength="200" rows="3" placeholder="例如：已发送合作方案，待客户反馈"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>沟通记录</label>
+                    <textarea id="customerCommunicationRecord" rows="3" placeholder="可粘贴企微 / 飞书 / 会议纪要链接"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="node-type-drawer-footer">
+            <button class="btn-default" onclick="closeCustomerDrawer()">取消</button>
+            <button class="btn-primary" onclick="submitCustomerDrawer()">确认提交</button>
         </div>
     </div>
 </div>
