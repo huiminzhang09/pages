@@ -385,10 +385,6 @@ const pages = {
                       <select id="compPromptSelect" style="font-size: 14px; padding: 10px; height: auto;"
                         onchange="handleCompositionPromptChange(this.value)">
                         <option value="">-- 请选择跑曲提示词 --</option>
-                        <option value="prompt">[Prompt] 风格, 歌手-性别 </option>
-                        <option value="inspo">[Inspo] acoustic guitar, indie folk, warm</option>
-                        <option value="cover">[Cover] upbeat edm, male vocal, energetic</option>
-                        <option value="sample">[Sample] lo-fi hip hop, chill beats, relax</option>
                       </select>
                     </div>
 
@@ -2205,6 +2201,9 @@ function navigateTo(pageKey, navEl = null) {
         if (pageKey === 'song-review-page') {
             setTimeout(initSongReviewCoverPanel, 50);
         }
+        if (pageKey === 'manual-composition-page') {
+            setTimeout(initCompositionPromptSelect, 50);
+        }
         if (pageKey === 'singer-library-page') {
             setTimeout(() => {
                 renderSingersTable();
@@ -2899,6 +2898,32 @@ const compositionBusinessInfoMap = {
         ['提示词（style 内容）', 'lo-fi hip hop, chill beats, relaxed sample-driven groove']
     ]
 };
+
+function getCompositionBusinessInfoValue(type, label, fallback = '') {
+    const rows = compositionBusinessInfoMap[type] || [];
+    const row = rows.find(([rowLabel]) => rowLabel === label);
+    return row ? row[1] : fallback;
+}
+
+function getCompositionPromptOptionLabel(type) {
+    const configName = '提示词获取';
+    const workflow = getCompositionBusinessInfoValue(type, '生成方式', type);
+    const style = getCompositionBusinessInfoValue(type, '风格', '-');
+    const singer = getCompositionBusinessInfoValue(type, '歌手', '-');
+    return `【${configName}】-【${workflow}】-${style}-${singer}`;
+}
+
+function initCompositionPromptSelect() {
+    const select = document.getElementById('compPromptSelect');
+    if (!select) return;
+
+    const currentValue = select.value;
+    const optionTypes = ['prompt', 'inspo', 'cover', 'sample'];
+    select.innerHTML = '<option value="">-- 请选择跑曲提示词 --</option>' + optionTypes
+        .map(type => `<option value="${type}">${getCompositionPromptOptionLabel(type)}</option>`)
+        .join('');
+    select.value = currentValue;
+}
 
 function renderCompositionBusinessInfo(value) {
     const card = document.getElementById('compBusinessInfoCard');
@@ -5179,7 +5204,7 @@ function openNodeConfigDrawer(mode, id = null) {
                     <label>工作流类型</label>
                     <input type="text" class="input dynamic-config-val" data-key="workflow_type" placeholder="填写工作流类型...">
                 </div>`;
-    const basicModelFieldHtml = (isPromptConfigTab || isAudioConfigTab)
+    const basicModelFieldHtml = (isLyricConfigTab || isPromptConfigTab || isAudioConfigTab)
         ? `<div class="node-type-field">
                     <label>模型</label>
                     <input type="text" class="input" id="inputNodeConfig_model" placeholder="填写模型...">
@@ -5364,7 +5389,7 @@ function openNodeConfigDrawer(mode, id = null) {
         document.getElementById('inputNodeConfig_style').value = '';
         document.getElementById('inputNodeConfig_creator').value = getCurrentLoginUserName();
         const basicModelInput = document.getElementById('inputNodeConfig_model');
-        if (basicModelInput) basicModelInput.value = '5.5';
+        if (basicModelInput) basicModelInput.value = isLyricConfigTab ? 'DeepSeek' : '5.5';
         document.getElementById('inputNodeConfig_createTime').value = formatDateTimeToSecond();
         document.getElementById('inputNodeConfig_remark').value = '';
         const versionInput = dynamicArea.querySelector('[data-key="version"]');
@@ -5386,7 +5411,7 @@ function openNodeConfigDrawer(mode, id = null) {
             document.getElementById('inputNodeConfig_style').value = rowData.style || '';
             document.getElementById('inputNodeConfig_creator').value = rowData.creator;
             const basicModelInput = document.getElementById('inputNodeConfig_model');
-            if (basicModelInput) basicModelInput.value = rowData.model || '5.5';
+            if (basicModelInput) basicModelInput.value = rowData.model || (isLyricConfigTab ? 'DeepSeek' : '5.5');
             document.getElementById('inputNodeConfig_createTime').value = rowData.createTime;
             document.getElementById('inputNodeConfig_remark').value = rowData.remark || '';
             
