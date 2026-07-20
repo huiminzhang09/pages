@@ -1554,9 +1554,9 @@ const pages = {
             <div class="filter-bar">
                 <div class="filter-row">
                     <div class="filter-item"><label>客户名称</label><select><option>全部</option><option>客户A</option><option>客户B</option></select></div>
-                    <div class="filter-item"><label>订单性质</label><select><option>全部</option><option>买断</option><option>分成</option></select></div>
-                    <div class="filter-item"><label>生产周期</label><select><option>全部</option><option>长期</option><option>批次</option></select></div>
-                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>进行中</option><option>已完成</option></select></div>
+                    <div class="filter-item"><label>订单性质</label><select><option>全部</option><option>买断</option><option>分成</option><option>独家</option><option>分成-独家</option><option>非独家</option><option>共同开发</option><option>仅需要配合/接收</option><option>申请提取</option></select></div>
+                    <div class="filter-item"><label>生产周期</label><select><option>全部</option><option>长期</option><option>批次</option><option>单次</option></select></div>
+                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待启动</option><option>生产中</option><option>部分交付</option><option>已完成</option></select></div>
                     <div class="filter-item" style="min-width: 320px;">
                         <label>创建时间</label>
                         <div class="date-range-picker">
@@ -1572,15 +1572,16 @@ const pages = {
                 </div>
             </div>
             <div class="action-bar">
-                <button class="btn-primary" onclick="openModal('modal-add-order')"><i class="fas fa-plus"></i> 新增订单</button>
+                <button class="btn-primary" onclick="openOrderModal()"><i class="fas fa-plus"></i> 新增订单</button>
             </div>
             <div class="table-container">
                 <table class="data-table">
-                    <thead><tr><th>订单编号</th><th>订单名称</th><th>客户名称</th><th>生产类型</th><th>订单性质</th><th>生产周期</th><th>项目批次</th><th>生产进度</th><th>创建时间</th><th>版权生效时间</th><th>创建人</th><th>备注</th><th>操作</th></tr></thead>
+                    <thead><tr><th>订单编号</th><th>订单名称</th><th>客户名称</th><th>生产类型</th><th>订单性质</th><th>生产周期</th><th>批次数量</th><th>需求数量</th><th>交付数量</th><th>生产进度</th><th>创建时间</th><th>创建人</th><th>备注</th><th>操作</th></tr></thead>
                     <tbody>
-                        <tr><td>DJ-20260418-001</td><td>需求管理系统开发</td><td>客户A</td><td>全案、DJ</td><td>共同开发</td><td>长期</td><td>批次名称</td><td><span class="badge badge-blue">持续交付</span></td><td>2026-04-12</td><td>-</td><td>张三</td><td>长期合作订单</td><td><button class="btn-text" onclick="openModal('modal-add-order')">编辑</button><button class="btn-text" onclick="navigateTo('add-batch-page')">新增批次</button><button class="btn-text" onclick="navigateTo('order-detail-page')">详情</button></td></tr>
-                        <tr><td>YQ-20260418-002</td><td>用户权限模块优化</td><td>客户C</td><td>Beat</td><td>仅需要配合/接收</td><td>长期</td><td>名称</td><td><span class="badge badge-gray">待启动</span></td><td>2026-04-15</td><td>-</td><td>李四</td><td>-</td><td><button class="btn-text" onclick="openModal('modal-add-order')">编辑</button><button class="btn-text" onclick="navigateTo('add-batch-page')">新增批次</button></td></tr>
-                        <tr><td>YQ-20260418-003</td><td>数据报表功能</td><td>客户D</td><td>Hit</td><td>申请提取</td><td>批次</td><td>名称</td><td><span class="badge badge-green">已完成</span></td><td>2026-04-10</td><td>2026-04-10 至 2026-04-18</td><td>王五</td><td>重点批次交付</td><td><button class="btn-text" onclick="openModal('modal-add-order')">编辑</button><button class="btn-text" onclick="navigateTo('add-batch-page')">新增批次</button></td></tr>
+                        <tr data-reference-files="需求说明.pdf|demo_reference.mp3"><td>DJ202604180001</td><td>需求管理系统开发</td><td>客户A</td><td>全案、DJ</td><td>共同开发</td><td>长期</td><td>3</td><td>44</td><td>30</td><td><span class="badge badge-blue">部分交付</span></td><td>2026-04-12 10:18:32</td><td>张三</td><td>长期合作订单</td><td><button class="btn-text" onclick="openOrderModalFromRow(this)">编辑</button><button class="btn-text" onclick="openAddBatchDrawer(this)">新增批次</button><button class="btn-text" onclick="openModal('modal-log')">操作日志</button></td></tr>
+                        <tr data-reference-files=""><td>YQ202604180002</td><td>用户权限模块优化</td><td>客户C</td><td>Beat</td><td>仅需要配合/接收</td><td>长期</td><td>0</td><td>0</td><td>0</td><td><span class="badge badge-gray">待启动</span></td><td>2026-04-15 14:22:09</td><td>李四</td><td>-</td><td><button class="btn-text" onclick="openOrderModalFromRow(this)">编辑</button><button class="btn-text" onclick="openAddBatchDrawer(this)">新增批次</button><button class="btn-text" onclick="openModal('modal-log')">操作日志</button></td></tr>
+                        <tr data-reference-files="歌词参考.txt|原曲参考.wav|授权材料.docx"><td>YQ202604180003</td><td>数据报表功能</td><td>客户D</td><td>Hit</td><td>申请提取</td><td>批次</td><td>2</td><td>120</td><td>120</td><td><span class="badge badge-green">已完成</span></td><td>2026-04-10 09:35:47</td><td>王五</td><td>重点批次交付</td><td><button class="btn-text" onclick="openOrderModalFromRow(this)">编辑</button><button class="btn-text" onclick="openAddBatchDrawer(this)">新增批次</button><button class="btn-text" onclick="openModal('modal-log')">操作日志</button></td></tr>
+                        <tr data-reference-files=""><td>YQ202604180004</td><td>数据中台联调</td><td>客户B</td><td>全案</td><td>分成</td><td>单次</td><td>1</td><td>20</td><td>0</td><td><span class="badge badge-orange">生产中</span></td><td>2026-04-18 16:05:21</td><td>赵六</td><td>新增测试订单</td><td><button class="btn-text" onclick="openOrderModalFromRow(this)">编辑</button><button class="btn-text" onclick="openAddBatchDrawer(this)">新增批次</button><button class="btn-text" onclick="openModal('modal-log')">操作日志</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1600,22 +1601,30 @@ const pages = {
             <div class="filter-bar">
                 <div class="filter-row">
                     <div class="filter-item"><label>批次编号</label><input type="text" placeholder="搜索批次编号"></div>
+                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待生产</option><option>生产中</option><option>待交付</option><option>部分交付</option><option>已交付</option></select></div>
                     <div class="filter-item"><label>订单名称</label><select><option>全部</option></select></div>
                     <div class="filter-item"><label>工作流</label><select><option>全部</option></select></div>
                     <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
                 </div>
             </div>
             <div class="action-bar">
-                <button class="btn-primary" onclick="navigateTo('add-batch-page')"><i class="fas fa-plus"></i> 新增批次</button>
+                <button class="btn-primary" onclick="openAddBatchDrawer()"><i class="fas fa-plus"></i> 新增批次</button>
                 <button class="btn-default"><i class="fas fa-download"></i> 下载</button>
+            </div>
+            <div class="batch-summary-bar">
+                <span class="batch-summary-dot"></span>
+                <span>共<strong>3</strong>个批次</span>
+                <span>需求总数量<strong>230</strong>首</span>
+                <span>生产完成<strong>185</strong>首</span>
+                <span>领用数量<strong>0</strong>首</span>
             </div>
             <div class="table-container">
                 <table class="data-table">
-                    <thead><tr><th>订单名称</th><th>批次名称</th><th>批次编号</th><th>生产数量</th><th>生产完成数量</th><th>生产进度</th><th>生产类型</th><th>制作方式</th><th>工作流</th><th>预计交付周期</th><th>创建时间</th><th>操作</th></tr></thead>
+                    <thead><tr><th>批次编号</th><th>批次名称</th><th>订单名称</th><th>需求数量</th><th>生产完成数量</th><th>生产进度</th><th>生产类型</th><th>制作方式</th><th>工作流</th><th>预计交付周期</th><th>创建时间</th><th>操作</th></tr></thead>
                     <tbody>
-                        <tr><td>4 月 500 首草原风</td><td>需求管理系统开发</td><td>PC-20260420-0001</td><td>100</td><td>80</td><td><span class="badge badge-gray">需求确认</span></td><td>全案</td><td>全案</td><td>工作流1</td><td>23</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text" onclick="navigateTo('add-batch-page')">编辑</button></td></tr>
-                        <tr><td>30 首草原风</td><td>需求管理系统开发</td><td>PC-20260421-0002</td><td>50</td><td>25</td><td><span class="badge badge-orange">生产中</span></td><td>Hit</td><td>Hit</td><td>工作流2</td><td>44</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text" onclick="navigateTo('add-batch-page')">编辑</button></td></tr>
-                        <tr><td>20 首 DJ</td><td>用户权限模块优化</td><td>PC-20260422-0003</td><td>80</td><td>80</td><td><span class="badge badge-orange">待交付</span></td><td>DJ</td><td>DJ</td><td>工作流1</td><td>55</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text" onclick="navigateTo('add-batch-page')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
+                        <tr><td>PC202604200001</td><td>4 月 500 首草原风</td><td>需求管理系统开发</td><td>100</td><td>80</td><td><span class="badge badge-gray">需求确认</span></td><td>全案</td><td>全案</td><td>工作流1</td><td>23</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer()">编辑</button></td></tr>
+                        <tr><td>PC202604210002</td><td>30 首草原风</td><td>需求管理系统开发</td><td>50</td><td>25</td><td><span class="badge badge-orange">生产中</span></td><td>Hit</td><td>Hit</td><td>工作流2</td><td>44</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer()">编辑</button></td></tr>
+                        <tr><td>PC202604220003</td><td>20 首 DJ</td><td>用户权限模块优化</td><td>80</td><td>80</td><td><span class="badge badge-orange">待交付</span></td><td>DJ</td><td>DJ</td><td>工作流1</td><td>55</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1672,46 +1681,79 @@ const pages = {
         content: `
             <div class="detail-header">
                 <div class="detail-back" onclick="navigateTo('order-page', document.querySelector('[data-page=order-page]'))"><i class="fas fa-arrow-left"></i> 返回</div>
-                <button class="btn-primary" onclick="openModal('modal-log')">操作日志</button>
             </div>
             <div class="info-card">
                 <h4>订单信息</h4>
-                <div class="info-grid">
-                    <div class="info-item"><span class="info-label">订单名称</span><span class="info-value">25 年 4 月 300首</span></div>
-                    <div class="info-item"><span class="info-label">订单编号</span><span class="info-value">PC-20260422-5687</span></div>
-                    <div class="info-item"><span class="info-label">客户名称</span><span class="info-value">番茄畅听</span></div>
-                    <div class="info-item"><span class="info-label">生产类型</span><span class="info-value">全案、DJ</span></div>
-                    <div class="info-item"><span class="info-label">生产进度</span><span class="info-value">持续交付</span></div>
-                    <div class="info-item"><span class="info-label">生产周期</span><span class="info-value">长期</span></div>
-                    <div class="info-item"><span class="info-label">生产数量</span><span class="info-value">44</span></div>
-                    <div class="info-item"><span class="info-label">交付数量</span><span class="info-value">30</span></div>
-                    <div class="info-item"><span class="info-label">订单性质</span><span class="info-value">买断</span></div>
-                    <div class="info-item"><span class="info-label">项目批次</span><span class="info-value">第一批次、第二批次...</span></div>
-                    <div class="info-item" style="grid-column: span 2"><span class="info-label">备注</span><span class="info-value">这是几个备注，可以很长哦</span></div>
-                </div>
-            </div>
-            <div class="info-card">
-                <h4>版权信息</h4>
-                <div class="info-grid">
-                    <div class="info-item"><span class="info-label">授权开始时间</span><span class="info-value">2026-04-01 <i class="fas fa-edit" style="color:var(--primary);cursor:pointer;font-size:12px;margin-left:4px"></i></span></div>
-                    <div class="info-item"><span class="info-label">授权结束时间</span><span class="info-value">2026-04-30 <i class="fas fa-edit" style="color:var(--primary);cursor:pointer;font-size:12px;margin-left:4px"></i></span></div>
-                    <div class="info-item"><span class="info-label">授权期限（天）</span><span class="info-value">30</span></div>
-                    <div class="info-item"><span class="info-label">上架平台</span><span class="info-value">番茄畅听 <i class="fas fa-edit" style="color:var(--primary);cursor:pointer;font-size:12px;margin-left:4px"></i></span></div>
-                    <div class="info-item"><span class="info-label">上架端口</span><span class="info-value">番茄端口 <i class="fas fa-edit" style="color:var(--primary);cursor:pointer;font-size:12px;margin-left:4px"></i></span></div>
+                <div class="info-grid order-detail-info-grid">
+                    <div class="info-item order-detail-info-item"><span class="info-label">订单名称：</span><span class="info-value">25 年 4 月 300首</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">订单编号：</span><span class="info-value">PC-20260422-5687</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">客户名称：</span><span class="info-value">番茄畅听</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">生产类型：</span><span class="info-value">全案、DJ</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">生产进度：</span><span class="info-value">部分交付</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">生产周期：</span><span class="info-value">长期</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">需求数量：</span><span class="info-value">44</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">交付数量：</span><span class="info-value">30</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">订单性质：</span><span class="info-value">买断</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">项目批次：</span><span class="info-value">第一批次、第二批次...</span></div>
+                    <div class="info-item order-detail-info-item order-detail-remark-item" data-tooltip="这是几个备注，可以很长哦。这里展示订单补充说明，最多按两行信息展示，超出内容鼠标划过后通过气泡展示完整内容，便于快速查看订单补充说明。"><span class="info-label">备注：</span><span class="info-value">这是几个备注，可以很长哦。这里展示订单补充说明，最多按两行信息展示，超出内容鼠标划过后通过气泡展示完整内容，便于快速查看订单补充说明。</span></div>
+                    <div class="info-item order-detail-info-item order-detail-info-item-full order-detail-reference-item">
+                        <span class="info-label">参考资料：</span>
+                        <span class="info-value order-detail-reference-list">
+                            <span class="order-detail-reference-file order-detail-reference-audio">
+                                <span class="order-detail-reference-file-head">
+                                    <span class="node-config-file-icon"><i class="fas fa-music"></i></span>
+                                    <span class="node-config-file-name">demo_reference.mp3</span>
+                                    <a class="btn-text order-detail-reference-download" href="https://www.w3schools.com/html/horse.mp3" download="demo_reference.mp3">下载</a>
+                                </span>
+                                <audio controls>
+                                    <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                                </audio>
+                            </span>
+                            <span class="order-detail-reference-file order-detail-reference-audio">
+                                <span class="order-detail-reference-file-head">
+                                    <span class="node-config-file-icon"><i class="fas fa-music"></i></span>
+                                    <span class="node-config-file-name">原曲参考.wav</span>
+                                    <a class="btn-text order-detail-reference-download" href="https://www.w3schools.com/html/horse.mp3" download="原曲参考.wav">下载</a>
+                                </span>
+                                <audio controls>
+                                    <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                                </audio>
+                            </span>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="info-card" style="margin-bottom: 0;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid var(--gray-200); padding-bottom:8px;">
-                    <h4 style="margin:0; border:none; padding:0;">歌曲清单 (共 300 首)</h4>
-                    <select style="padding:4px 8px; border:1px solid var(--gray-300); border-radius:4px;"><option>根据批次筛选</option><option>第一批次</option><option>第二批次</option></select>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid var(--gray-200); padding-bottom:8px; gap: 16px;">
+                    <h4 style="margin:0; border:none; padding:0;">歌曲清单</h4>
+                    <select id="orderSongBatchFilter" onchange="filterOrderSongListByBatch()" style="padding:4px 8px; border:1px solid var(--gray-300); border-radius:4px;">
+                        <option value="">全部批次</option>
+                        <option value="2月 300首">2月 300首</option>
+                        <option value="6月 300首">6月 300首</option>
+                        <option value="4月 300首">4月 300首</option>
+                    </select>
                 </div>
-                <div class="table-container" style="box-shadow: none; border: 1px solid var(--gray-200);">
+                <div style="display: flex; gap: 32px; border-bottom: 1px solid var(--gray-200); margin-bottom: 16px;">
+                    <div id="orderSongFlowTab" onclick="switchOrderSongTab('flow')" style="font-size: 16px; font-weight: 600; color: var(--primary); cursor: pointer; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: -1px;">制作</div>
+                    <div id="orderSongProductTab" onclick="switchOrderSongTab('product')" style="font-size: 16px; font-weight: 500; color: var(--gray-600); cursor: pointer; border-bottom: 2px solid transparent; padding-bottom: 10px; margin-bottom: -1px;">成品</div>
+                </div>
+                <div id="orderSongFlowTable" class="table-container order-song-table-panel" style="box-shadow: none; border: 1px solid var(--gray-200);">
                     <table class="data-table">
-                        <thead><tr><th>批次名称</th><th>歌曲原名</th><th>交付歌名</th><th>作词信息</th><th>作曲信息</th><th>制作状态</th><th>交付时间</th></tr></thead>
+                        <thead><tr><th>批次名称</th><th>流水ID</th><th>歌曲原名</th><th>交付歌名</th><th>当前节点</th><th>当前执行人</th><th>制作状态</th><th>交付时间</th></tr></thead>
                         <tbody>
-                            <tr><td>2月 300首</td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>执红烛轻扫眉笔...</td><td>文件</td><td><span class="badge badge-red">已中止</span></td><td>2026-02-23</td></tr>
-                            <tr><td>6月 300首</td><td>这一路</td><td>这一路</td><td>这是歌词...</td><td>这是文件</td><td><span class="badge badge-blue">进行中</span></td><td>-</td></tr>
-                            <tr><td>4月 300首</td><td>执念</td><td>执念</td><td>这是歌词...</td><td>这是文件</td><td><span class="badge badge-green">已完成</span></td><td>2026-02-23</td></tr>
+                            <tr data-batch="2月 300首"><td>2月 300首</td><td>LS-001</td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>作曲</td><td>张三</td><td><span class="badge badge-red">已中止</span></td><td>2026-02-23</td></tr>
+                            <tr data-batch="6月 300首"><td>6月 300首</td><td>LS-002</td><td>这一路</td><td>这一路</td><td>曲审核</td><td>李四</td><td><span class="badge badge-blue">进行中</span></td><td>-</td></tr>
+                            <tr data-batch="4月 300首"><td>4月 300首</td><td>LS-003</td><td>执念</td><td>执念</td><td>-</td><td>王五</td><td><span class="badge badge-green">已完成</span></td><td>2026-02-23</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="orderSongProductTable" class="table-container order-song-table-panel" style="display:none; box-shadow: none; border: 1px solid var(--gray-200);">
+                    <table class="data-table">
+                        <thead><tr><th>批次名称</th><th>成品编号</th><th>歌名</th><th>歌曲编号</th><th>成品音频</th><th>交付状态</th><th>创建人</th><th>创建时间</th></tr></thead>
+                        <tbody>
+                            <tr data-batch="2月 300首"><td>2月 300首</td><td>CP-001</td><td>泪似桃花瓣飘落溪</td><td>AIB-001</td><td>文件</td><td><span class="badge badge-gray">未交付</span></td><td>张三</td><td>2026-02-23</td></tr>
+                            <tr data-batch="6月 300首"><td>6月 300首</td><td>CP-002</td><td>这一路</td><td>AIB-002</td><td>文件</td><td><span class="badge badge-blue">交付中</span></td><td>李四</td><td>2026-06-12</td></tr>
+                            <tr data-batch="4月 300首"><td>4月 300首</td><td>CP-003</td><td>执念</td><td>AIB-003</td><td>文件</td><td><span class="badge badge-green">已交付</span></td><td>王五</td><td>2026-04-18</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1731,7 +1773,7 @@ const pages = {
                     <div class="form-group"><label>预计交付周期 (天) *</label><input type="number" placeholder="请输入天数"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group" style="flex: 0 0 32%;"><label>生产数量 *</label><input type="number" placeholder="请输入数量"></div>
+                    <div class="form-group" style="flex: 0 0 32%;"><label>需求数量 *</label><input type="number" placeholder="请输入数量"></div>
                 </div>
             </div>
             <div class="info-card">
@@ -1787,37 +1829,56 @@ const pages = {
                 <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">基础信息</h4>
                 <table class="data-table" style="margin-bottom: 24px; border: 1px solid var(--gray-200);">
                     <tbody>
-                        <tr><td style="background:var(--gray-100);width:10%;text-align:center;">批次名称</td><td style="width:15%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:10%;text-align:center;">批次编号</td><td style="width:15%">PC-20260422-5687</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产数量</td><td style="width:15%">44</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产类型</td><td style="width:15%">全案</td></tr>
+                        <tr><td style="background:var(--gray-100);width:10%;text-align:center;">批次名称</td><td style="width:15%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:10%;text-align:center;">批次编号</td><td style="width:15%">PC-20260422-5687</td><td style="background:var(--gray-100);width:10%;text-align:center;">需求数量</td><td style="width:15%">44</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产类型</td><td style="width:15%">全案</td></tr>
                         <tr><td style="background:var(--gray-100);text-align:center;">生产完成数量</td><td>40</td><td style="background:var(--gray-100);text-align:center;">制作方式</td><td>随意了</td><td style="background:var(--gray-100);text-align:center;">预计交付周期(天)</td><td>44</td><td style="background:var(--gray-100);text-align:center;">客户需求</td><td>客户需求</td></tr>
                         <tr><td style="background:var(--gray-100);text-align:center;">客户定制自动化</td><td>全自动作词流程</td><td style="background:var(--gray-100);text-align:center;">备注</td><td colspan="5">这里是备注有可能很重要哦</td></tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="filter-bar" style="margin-bottom: 24px;">
-                <div class="filter-row">
-                    <div class="filter-item"><label>歌曲ID</label><input type="text"></div>
-                    <div class="filter-item"><label>当前状态</label><select><option>全部</option></select></div>
-                    <div class="filter-item"><label>当前节点</label><select><option>全部</option></select></div>
-                    <div class="filter-item"><label>任务执行人</label><div class="input-with-icon" style="border:1px solid var(--gray-300); border-radius:6px; padding:2px 8px; margin-top:2px;"><i class="fas fa-search"></i><input type="text" placeholder="搜索执行人" style="font-size:14px; padding:4px;"></div></div>
-                    <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
+            <div class="info-card" style="margin-bottom: 0;">
+                <div style="display: flex; gap: 32px; border-bottom: 1px solid var(--gray-200); margin-bottom: 16px;">
+                    <div id="batchDetailMakeTab" onclick="switchBatchDetailTab('make')" style="font-size: 16px; font-weight: 600; color: var(--primary); cursor: pointer; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: -1px;">生产</div>
+                    <div id="batchDetailProductTab" onclick="switchBatchDetailTab('product')" style="font-size: 16px; font-weight: 500; color: var(--gray-600); cursor: pointer; border-bottom: 2px solid transparent; padding-bottom: 10px; margin-bottom: -1px;">领用</div>
                 </div>
-            </div>
-
-            <div class="action-bar">
-                <button class="btn-primary" onclick="openModal('modal-batch-edit-staff')">批量修改人员</button>
-            </div>
-            <div class="table-container">
-                <table class="data-table">
-                    <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水ID</th><th>原歌名</th><th>交付歌名</th><th>歌曲编号</th><th>状态</th><th>交付状态</th><th>节点</th><th>当前执行人</th><th>操作</th></tr></thead>
+                <div id="batchDetailMakePanel">
+                    <div class="filter-bar" style="margin-bottom: 24px;">
+                        <div class="filter-row">
+                            <div class="filter-item"><label>歌曲ID</label><input type="text"></div>
+                            <div class="filter-item"><label>当前状态</label><select><option>全部</option></select></div>
+                            <div class="filter-item"><label>当前节点</label><select><option>全部</option></select></div>
+                            <div class="filter-item"><label>任务执行人</label><div class="input-with-icon" style="border:1px solid var(--gray-300); border-radius:6px; padding:2px 8px; margin-top:2px;"><i class="fas fa-search"></i><input type="text" placeholder="搜索执行人" style="font-size:14px; padding:4px;"></div></div>
+                            <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
+                        </div>
+                    </div>
+                    <div class="action-bar">
+                        <button class="btn-primary" onclick="openModal('modal-batch-edit-staff')">批量修改人员</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                    <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水ID</th><th>原歌名</th><th>交付歌名</th><th>歌曲编号</th><th>状态</th><th>节点</th><th>当前执行人</th><th>操作</th></tr></thead>
                     <tbody>
-                        <tr><td><input type="checkbox"></td><td>LS-001</td><td>窗外</td><td>窗外</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td><span class="badge badge-gray">未交付</span></td><td>作词</td><td>张三</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('中止确认', '确定中止该流水？中止后当前及后续节点将停止流转。', '确认中止')">中止</button></td></tr>
-                        <tr><td><input type="checkbox"></td><td>LS-002</td><td>他不懂</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #F5222D; color:#F5222D; background:transparent;">已中止</span></td><td><span class="badge badge-gray">未交付</span></td><td>作曲</td><td>李四</td><td><button class="btn-text">详情</button><button class="btn-text danger" onclick="openConfirmDialog('恢复确认', '是否确认恢复当前流水？恢复后流程将继续推进，并重新纳入相关人员待办列表。', '确认恢复')">恢复</button></td></tr>
-                        <tr><td><input type="checkbox" checked></td><td>LS-003</td><td>这就是爱</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:#E6F9ED;">已交付</span></td><td>-</td><td>王五</td><td><button class="btn-text">详情</button><button class="btn-text danger" onclick="openConfirmDialog('版权打回确认', '确定要将该流水进行版权打回吗？打回后交付状态将变更为「交付打回」，需重新处理或制作。', '确认打回')">版权打回</button></td></tr>
-                        <tr><td><input type="checkbox"></td><td>LS-004</td><td>云中的angle</td><td>云中的angle</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td><span class="badge badge-gray">未交付</span></td><td>作曲</td><td>赵六</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('中止确认', '确定中止该流水？中止后当前及后续节点将停止流转。', '确认中止')">中止</button></td></tr>
-                        <tr><td><input type="checkbox" checked></td><td>LS-005</td><td>--</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td><span class="badge" style="border:1px solid #FA8C16; color:#FA8C16; background:#FFF7E6;">交付打回</span></td><td>-</td><td>王五</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-remake')">重新制作</button><button class="btn-text" onclick="openModal('modal-change-batch')">变更批次</button></td></tr>
+                        <tr><td><input type="checkbox"></td><td>LS-001</td><td>窗外</td><td>窗外</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td>作词</td><td>张三</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('中止确认', '确定中止该流水？中止后当前及后续节点将停止流转。', '确认中止')">中止</button></td></tr>
+                        <tr><td><input type="checkbox"></td><td>LS-002</td><td>他不懂</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #F5222D; color:#F5222D; background:transparent;">已中止</span></td><td>作曲</td><td>李四</td><td><button class="btn-text">详情</button><button class="btn-text danger" onclick="openConfirmDialog('恢复确认', '是否确认恢复当前流水？恢复后流程将继续推进，并重新纳入相关人员待办列表。', '确认恢复')">恢复</button></td></tr>
+                        <tr><td><input type="checkbox" checked></td><td>LS-003</td><td>这就是爱</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td>-</td><td>王五</td><td><button class="btn-text">详情</button><button class="btn-text danger" onclick="openConfirmDialog('版权打回确认', '确定要将该流水进行版权打回吗？打回后交付状态将变更为「交付打回」，需重新处理或制作。', '确认打回')">版权打回</button></td></tr>
+                        <tr><td><input type="checkbox"></td><td>LS-004</td><td>云中的angle</td><td>云中的angle</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td>作曲</td><td>赵六</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('中止确认', '确定中止该流水？中止后当前及后续节点将停止流转。', '确认中止')">中止</button></td></tr>
+                        <tr><td><input type="checkbox" checked></td><td>LS-005</td><td>--</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td>-</td><td>王五</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-remake')">重新制作</button><button class="btn-text" onclick="openModal('modal-change-batch')">变更批次</button></td></tr>
                     </tbody>
                 </table>
+            </div>
+                </div>
+                <div id="batchDetailProductPanel" style="display:none;">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead><tr><th>歌曲编号</th><th>新歌名</th><th>当前状态</th><th>歌词</th><th>作词</th><th>音频信息</th><th>作曲</th><th>歌手</th><th>制作时间</th></tr></thead>
+                            <tbody>
+                                <tr><td>AIB-20260717-001</td><td>窗外</td><td><span class="badge badge-green">已完成</span></td><td>这是歌词内容...</td><td>张三</td><td><button class="btn-text">试听</button><button class="btn-text">下载</button></td><td>李四</td><td>虚拟歌手 小A</td><td>2026-07-17 10:18:32</td></tr>
+                                <tr><td>AIB-20260717-002</td><td>他不懂</td><td><span class="badge badge-green">已完成</span></td><td>这是歌词内容...</td><td>李四</td><td><button class="btn-text">试听</button><button class="btn-text">下载</button></td><td>赵六</td><td>独立音乐人 B</td><td>2026-07-17 10:32:45</td></tr>
+                                <tr><td>AIB-20260717-003</td><td>这就是爱</td><td><span class="badge badge-green">已完成</span></td><td>这是歌词内容...</td><td>王五</td><td><button class="btn-text">试听</button><button class="btn-text">下载</button></td><td>李四</td><td>歌手 C</td><td>2026-07-17 11:05:09</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         `
     },
@@ -1831,7 +1892,7 @@ const pages = {
                 <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">基础信息</h4>
                 <table class="data-table" style="margin-bottom: 24px; border: 1px solid var(--gray-200);">
                     <tbody>
-                        <tr><td style="background:var(--gray-100);width:10%;text-align:center;">批次名称</td><td style="width:15%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:10%;text-align:center;">批次编号</td><td style="width:15%">PC-20260422-5687</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产数量</td><td style="width:15%">44</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产进度</td><td style="width:15%">待交付</td></tr>
+                        <tr><td style="background:var(--gray-100);width:10%;text-align:center;">批次名称</td><td style="width:15%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:10%;text-align:center;">批次编号</td><td style="width:15%">PC-20260422-5687</td><td style="background:var(--gray-100);width:10%;text-align:center;">需求数量</td><td style="width:15%">44</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产进度</td><td style="width:15%">待交付</td></tr>
                         <tr><td style="background:var(--gray-100);text-align:center;">生产完成数量</td><td>40</td><td style="background:var(--gray-100);text-align:center;">制作方式</td><td>随意了</td><td style="background:var(--gray-100);text-align:center;">预计交付周期(天)</td><td>44</td><td style="background:var(--gray-100);text-align:center;">客户需求</td><td>客户需求</td></tr>
                         <tr><td style="background:var(--gray-100);text-align:center;">客户定制自动化</td><td>全自动作词流程</td><td style="background:var(--gray-100);text-align:center;">备注</td><td colspan="5">这里是备注有可能很重要哦</td></tr>
                     </tbody>
@@ -1965,7 +2026,7 @@ const pages = {
             <div class="info-card" style="padding: 24px; margin-bottom: 24px;">
                 <h3 style="font-size:16px; font-weight:600; margin-bottom:16px; border-left:4px solid var(--primary); padding-left:8px;">批次信息</h3>
                 <table class="data-table">
-                    <thead><tr><th>订单名称</th><th>订单名称</th><th>批次编号</th><th>生产数量</th><th>领用数量</th><th>生产进度</th><th>生产类型</th><th>制作方式</th><th>预计交付周期(天)</th><th>创建人</th><th>创建时间</th></tr></thead>
+                    <thead><tr><th>订单名称</th><th>订单名称</th><th>批次编号</th><th>需求数量</th><th>领用数量</th><th>生产进度</th><th>生产类型</th><th>制作方式</th><th>预计交付周期(天)</th><th>创建人</th><th>创建时间</th></tr></thead>
                     <tbody>
                         <tr><td>DJ30 首</td><td>0518 第一批</td><td>PC-20260518-002</td><td>0</td><td>30</td><td><span class="badge" style="color:#1677FF;background:#E6F4FF;">已交付</span></td><td>DJ、全案</td><td>全案</td><td>30</td><td>系统</td><td>2026-05-19<br>12:12:22</td></tr>
                     </tbody>
@@ -2242,6 +2303,276 @@ function openModal(id) {
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.style.display = 'none';
+}
+
+function setSelectValue(select, value) {
+    if (!select) return;
+    const normalizedValue = String(value || '').trim();
+    const exists = Array.from(select.options).some(option => option.value === normalizedValue || option.textContent.trim() === normalizedValue);
+    if (!exists && normalizedValue) {
+        const option = document.createElement('option');
+        option.value = normalizedValue;
+        option.textContent = normalizedValue;
+        select.appendChild(option);
+    }
+    select.value = normalizedValue;
+}
+
+function openOrderModal(data = null) {
+    const modalTitle = document.getElementById('orderModalTitle');
+    if (modalTitle) modalTitle.innerText = data ? '编辑订单' : '新增订单';
+
+    const nameInput = document.getElementById('orderFormName');
+    const ownerSelect = document.getElementById('orderFormOwner');
+    const customerSelect = document.getElementById('orderFormCustomer');
+    const productionTypeSelect = document.getElementById('orderFormProductionType');
+    const natureSelect = document.getElementById('orderFormNature');
+    const cycleSelect = document.getElementById('orderFormCycle');
+    const remarkInput = document.getElementById('orderFormRemark');
+
+    if (nameInput) nameInput.value = data?.name || '';
+    setSelectValue(ownerSelect, data?.owner || document.querySelector('.user-avatar')?.dataset.currentUser || '张三');
+    setSelectValue(customerSelect, data?.customer || '');
+    if (productionTypeSelect) {
+        productionTypeSelect.value = data?.productionType || '';
+        renderNodeConfigSingerMulti(productionTypeSelect.closest('.node-config-singer-select'));
+    }
+    setSelectValue(natureSelect, data?.nature || '');
+    setSelectValue(cycleSelect, data?.cycle || '');
+    if (remarkInput) remarkInput.value = '-';
+    const referenceInput = document.getElementById('orderReferenceFilesInput');
+    if (referenceInput) referenceInput.value = '';
+    setOrderReferenceFiles(data?.referenceFiles || []);
+
+    const overlay = document.getElementById('modal-add-order');
+    const drawer = document.getElementById('orderFormDrawer');
+    if (!overlay || !drawer) return;
+    overlay.style.display = 'flex';
+    setTimeout(() => drawer.classList.add('active'), 10);
+}
+
+function closeOrderModal() {
+    const overlay = document.getElementById('modal-add-order');
+    const drawer = document.getElementById('orderFormDrawer');
+    if (!overlay || !drawer) return;
+    drawer.classList.remove('active');
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 220);
+}
+
+function openOrderModalFromRow(button) {
+    const row = button?.closest('tr');
+    if (!row) {
+        openOrderModal();
+        return;
+    }
+
+    const cells = row.querySelectorAll('td');
+    const referenceFiles = (row.dataset.referenceFiles || '')
+        .split('|')
+        .map(item => item.trim())
+        .filter(isAudioReferenceFile);
+    openOrderModal({
+        name: cells[1]?.textContent.trim() || '',
+        owner: cells[11]?.textContent.trim() || '',
+        customer: cells[2]?.textContent.trim() || '',
+        productionType: cells[3]?.textContent.trim() || '',
+        nature: cells[4]?.textContent.trim() || '',
+        cycle: cells[5]?.textContent.trim() || '',
+        remark: cells[12]?.textContent.trim() || '',
+        referenceFiles
+    });
+}
+
+let orderReferenceFiles = [];
+
+function isAudioReferenceFile(fileName) {
+    return /\.(mp3|wav)$/i.test(String(fileName || '').trim());
+}
+
+function getOrderReferenceFileUrl(file) {
+    return file.url || 'https://www.w3schools.com/html/horse.mp3';
+}
+
+function getOrderReferenceAudioType(fileName) {
+    return /\.wav$/i.test(fileName || '') ? 'audio/wav' : 'audio/mpeg';
+}
+
+function formatFileSize(size) {
+    if (!size) return '0 KB';
+    if (size >= 1024 * 1024) return `${(size / 1024 / 1024).toFixed(1)} MB`;
+    return `${Math.max(1, Math.round(size / 1024))} KB`;
+}
+
+function setOrderReferenceFiles(files) {
+    orderReferenceFiles = files.map(file => typeof file === 'string' ? { name: file, size: 0 } : file);
+    const input = document.getElementById('orderReferenceFilesValue');
+    if (input) input.value = orderReferenceFiles.map(file => file.name).join('、');
+    renderOrderReferenceFiles();
+}
+
+function renderOrderReferenceFiles() {
+    const list = document.getElementById('orderReferenceFilesList');
+    if (!list) return;
+
+    list.innerHTML = orderReferenceFiles.map((file, index) => {
+        const fileName = escapeCompositionText(file.name);
+        const fileMeta = file.size ? `（${formatFileSize(file.size)}）` : '';
+        if (isAudioReferenceFile(file.name)) {
+            const audioUrl = getOrderReferenceFileUrl(file);
+            return `
+                <div class="node-config-file-item order-reference-audio-item">
+                    <div class="order-reference-file-head">
+                        <span class="node-config-file-icon"><i class="fas fa-music"></i></span>
+                        <span class="node-config-file-name">${fileName}${fileMeta}</span>
+                        <a class="node-config-file-action" href="${audioUrl}" download="${fileName}">下载</a>
+                        <button type="button" class="node-config-file-delete" onclick="removeOrderReferenceFile(${index})">删除</button>
+                    </div>
+                    <audio controls>
+                        <source src="${audioUrl}" type="${getOrderReferenceAudioType(file.name)}">
+                    </audio>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="node-config-file-item">
+                <span class="node-config-file-icon"><i class="fas fa-file-alt"></i></span>
+                <span class="node-config-file-name">${fileName}${fileMeta}</span>
+                <button type="button" class="node-config-file-delete" onclick="removeOrderReferenceFile(${index})">删除</button>
+            </div>
+        `;
+    }).join('');
+    list.style.display = orderReferenceFiles.length ? 'flex' : 'none';
+}
+
+function handleOrderReferenceFilesUpload(input) {
+    const files = Array.from(input.files || []);
+    const merged = [...orderReferenceFiles, ...files.map(file => ({
+        name: file.name,
+        size: file.size,
+        url: URL.createObjectURL(file)
+    }))];
+    if (merged.length > 6) {
+        alert('参考资料最多上传 6 个文件');
+        input.value = '';
+        return;
+    }
+    const totalSize = merged.reduce((sum, file) => sum + (file.size || 0), 0);
+    if (totalSize > 60 * 1024 * 1024) {
+        alert('参考资料总大小不能超过 60M');
+        input.value = '';
+        return;
+    }
+
+    setOrderReferenceFiles(merged);
+    input.value = '';
+}
+
+function removeOrderReferenceFile(index) {
+    orderReferenceFiles.splice(index, 1);
+    setOrderReferenceFiles(orderReferenceFiles);
+}
+
+function openOrderDetailDrawer() {
+    const overlay = document.getElementById('orderDetailDrawerOverlay');
+    const drawer = document.getElementById('orderDetailDrawer');
+    const body = document.getElementById('orderDetailDrawerBody');
+    if (!overlay || !drawer || !body) return;
+
+    const temp = document.createElement('div');
+    temp.innerHTML = pages['order-detail-page'].content;
+    const header = temp.querySelector('.detail-header');
+    if (header) header.remove();
+    body.innerHTML = temp.innerHTML;
+
+    overlay.style.display = 'flex';
+    setTimeout(() => drawer.classList.add('active'), 10);
+}
+
+function closeOrderDetailDrawer() {
+    const overlay = document.getElementById('orderDetailDrawerOverlay');
+    const drawer = document.getElementById('orderDetailDrawer');
+    if (!overlay || !drawer) return;
+    drawer.classList.remove('active');
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 220);
+}
+
+function openAddBatchDrawer() {
+    const overlay = document.getElementById('addBatchDrawerOverlay');
+    const drawer = document.getElementById('addBatchDrawer');
+    const body = document.getElementById('addBatchDrawerBody');
+    if (!overlay || !drawer || !body) return;
+
+    const temp = document.createElement('div');
+    temp.innerHTML = pages['add-batch-page'].content;
+    const header = temp.querySelector('.detail-header');
+    if (header) header.remove();
+    const fixedFooter = temp.querySelector('div[style*="position:fixed"]');
+    if (fixedFooter) fixedFooter.remove();
+    body.innerHTML = temp.innerHTML;
+
+    overlay.style.display = 'flex';
+    setTimeout(() => drawer.classList.add('active'), 10);
+}
+
+function closeAddBatchDrawer() {
+    const overlay = document.getElementById('addBatchDrawerOverlay');
+    const drawer = document.getElementById('addBatchDrawer');
+    if (!overlay || !drawer) return;
+    drawer.classList.remove('active');
+    setTimeout(() => {
+        overlay.style.display = 'none';
+    }, 220);
+}
+
+function switchBatchDetailTab(type) {
+    const makePanel = document.getElementById('batchDetailMakePanel');
+    const productPanel = document.getElementById('batchDetailProductPanel');
+    const makeTab = document.getElementById('batchDetailMakeTab');
+    const productTab = document.getElementById('batchDetailProductTab');
+    if (!makePanel || !productPanel || !makeTab || !productTab) return;
+
+    const isMake = type === 'make';
+    makePanel.style.display = isMake ? 'block' : 'none';
+    productPanel.style.display = isMake ? 'none' : 'block';
+
+    makeTab.style.color = isMake ? 'var(--primary)' : 'var(--gray-600)';
+    makeTab.style.borderBottom = isMake ? '2px solid var(--primary)' : '2px solid transparent';
+    makeTab.style.fontWeight = isMake ? '600' : '500';
+
+    productTab.style.color = isMake ? 'var(--gray-600)' : 'var(--primary)';
+    productTab.style.borderBottom = isMake ? '2px solid transparent' : '2px solid var(--primary)';
+    productTab.style.fontWeight = isMake ? '500' : '600';
+}
+
+function switchOrderSongTab(type) {
+    const flowTable = document.getElementById('orderSongFlowTable');
+    const productTable = document.getElementById('orderSongProductTable');
+    const flowTab = document.getElementById('orderSongFlowTab');
+    const productTab = document.getElementById('orderSongProductTab');
+    if (!flowTable || !productTable || !flowTab || !productTab) return;
+
+    const isFlow = type === 'flow';
+    flowTable.style.display = isFlow ? 'block' : 'none';
+    productTable.style.display = isFlow ? 'none' : 'block';
+    flowTab.style.color = isFlow ? 'var(--primary)' : 'var(--gray-600)';
+    flowTab.style.borderBottom = isFlow ? '2px solid var(--primary)' : '2px solid transparent';
+    flowTab.style.fontWeight = isFlow ? '600' : '500';
+    productTab.style.color = isFlow ? 'var(--gray-600)' : 'var(--primary)';
+    productTab.style.borderBottom = isFlow ? '2px solid transparent' : '2px solid var(--primary)';
+    productTab.style.fontWeight = isFlow ? '500' : '600';
+    filterOrderSongListByBatch();
+}
+
+function filterOrderSongListByBatch() {
+    const batchValue = document.getElementById('orderSongBatchFilter')?.value || '';
+    document.querySelectorAll('.order-song-table-panel tbody tr').forEach(row => {
+        row.style.display = !batchValue || row.dataset.batch === batchValue ? '' : 'none';
+    });
 }
 
 const existingCustomerNames = ['番茄畅听', '客户六'];

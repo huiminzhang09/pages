@@ -198,24 +198,106 @@
 
 <!-- ==================== MODALS ==================== -->
 <!-- Add Order Modal -->
-<div class="modal-overlay" id="modal-add-order" style="display:none">
-    <div class="modal">
-        <div class="modal-header">
-            <h3>新增订单</h3>
-            <button class="modal-close" onclick="closeModal('modal-add-order')">&times;</button>
+<div class="modal-overlay" id="modal-add-order" style="display:none" onclick="closeOrderModal()">
+    <div class="modal modal-right node-type-drawer order-form-drawer" id="orderFormDrawer" onclick="event.stopPropagation()">
+        <div class="node-type-drawer-header">
+            <h3 id="orderModalTitle">新增订单</h3>
+            <button class="modal-close" onclick="closeOrderModal()">&times;</button>
         </div>
-        <div class="modal-body">
-            <div class="form-group"><label>订单号 *</label><input type="text" value="DJ-260425-0001" disabled class="input-disabled"></div>
-            <div class="form-group"><label>客户名称 *</label><select><option value="">请选择客户</option><option>客户A</option><option>客户B</option><option>客户C</option></select></div>
-            <div class="form-group"><label>订单名称 *</label><input type="text" placeholder="请输入订单内容"></div>
-            <div class="form-group"><label>生产类型 *</label><select><option value="">请选择</option><option>DJ</option><option>Beat</option><option>Hit</option><option>Test</option><option>全案</option><option>demo</option></select></div>
-            <div class="form-group"><label>订单性质 *</label><select><option value="">请选择</option><option>买断</option><option>分成</option><option>独家</option><option>分成-独家</option><option>非独家</option></select></div>
-            <div class="form-group"><label>生产周期 *</label><select><option value="">请选择</option><option>长期</option><option>批次</option><option>单次</option></select></div>
-            <div class="form-group"><label>备注</label><textarea placeholder="请输入备注信息" rows="3"></textarea></div>
+        <div class="node-type-drawer-body">
+            <div class="form-group"><label>客户名称 <span class="required">*</span></label><select id="orderFormCustomer"><option value="">请选择客户</option><option>客户A</option><option>客户B</option><option>客户C</option><option>客户D</option></select></div>
+            <div class="form-group"><label>订单名称 <span class="required">*</span></label><input type="text" id="orderFormName" placeholder="请输入订单内容"></div>
+            <div class="form-group"><label>负责人 <span class="required">*</span></label><select id="orderFormOwner"><option value="">请选择负责人</option><option>张三</option><option>李四</option></select></div>
+            <div class="form-group">
+                <label>生产类型 <span class="required">*</span></label>
+                <div class="node-config-singer-select order-production-type-select">
+                    <input type="hidden" id="orderFormProductionType" class="node-config-singer-value">
+                    <button type="button" class="node-config-singer-trigger" onclick="toggleNodeConfigSingerDropdown(this)">
+                        <span class="node-config-singer-tags"></span>
+                        <i class="fas fa-chevron-up node-config-singer-arrow"></i>
+                    </button>
+                    <div class="node-config-singer-dropdown">
+                        <div class="node-config-singer-caret"></div>
+                        <div class="node-config-singer-option" data-value="DJ" onclick="toggleNodeConfigSingerOption(this)">
+                            <span>DJ</span>
+                            <i class="fas fa-check node-config-singer-check" style="visibility: hidden;"></i>
+                        </div>
+                        <div class="node-config-singer-option" data-value="Beat" onclick="toggleNodeConfigSingerOption(this)">
+                            <span>Beat</span>
+                            <i class="fas fa-check node-config-singer-check" style="visibility: hidden;"></i>
+                        </div>
+                        <div class="node-config-singer-option" data-value="Hit" onclick="toggleNodeConfigSingerOption(this)">
+                            <span>Hit</span>
+                            <i class="fas fa-check node-config-singer-check" style="visibility: hidden;"></i>
+                        </div>
+                        <div class="node-config-singer-option" data-value="Test" onclick="toggleNodeConfigSingerOption(this)">
+                            <span>Test</span>
+                            <i class="fas fa-check node-config-singer-check" style="visibility: hidden;"></i>
+                        </div>
+                        <div class="node-config-singer-option" data-value="全案" onclick="toggleNodeConfigSingerOption(this)">
+                            <span>全案</span>
+                            <i class="fas fa-check node-config-singer-check" style="visibility: hidden;"></i>
+                        </div>
+                        <div class="node-config-singer-option" data-value="全案、DJ" onclick="toggleNodeConfigSingerOption(this)">
+                            <span>全案、DJ</span>
+                            <i class="fas fa-check node-config-singer-check" style="visibility: hidden;"></i>
+                        </div>
+                        <div class="node-config-singer-option" data-value="demo" onclick="toggleNodeConfigSingerOption(this)">
+                            <span>demo</span>
+                            <i class="fas fa-check node-config-singer-check" style="visibility: hidden;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"><label>订单性质 <span class="required">*</span></label><select id="orderFormNature"><option value="">请选择</option><option>买断</option><option>分成</option><option>独家</option><option>分成-独家</option><option>非独家</option><option>共同开发</option><option>仅需要配合/接收</option><option>申请提取</option></select></div>
+            <div class="form-group"><label>生产周期 <span class="required">*</span></label><select id="orderFormCycle"><option value="">请选择</option><option>长期</option><option>批次</option><option>单次</option></select></div>
+            <div class="form-group">
+                <label>参考资料</label>
+                <div class="node-config-upload-field order-reference-upload-field">
+                    <input type="hidden" id="orderReferenceFilesValue">
+                    <label class="node-config-upload-zone node-config-upload-zone-compact">
+                        <input id="orderReferenceFilesInput" type="file" multiple onchange="handleOrderReferenceFilesUpload(this)">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span class="node-config-upload-copy">
+                            <span>选择文件</span>
+                            <small>最多上传 6 个，最大 60M；支持文档、音频等资料，音频可为 mp3、wav</small>
+                        </span>
+                    </label>
+                    <div class="node-config-file-list" id="orderReferenceFilesList"></div>
+                </div>
+            </div>
+            <div class="form-group"><label>备注</label><textarea id="orderFormRemark" placeholder="请输入备注信息" rows="3"></textarea></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn-default" onclick="closeModal('modal-add-order')">取消</button>
-            <button class="btn-primary" onclick="closeModal('modal-add-order')">确认提交</button>
+        <div class="node-type-drawer-footer">
+            <button class="btn-default" onclick="closeOrderModal()">取消</button>
+            <button class="btn-primary" onclick="closeOrderModal()">确认提交</button>
+        </div>
+    </div>
+</div>
+
+<!-- Order Detail Drawer -->
+<div class="modal-overlay" id="orderDetailDrawerOverlay" style="display:none" onclick="closeOrderDetailDrawer()">
+    <div class="modal modal-right node-type-drawer order-detail-drawer" id="orderDetailDrawer" onclick="event.stopPropagation()">
+        <div class="node-type-drawer-header">
+            <h3>订单详情</h3>
+            <button class="modal-close" onclick="closeOrderDetailDrawer()">&times;</button>
+        </div>
+        <div class="node-type-drawer-body" id="orderDetailDrawerBody"></div>
+    </div>
+</div>
+
+<!-- Add Batch Drawer -->
+<div class="modal-overlay" id="addBatchDrawerOverlay" style="display:none" onclick="closeAddBatchDrawer()">
+    <div class="modal modal-right node-type-drawer order-detail-drawer add-batch-drawer" id="addBatchDrawer" onclick="event.stopPropagation()">
+        <div class="node-type-drawer-header">
+            <h3>新增批次</h3>
+            <button class="modal-close" onclick="closeAddBatchDrawer()">&times;</button>
+        </div>
+        <div class="node-type-drawer-body" id="addBatchDrawerBody"></div>
+        <div class="node-type-drawer-footer">
+            <div class="batch-drawer-summary">已领用：<span>0</span> 首&nbsp;&nbsp; 待制作：<strong>100</strong> 首</div>
+            <button class="btn-default" onclick="closeAddBatchDrawer()">取消</button>
+            <button class="btn-primary" onclick="closeAddBatchDrawer()">确认提交</button>
         </div>
     </div>
 </div>
@@ -348,7 +430,7 @@
             <table class="data-table" style="margin-bottom: 24px; border: 1px solid var(--gray-200);">
                 <tbody>
                     <tr><td style="background:var(--gray-100);width:15%;text-align:right;">批次名称</td><td style="width:35%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:15%;text-align:right;">批次编号</td><td style="width:35%">PC-20260422-5687</td></tr>
-                    <tr><td style="background:var(--gray-100);text-align:right;">生产数量</td><td>25</td><td style="background:var(--gray-100);text-align:right;">生产类型</td><td>全案</td></tr>
+                    <tr><td style="background:var(--gray-100);text-align:right;">需求数量</td><td>25</td><td style="background:var(--gray-100);text-align:right;">生产类型</td><td>全案</td></tr>
                     <tr><td style="background:var(--gray-100);text-align:right;">制作方式</td><td>制作方式名称</td><td style="background:var(--gray-100);text-align:right;">预计交付周期(天)</td><td>全案</td></tr>
                     <tr><td style="background:var(--gray-100);text-align:right;">客户需求</td><td colspan="3">这里是客户需求，有很多哦，多看看多学学</td></tr>
                     <tr><td style="background:var(--gray-100);text-align:right;">客户定制化自动化</td><td colspan="3">客户要求这么做，按照说的做吧</td></tr>
@@ -578,14 +660,21 @@
     <div class="modal">
         <div class="modal-header"><h3>操作日志</h3><button class="modal-close" onclick="closeModal('modal-log')">&times;</button></div>
         <div class="modal-body">
-            <table class="data-table"><thead><tr><th>操作时间</th><th>操作人</th><th>操作类型</th><th>操作内容</th></tr></thead>
+            <table class="data-table"><thead><tr><th>操作类型</th><th>操作人</th><th>操作时间</th><th>备注</th></tr></thead>
             <tbody>
-                <tr><td>2026-04-22 14:30</td><td>张三</td><td>新增订单</td><td>创建订单 DJ-260425-0001</td></tr>
-                <tr><td>2026-04-22 15:00</td><td>张三</td><td>编辑订单</td><td>修改订单名称</td></tr>
-                <tr><td>2026-04-23 09:00</td><td>李四</td><td>新增批次</td><td>创建批次 PC-20260420-0001</td></tr>
-                <tr><td>2026-04-23 10:30</td><td>王五</td><td>编辑授权</td><td>更新版权信息</td></tr>
-                <tr><td>2026-04-24 11:00</td><td>张三</td><td>交付确认</td><td>确认交付 30 首</td></tr>
+                <tr><td>新增订单</td><td>张三</td><td>2026-04-22 14:30</td><td>创建订单 DJ-260425-0001</td></tr>
+                <tr><td>编辑订单</td><td>张三</td><td>2026-04-22 15:00</td><td>修改订单名称</td></tr>
+                <tr><td>新增批次</td><td>李四</td><td>2026-04-23 09:00</td><td>创建批次 PC-20260420-0001</td></tr>
             </tbody></table>
+            <div class="pagination" style="margin-top: 16px;">
+                <span>共 3 条</span>
+                <button class="page-btn active">1</button>
+                <select class="page-size-select">
+                    <option selected>10 条/页</option>
+                    <option>20 条/页</option>
+                    <option>50 条/页</option>
+                </select>
+            </div>
         </div>
     </div>
 </div>
