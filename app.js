@@ -1601,7 +1601,7 @@ const pages = {
             <div class="filter-bar">
                 <div class="filter-row">
                     <div class="filter-item"><label>批次编号</label><input type="text" placeholder="搜索批次编号"></div>
-                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待生产</option><option>生产中</option><option>待交付</option><option>部分交付</option><option>已交付</option></select></div>
+                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待生产</option><option>生产中</option><option>已终止</option><option>部分交付</option><option>已交付</option></select></div>
                     <div class="filter-item"><label>订单名称</label><select><option>全部</option></select></div>
                     <div class="filter-item"><label>工作流</label><select><option>全部</option></select></div>
                     <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
@@ -1613,18 +1613,20 @@ const pages = {
             </div>
             <div class="batch-summary-bar">
                 <span class="batch-summary-dot"></span>
-                <span>共<strong>3</strong>个批次</span>
-                <span>需求总数量<strong>230</strong>首</span>
-                <span>生产完成<strong>185</strong>首</span>
-                <span>领用数量<strong>0</strong>首</span>
+                <span>共<strong>5</strong>个批次</span>
+                <span>需求总数量<strong>450</strong>首</span>
+                <span>生产完成<strong>275</strong>首</span>
+                <span>领用数量<strong>68</strong>首</span>
             </div>
             <div class="table-container">
                 <table class="data-table">
-                    <thead><tr><th>批次编号</th><th>批次名称</th><th>订单名称</th><th>需求数量</th><th>生产完成数量</th><th>生产进度</th><th>生产类型</th><th>制作方式</th><th>工作流</th><th>预计交付周期</th><th>创建时间</th><th>操作</th></tr></thead>
+                    <thead><tr><th>批次编号</th><th>批次名称</th><th>订单名称</th><th>需求数量</th><th>生产完成数量</th><th>领用数量</th><th>生产进度</th><th>生产类型</th><th>制作方式</th><th>工作流</th><th>预计交付周期（天）</th><th>创建时间</th><th>操作</th></tr></thead>
                     <tbody>
-                        <tr><td>PC202604200001</td><td>4 月 500 首草原风</td><td>需求管理系统开发</td><td>100</td><td>80</td><td><span class="badge badge-gray">需求确认</span></td><td>全案</td><td>全案</td><td>工作流1</td><td>23</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer()">编辑</button></td></tr>
-                        <tr><td>PC202604210002</td><td>30 首草原风</td><td>需求管理系统开发</td><td>50</td><td>25</td><td><span class="badge badge-orange">生产中</span></td><td>Hit</td><td>Hit</td><td>工作流2</td><td>44</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer()">编辑</button></td></tr>
-                        <tr><td>PC202604220003</td><td>20 首 DJ</td><td>用户权限模块优化</td><td>80</td><td>80</td><td><span class="badge badge-orange">待交付</span></td><td>DJ</td><td>DJ</td><td>工作流1</td><td>55</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
+                        <tr><td>PC202604200001</td><td>4 月 500 首草原风</td><td>需求管理系统开发</td><td>100</td><td>0</td><td>0</td><td><span class="badge badge-gray">待生产</span></td><td>全案</td><td>全案</td><td>工作流1</td><td>23</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
+                        <tr><td>PC202604210002</td><td>30 首草原风</td><td>需求管理系统开发</td><td>50</td><td>25</td><td>0</td><td><span class="badge badge-orange">生产中</span></td><td>Hit</td><td>Hit</td><td>工作流2</td><td>44</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
+                        <tr><td>PC202604220003</td><td>20 首 DJ</td><td>用户权限模块优化</td><td>80</td><td>30</td><td>0</td><td><span class="badge badge-red">已终止</span></td><td>DJ</td><td>DJ</td><td>工作流1</td><td>55</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
+                        <tr><td>PC202604230004</td><td>5 月 120 首流行</td><td>数据报表功能</td><td>120</td><td>80</td><td>68</td><td><span class="badge badge-blue">部分交付</span></td><td>全案</td><td>全案</td><td>工作流2</td><td>30</td><td>2026-05-08 09:18:45</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
+                        <tr><td>PC202604240005</td><td>6 月 100 首民谣</td><td>数据中台联调</td><td>100</td><td>100</td><td>100</td><td><span class="badge badge-green">已交付</span></td><td>Hit</td><td>Hit</td><td>工作流3</td><td>28</td><td>2026-05-10 16:30:12</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1686,7 +1688,7 @@ const pages = {
                 <h4>订单信息</h4>
                 <div class="info-grid order-detail-info-grid">
                     <div class="info-item order-detail-info-item"><span class="info-label">订单名称：</span><span class="info-value">25 年 4 月 300首</span></div>
-                    <div class="info-item order-detail-info-item"><span class="info-label">订单编号：</span><span class="info-value">PC-20260422-5687</span></div>
+                    <div class="info-item order-detail-info-item"><span class="info-label">订单编号：</span><span class="info-value">PC202604225687</span></div>
                     <div class="info-item order-detail-info-item"><span class="info-label">客户名称：</span><span class="info-value">番茄畅听</span></div>
                     <div class="info-item order-detail-info-item"><span class="info-label">生产类型：</span><span class="info-value">全案、DJ</span></div>
                     <div class="info-item order-detail-info-item"><span class="info-label">生产进度：</span><span class="info-value">部分交付</span></div>
@@ -1790,9 +1792,9 @@ const pages = {
                 </div>
             </div>
             <div class="info-card">
-                <h4 style="color:var(--primary); border-left:4px solid var(--primary); padding-left:8px; border-bottom:none; margin-bottom:20px;">工作流与人员</h4>
+                <h4 style="color:var(--primary); border-left:4px solid var(--primary); padding-left:8px; border-bottom:none; margin-bottom:20px;">工作流</h4>
                 <div class="form-row">
-                    <div class="form-group" style="flex: 0 0 32%;"><label>工作流 *</label><select><option>全案工作流</option></select></div>
+                    <div class="form-group" style="flex: 0 0 32%;"><label>工作流 *</label><select data-batch-workflow-select><option>全案工作流</option></select></div>
                 </div>
                 <p style="color:var(--primary); font-size:13px; margin: 10px 0;">当前工作流：全案工作流</p>
                 <div style="display:flex; align-items:center; gap:10px; font-size:13px;">
@@ -1829,9 +1831,10 @@ const pages = {
                 <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">基础信息</h4>
                 <table class="data-table" style="margin-bottom: 24px; border: 1px solid var(--gray-200);">
                     <tbody>
-                        <tr><td style="background:var(--gray-100);width:10%;text-align:center;">批次名称</td><td style="width:15%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:10%;text-align:center;">批次编号</td><td style="width:15%">PC-20260422-5687</td><td style="background:var(--gray-100);width:10%;text-align:center;">需求数量</td><td style="width:15%">44</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产类型</td><td style="width:15%">全案</td></tr>
-                        <tr><td style="background:var(--gray-100);text-align:center;">生产完成数量</td><td>40</td><td style="background:var(--gray-100);text-align:center;">制作方式</td><td>随意了</td><td style="background:var(--gray-100);text-align:center;">预计交付周期(天)</td><td>44</td><td style="background:var(--gray-100);text-align:center;">客户需求</td><td>客户需求</td></tr>
-                        <tr><td style="background:var(--gray-100);text-align:center;">客户定制自动化</td><td>全自动作词流程</td><td style="background:var(--gray-100);text-align:center;">备注</td><td colspan="5">这里是备注有可能很重要哦</td></tr>
+                        <tr><td style="background:var(--gray-100);width:10%;text-align:center;">批次名称</td><td style="width:15%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:10%;text-align:center;">批次编号</td><td style="width:15%">PC202604225687</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产进度</td><td style="width:15%"><span class="badge badge-orange">待交付</span></td><td style="background:var(--gray-100);width:10%;text-align:center;">需求数量</td><td style="width:15%">44</td></tr>
+                        <tr><td style="background:var(--gray-100);text-align:center;">生产类型</td><td>全案</td><td style="background:var(--gray-100);text-align:center;">生产完成数量</td><td>40</td><td style="background:var(--gray-100);text-align:center;">领用数量</td><td>12</td><td style="background:var(--gray-100);text-align:center;">制作方式</td><td>随意了</td></tr>
+                        <tr><td style="background:var(--gray-100);text-align:center;">生产需求</td><td>生产需求</td><td style="background:var(--gray-100);text-align:center;">客户需求</td><td>客户需求</td><td style="background:var(--gray-100);text-align:center;">客户定制自动化</td><td>全自动作词流程</td><td style="background:var(--gray-100);text-align:center;">预计交付周期（天）</td><td>44</td></tr>
+                        <tr><td style="background:var(--gray-100);text-align:center;">备注</td><td colspan="7">这里是备注有可能很重要哦</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1852,29 +1855,37 @@ const pages = {
                         </div>
                     </div>
                     <div class="action-bar">
-                        <button class="btn-primary" onclick="openModal('modal-batch-edit-staff')">批量修改人员</button>
+                        <button class="btn-primary" onclick="handleBatchEditStaffClick()">批量修改人员</button>
                     </div>
                     <div class="table-container">
                         <table class="data-table">
-                    <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水ID</th><th>原歌名</th><th>交付歌名</th><th>歌曲编号</th><th>状态</th><th>节点</th><th>当前执行人</th><th>操作</th></tr></thead>
+                    <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水ID</th><th>原歌名</th><th>新歌名</th><th>歌曲编号</th><th>状态</th><th>节点</th><th>当前执行人</th><th>操作</th></tr></thead>
                     <tbody>
-                        <tr><td><input type="checkbox"></td><td>LS-001</td><td>窗外</td><td>窗外</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td>作词</td><td>张三</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('中止确认', '确定中止该流水？中止后当前及后续节点将停止流转。', '确认中止')">中止</button></td></tr>
-                        <tr><td><input type="checkbox"></td><td>LS-002</td><td>他不懂</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #F5222D; color:#F5222D; background:transparent;">已中止</span></td><td>作曲</td><td>李四</td><td><button class="btn-text">详情</button><button class="btn-text danger" onclick="openConfirmDialog('恢复确认', '是否确认恢复当前流水？恢复后流程将继续推进，并重新纳入相关人员待办列表。', '确认恢复')">恢复</button></td></tr>
-                        <tr><td><input type="checkbox" checked></td><td>LS-003</td><td>这就是爱</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td>-</td><td>王五</td><td><button class="btn-text">详情</button><button class="btn-text danger" onclick="openConfirmDialog('版权打回确认', '确定要将该流水进行版权打回吗？打回后交付状态将变更为「交付打回」，需重新处理或制作。', '确认打回')">版权打回</button></td></tr>
-                        <tr><td><input type="checkbox"></td><td>LS-004</td><td>云中的angle</td><td>云中的angle</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td>作曲</td><td>赵六</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-staff-maintenance')">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('中止确认', '确定中止该流水？中止后当前及后续节点将停止流转。', '确认中止')">中止</button></td></tr>
-                        <tr><td><input type="checkbox" checked></td><td>LS-005</td><td>--</td><td>--</td><td>AIBae...fw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td>-</td><td>王五</td><td><button class="btn-text">详情</button><button class="btn-text" onclick="openModal('modal-remake')">重新制作</button><button class="btn-text" onclick="openModal('modal-change-batch')">变更批次</button></td></tr>
+                        <tr class="batch-flow-row" data-status="进行中" data-node="作词"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200001</td><td>窗外</td><td>窗外</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td class="batch-flow-node-cell">作词</td><td class="batch-flow-owner-cell">张三</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
+                        <tr class="batch-flow-row" data-status="已终止" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox" disabled title="已终止流水不可参与批量维护"></td><td>FLOW2026060200002</td><td>他不懂</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #F5222D; color:#F5222D; background:transparent;">已终止</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">李四</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button></td></tr>
+                        <tr class="batch-flow-row" data-status="已完成" data-node="-"><td><input type="checkbox" class="batch-flow-checkbox" disabled title="无当前运行节点，不可参与批量维护"></td><td>FLOW2026060200003</td><td>这就是爱</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td class="batch-flow-node-cell">-</td><td class="batch-flow-owner-cell">王五</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button></td></tr>
+                        <tr class="batch-flow-row" data-status="进行中" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200004</td><td>云中的angle</td><td>云中的angle</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">赵六</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
+                        <tr class="batch-flow-row" data-status="待分配" data-node="作词"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200005</td><td>--</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge badge-gray">待分配</span></td><td class="batch-flow-node-cell">作词</td><td class="batch-flow-owner-cell">-</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
                     </tbody>
                 </table>
             </div>
                 </div>
                 <div id="batchDetailProductPanel" style="display:none;">
+                    <div class="filter-bar" style="margin-bottom: 24px;">
+                        <div class="filter-row">
+                            <div class="filter-item"><label>新歌名</label><input type="text" id="batchClaimSongNameFilter" placeholder="请输入新歌名"></div>
+                            <div class="filter-item"><label>歌曲编号</label><input type="text" id="batchClaimSongCodeFilter" placeholder="请输入歌曲编号"></div>
+                            <div class="filter-item"><label>歌手</label><input type="text" id="batchClaimSingerFilter" placeholder="请输入歌手"></div>
+                            <div class="filter-actions"><button class="btn-primary" onclick="filterBatchClaimSongs()">查询</button><button class="btn-default" onclick="resetBatchClaimSongs()">重置</button></div>
+                        </div>
+                    </div>
                     <div class="table-container">
                         <table class="data-table">
-                            <thead><tr><th>歌曲编号</th><th>新歌名</th><th>当前状态</th><th>歌词</th><th>作词</th><th>音频信息</th><th>作曲</th><th>歌手</th><th>制作时间</th></tr></thead>
+                            <thead><tr><th>歌曲编号</th><th>新歌名</th><th>状态</th><th>歌手</th><th>音频信息</th><th>歌词</th><th>作词</th><th>作曲</th><th>制作时间</th></tr></thead>
                             <tbody>
-                                <tr><td>AIB-20260717-001</td><td>窗外</td><td><span class="badge badge-green">已完成</span></td><td>这是歌词内容...</td><td>张三</td><td><button class="btn-text">试听</button><button class="btn-text">下载</button></td><td>李四</td><td>虚拟歌手 小A</td><td>2026-07-17 10:18:32</td></tr>
-                                <tr><td>AIB-20260717-002</td><td>他不懂</td><td><span class="badge badge-green">已完成</span></td><td>这是歌词内容...</td><td>李四</td><td><button class="btn-text">试听</button><button class="btn-text">下载</button></td><td>赵六</td><td>独立音乐人 B</td><td>2026-07-17 10:32:45</td></tr>
-                                <tr><td>AIB-20260717-003</td><td>这就是爱</td><td><span class="badge badge-green">已完成</span></td><td>这是歌词内容...</td><td>王五</td><td><button class="btn-text">试听</button><button class="btn-text">下载</button></td><td>李四</td><td>歌手 C</td><td>2026-07-17 11:05:09</td></tr>
+                                <tr class="batch-claim-song-row"><td>AIB-20260717-001</td><td>窗外</td><td><span class="badge badge-orange">待交付</span></td><td>虚拟歌手 小A</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td>这是歌词内容...</td><td>张三</td><td>李四</td><td>2026-07-17 10:18:32</td></tr>
+                                <tr class="batch-claim-song-row"><td>AIB-20260717-002</td><td>他不懂</td><td><span class="badge badge-orange">待交付</span></td><td>独立音乐人 B</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td>这是歌词内容...</td><td>李四</td><td>赵六</td><td>2026-07-17 10:32:45</td></tr>
+                                <tr class="batch-claim-song-row"><td>AIB-20260717-003</td><td>这就是爱</td><td><span class="badge badge-orange">待交付</span></td><td>歌手 C</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td>这是歌词内容...</td><td>王五</td><td>李四</td><td>2026-07-17 11:05:09</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1892,70 +1903,54 @@ const pages = {
                 <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">基础信息</h4>
                 <table class="data-table" style="margin-bottom: 24px; border: 1px solid var(--gray-200);">
                     <tbody>
-                        <tr><td style="background:var(--gray-100);width:10%;text-align:center;">批次名称</td><td style="width:15%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:10%;text-align:center;">批次编号</td><td style="width:15%">PC-20260422-5687</td><td style="background:var(--gray-100);width:10%;text-align:center;">需求数量</td><td style="width:15%">44</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产进度</td><td style="width:15%">待交付</td></tr>
-                        <tr><td style="background:var(--gray-100);text-align:center;">生产完成数量</td><td>40</td><td style="background:var(--gray-100);text-align:center;">制作方式</td><td>随意了</td><td style="background:var(--gray-100);text-align:center;">预计交付周期(天)</td><td>44</td><td style="background:var(--gray-100);text-align:center;">客户需求</td><td>客户需求</td></tr>
-                        <tr><td style="background:var(--gray-100);text-align:center;">客户定制自动化</td><td>全自动作词流程</td><td style="background:var(--gray-100);text-align:center;">备注</td><td colspan="5">这里是备注有可能很重要哦</td></tr>
+                        <tr><td style="background:var(--gray-100);width:10%;text-align:center;">批次名称</td><td style="width:15%">25 年 4 月 300首</td><td style="background:var(--gray-100);width:10%;text-align:center;">批次编号</td><td style="width:15%">PC202604225687</td><td style="background:var(--gray-100);width:10%;text-align:center;">生产进度</td><td style="width:15%"><span class="badge badge-orange">待交付</span></td><td style="background:var(--gray-100);width:10%;text-align:center;">需求数量</td><td style="width:15%">44</td></tr>
+                        <tr><td style="background:var(--gray-100);text-align:center;">生产类型</td><td>全案</td><td style="background:var(--gray-100);text-align:center;">生产完成数量</td><td>40</td><td style="background:var(--gray-100);text-align:center;">领用数量</td><td>12</td><td style="background:var(--gray-100);text-align:center;">制作方式</td><td>随意了</td></tr>
+                        <tr><td style="background:var(--gray-100);text-align:center;">生产需求</td><td>生产需求</td><td style="background:var(--gray-100);text-align:center;">客户需求</td><td>客户需求</td><td style="background:var(--gray-100);text-align:center;">客户定制自动化</td><td>全自动作词流程</td><td style="background:var(--gray-100);text-align:center;">预计交付周期（天）</td><td>44</td></tr>
+                        <tr><td style="background:var(--gray-100);text-align:center;">备注</td><td colspan="7">这里是备注有可能很重要哦</td></tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="info-card">
-                <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">授权信息</h4>
+                <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">版权信息</h4>
                 <div class="form-row">
-                    <div class="form-group"><label>外显词作者</label><input type="text" placeholder="请输入外显词作者"></div>
-                    <div class="form-group"><label>外显曲作者</label><input type="text" placeholder="请输入外显曲作者"></div>
-                    <div class="form-group"><label>外显歌手</label><input type="text" placeholder="请输入外显歌手"></div>
-                    <div class="form-group"><label>商用情况</label><select><option>请选择商用情况</option></select></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>分成比例</label><input type="text" placeholder="请输入分成比例"></div>
-                    <div class="form-group"><label>上架平台 <span style="color:#F5222D">*</span></label><input type="text" value="番茄"></div>
-                    <div class="form-group"><label>端口应上线平台</label><input type="text" placeholder="请输入端口应上线平台"></div>
-                    <div class="form-group"><label>发行端口</label><input type="text" placeholder="请输入发行端口"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>上线外显</label><input type="text" placeholder="请输入上线外显"></div>
-                    <div class="form-group"><label>授权开始时间 <span style="color:#F5222D">*</span></label><input type="date" value="2026-05-09"></div>
-                    <div class="form-group"><label>授权结束时间 <span style="color:#F5222D">*</span></label><input type="date" value="2026-09-09"></div>
-                    <div class="form-group"><label>发行日期</label><input type="date" placeholder="请选择发行日期"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>上线日期</label><input type="date" placeholder="请选择上线日期"></div>
-                    <div class="form-group"><label>下架时间</label><input type="date" placeholder="请选择下架时间"></div>
+                    <div class="form-group"><label>商用情况 <span style="color:#F5222D">*</span></label><select><option>请选择商用情况</option><option>可商用</option><option>不可商用</option></select></div>
                     <div class="form-group"><label>授权地区 <span style="color:#F5222D">*</span></label><input type="text" placeholder="请输入授权地区"></div>
-                    <div class="form-group"><label>发行地区</label><input type="text" placeholder="请输入发行地区"></div>
+                    <div class="form-group"><label>发行地区 <span style="color:#F5222D">*</span></label><input type="text" placeholder="请输入发行地区"></div>
+                    <div class="form-group"><label>版权情况 <span style="color:#F5222D">*</span></label><select><option>请选择版权情况</option><option>独家</option><option>非独家</option><option>买断</option><option>分成</option></select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>版权情况</label><select><option>请选择版权情况</option></select></div>
-                    <div class="form-group"><label>在线状态</label><select><option>请选择在线状态</option></select></div>
-                    <div class="form-group"><label>授权时间 <span style="color:#F5222D">*</span></label><input type="date" value="2026-04-30"></div>
-                    <div class="form-group"></div>
+                    <div class="form-group"><label>授权时间</label><select><option>请选择授权时间</option><option>一年</option><option>三年</option><option>五年</option></select></div>
+                    <div class="form-group"><label>授权开始时间</label><input type="date" value="2026-05-09"></div>
+                    <div class="form-group"><label>授权结束时间</label><input type="date" value="2029-05-09"></div>
+                    <div class="form-group"><label>供应商信息</label><input type="text" placeholder="请输入供应商信息"></div>
                 </div>
+                <div class="form-group"><label>备注信息</label><textarea rows="3" placeholder="请输入备注信息"></textarea></div>
             </div>
 
             <div class="info-card" style="margin-bottom:80px;">
-                <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">交付信息</h4>
+                <h4 style="font-size:15px; font-weight:600; margin-bottom:16px;">歌曲信息</h4>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
-                    <div style="font-size: 14px; color: var(--gray-800);">歌曲共：xxxx 首 &nbsp;|&nbsp; demo 库领用：xxx 首 &nbsp;|&nbsp; 制作：xxx 首</div>
+                    <div style="font-size: 14px; color: var(--gray-800);">待交付歌曲：<span id="batchDeliveryCompletedCount">0</span> 首 &nbsp;|&nbsp; 领用：<span id="batchDeliveryClaimedCount">0</span> 首 &nbsp;|&nbsp; 制作：<span id="batchDeliveryMadeCount">0</span> 首</div>
                     <button class="btn-primary" onclick="alert('打包成功！')"><i class="fas fa-archive"></i> 打包</button>
                 </div>
                 <div class="table-container">
-                    <table class="data-table">
-                        <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水ID</th><th>原歌名</th><th>交付歌名</th><th>歌曲编号</th><th>当前状态</th><th>歌词信息</th><th>歌曲信息</th><th>来源</th></tr></thead>
+                    <table class="data-table" id="batchDeliveryTable">
+                        <thead><tr><th style="width:40px;"><input type="checkbox" onchange="toggleBatchDeliveryAll(this)"></th><th>原歌名</th><th>新歌名</th><th>歌手</th><th>歌曲编号</th><th>状态</th><th>歌词信息</th><th>音频信息</th><th>操作</th></tr></thead>
                         <tbody>
-                            <tr><td><input type="checkbox"></td><td>LS-001</td><td>窗外</td><td>窗外</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:#E6F9ED;">已完成</span></td><td>这个是歌词</td><td>文件</td><td><span class="badge" style="color:#722ED1; background:#F9F0FF;">制作</span></td></tr>
-                            <tr><td><input type="checkbox"></td><td>LS-002</td><td>他不懂</td><td>他不懂</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:#E6F9ED;">已完成</span></td><td>这个是歌词</td><td>文件</td><td><span class="badge" style="color:#FA8C16; background:#FFF7E6;">领用</span></td></tr>
-                            <tr><td><input type="checkbox" checked></td><td>LS-003</td><td>这就是爱</td><td>这就是爱</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:#E6F9ED;">已完成</span></td><td>这个是歌词</td><td>文件</td><td><span class="badge" style="color:#FA8C16; background:#FFF7E6;">领用</span></td></tr>
-                            <tr><td><input type="checkbox"></td><td>LS-004</td><td>云中的angle</td><td>云中的angle</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:#E6F9ED;">已完成</span></td><td>这个是歌词</td><td>文件</td><td><span class="badge" style="color:#722ED1; background:#F9F0FF;">制作</span></td></tr>
+                            <tr data-source="制作"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>窗外</td><td>窗外</td><td>虚拟歌手 小A</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="窗外.mp3">下载音频</a></td></tr>
+                            <tr data-source="领用"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>他不懂</td><td>他不懂</td><td>独立音乐人 B</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="他不懂.mp3">下载音频</a></td></tr>
+                            <tr data-source="领用"><td><input type="checkbox" class="batch-delivery-checkbox" checked onchange="updateBatchDeliverySelectedCount()"></td><td>这就是爱</td><td>这就是爱</td><td>歌手 C</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="这就是爱.mp3">下载音频</a></td></tr>
+                            <tr data-source="制作"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>云中的angle</td><td>云中的angle</td><td>赵六</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="云中的angle.mp3">下载音频</a></td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <div style="position:fixed; bottom:0; left:200px; right:0; background:#fff; padding:16px 24px; border-top:1px solid var(--gray-200); display:flex; justify-content:flex-end; align-items:center; gap:16px; box-shadow:0 -2px 10px rgba(0,0,0,0.05); z-index:100;">
-                <div style="font-size:14px;">共选取：<span style="color:var(--danger); font-weight:600;">XX</span> 首</div>
+                <div style="font-size:14px;">共选取：<span id="batchDeliverySelectedCount" style="color:var(--danger); font-weight:600;">0</span> 首</div>
                 <button class="btn-default" onclick="navigateTo('batch-page')">取消</button>
-                <button class="btn-primary" onclick="navigateTo('batch-page')">确认交付</button>
+                <button class="btn-primary" onclick="handleBatchDeliverySubmit()">确认交付</button>
             </div>
         `
     },
@@ -2094,19 +2089,27 @@ const pages = {
                     <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
                 </div>
             </div>
-            <div class="action-bar" style="display:flex; gap:12px;">
+            <div class="action-bar" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <div style="position:relative;">
+                        <button class="btn-primary" onclick="toggleCopyrightImportDropdown(event)"><i class="fas fa-plus"></i> 导入版权信息 <i class="fas fa-chevron-down" style="font-size:11px;"></i></button>
+                        <div id="copyrightImportDropdown" style="display:none; position:absolute; left:0; top:calc(100% + 6px); min-width:160px; background:#fff; border:1px solid var(--gray-200); border-radius:6px; box-shadow:0 8px 20px rgba(15,23,42,0.12); z-index:30; padding:6px 0;">
+                            <button style="display:block; width:100%; padding:9px 14px; border:none; background:#fff; text-align:left; font-size:13px; color:var(--gray-800); cursor:pointer;" onclick="closeCopyrightImportDropdown(); alert('下载模板功能')">下载模板</button>
+                            <button style="display:block; width:100%; padding:9px 14px; border:none; background:#fff; text-align:left; font-size:13px; color:var(--gray-800); cursor:pointer;" onclick="closeCopyrightImportDropdown(); openModal('modal-import-copyright')">导入版权信息</button>
+                        </div>
+                    </div>
+                    <button class="btn-primary" onclick="openModal('modal-import-copyright-resource')"><i class="fas fa-upload"></i> 导入版权资源</button>
+                </div>
                 <button class="btn-default"><i class="fas fa-download"></i> 下载</button>
-                <button class="btn-primary" onclick="openModal('modal-import-copyright')"><i class="fas fa-plus"></i> 导入版权信息</button>
-                <a style="color:var(--primary); font-size:14px; cursor:pointer; line-height:32px; text-decoration:underline;" onclick="alert('下载模板功能')">下载模板</a>
             </div>
             <div class="table-container">
                 <table class="data-table">
-                    <thead><tr><th>所属订单名</th><th>所属批次名</th><th>交付编号（不可为空）</th><th>歌名（成品信息带过来的）</th><th>成品编号</th><th>版权状态（未维护、已维护）</th><th>词信息</th><th>作词人</th><th>曲信息</th><th>作曲人</th><th>制作完成时间</th><th>授权时间</th><th>授权开始时间</th><th>授权结束时间</th><th>授权期限（天）</th><th>发行日期</th><th>上线日期</th><th>下架日期</th><th>授权地区（枚举）</th><th>发行地区（枚举）</th><th>版权情况（枚举）</th><th>在线状态（枚举）</th><th>上架平台（枚举）</th><th>端口应上线平台（枚举）</th><th>发行端口（枚举）</th><th>分成比例（字符串）</th><th>商用情况（枚举）</th><th>外显歌手（枚举）</th><th>外显词作者（枚举）</th><th>外显曲作者（枚举）</th><th>上线外显（字符串）</th><th class="sticky-right">操作</th></tr></thead>
+                    <thead><tr><th>所属订单名</th><th>所属批次名</th><th>交付编号（不可为空）</th><th>歌名（成品信息带过来的）</th><th>成品编号</th><th>版权状态（未维护、已维护）</th><th>词信息</th><th>作词人</th><th>曲信息</th><th>作曲人</th><th>制作完成时间</th><th>授权时间</th><th>授权开始时间</th><th>授权结束时间</th><th>授权期限（天）</th><th>发行日期</th><th>上线日期</th><th>下架日期</th><th>授权地区（枚举）</th><th>发行地区（枚举）</th><th>版权情况（枚举）</th><th>在线状态（枚举）</th><th>上架平台（枚举）</th><th>端口应上线平台（枚举）</th><th>发行端口（枚举）</th><th>分成比例（字符串）</th><th>商用情况（枚举）</th><th>外显歌手（枚举）</th><th>外显词作者（枚举）</th><th>外显曲作者（枚举）</th><th>上线外显（字符串）</th><th class="sticky-right copyright-download-actions">操作</th></tr></thead>
                     <tbody>
-                        <tr><td>订单 1</td><td>001</td><td>JF-2605-001</td><td>窗外</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>张三</td><td>曲信息</td><td>张三</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button><button class="btn-text" onclick="openConfirmDialog('复用确认', '确定要复用该成品的版权信息吗？', '确认复用')">复用</button></td></tr>
-                        <tr><td>订单 2</td><td>002</td><td>JF-2605-002</td><td>他不懂</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>李四</td><td>曲信息</td><td>李四</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button><button class="btn-text" onclick="openConfirmDialog('复用确认', '确定要复用该成品的版权信息吗？', '确认复用')">复用</button></td></tr>
-                        <tr><td>订单 3</td><td>003</td><td>JF-2605-003</td><td>这就是爱</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>王五</td><td>曲信息</td><td>王五</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>中国大陆</td><td>全球</td><td>独家</td><td>在线</td><td>网易云音乐</td><td>网易云/QQ音乐</td><td>网页端</td><td>50%</td><td>可商用</td><td>张杰</td><td>王五</td><td>王五</td><td>已上线</td><td class="sticky-right"><button class="btn-text">下载</button><button class="btn-text" onclick="openConfirmDialog('复用确认', '确定要复用该成品的版权信息吗？', '确认复用')">复用</button></td></tr>
-                        <tr><td>订单 4</td><td>004</td><td>JF-2605-004</td><td>云中的angle</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>赵六</td><td>曲信息</td><td>赵六</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>全球</td><td>全球</td><td>非独家</td><td>在线</td><td>QQ音乐</td><td>QQ音乐</td><td>移动端</td><td>30%</td><td>可商用</td><td>张杰</td><td>赵六</td><td>赵六</td><td>上线中</td><td class="sticky-right"><button class="btn-text">下载</button><button class="btn-text" onclick="openConfirmDialog('复用确认', '确定要复用该成品的版权信息吗？', '确认复用')">复用</button></td></tr>
+                        <tr><td>订单 1</td><td>001</td><td>JF-2605-001</td><td>窗外</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>张三</td><td>曲信息</td><td>张三</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 2</td><td>002</td><td>JF-2605-002</td><td>他不懂</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>李四</td><td>曲信息</td><td>李四</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 3</td><td>003</td><td>JF-2605-003</td><td>这就是爱</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>王五</td><td>曲信息</td><td>王五</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>中国大陆</td><td>全球</td><td>独家</td><td>在线</td><td>网易云音乐</td><td>网易云/QQ音乐</td><td>网页端</td><td>50%</td><td>可商用</td><td>张杰</td><td>王五</td><td>王五</td><td>已上线</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 4</td><td>004</td><td>JF-2605-004</td><td>云中的angle</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>赵六</td><td>曲信息</td><td>赵六</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>全球</td><td>全球</td><td>非独家</td><td>在线</td><td>QQ音乐</td><td>QQ音乐</td><td>移动端</td><td>30%</td><td>可商用</td><td>张杰</td><td>赵六</td><td>赵六</td><td>上线中</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2291,6 +2294,12 @@ function navigateTo(pageKey, navEl = null) {
                 initWfPage();
             }, 50);
         }
+        if (pageKey === 'batch-delivery-page') {
+            setTimeout(() => {
+                updateBatchDeliverySongSummary();
+                updateBatchDeliverySelectedCount();
+            }, 50);
+        }
     }
 }
 
@@ -2303,6 +2312,74 @@ function openModal(id) {
 function closeModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.style.display = 'none';
+}
+
+function toggleCopyrightImportDropdown(event) {
+    event.stopPropagation();
+    const menu = document.getElementById('copyrightImportDropdown');
+    if (!menu) return;
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+function closeCopyrightImportDropdown() {
+    const menu = document.getElementById('copyrightImportDropdown');
+    if (menu) menu.style.display = 'none';
+}
+
+function updateBatchDeliverySelectedCount() {
+    const checkboxes = Array.from(document.querySelectorAll('#batchDeliveryTable .batch-delivery-checkbox'));
+    const checkedCount = checkboxes.filter(checkbox => checkbox.checked).length;
+    const countEl = document.getElementById('batchDeliverySelectedCount');
+    const allCheckbox = document.querySelector('#batchDeliveryTable thead input[type="checkbox"]');
+
+    if (countEl) countEl.innerText = checkedCount;
+    if (allCheckbox) {
+        allCheckbox.checked = checkboxes.length > 0 && checkedCount === checkboxes.length;
+        allCheckbox.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+    }
+}
+
+function updateBatchDeliverySongSummary() {
+    const rows = Array.from(document.querySelectorAll('#batchDeliveryTable tbody tr'));
+    const completedCount = rows.filter(row => row.textContent.includes('已完成')).length;
+    const claimedCount = rows.filter(row => row.dataset.source === '领用').length;
+    const madeCount = rows.filter(row => row.dataset.source === '制作').length;
+
+    const completedEl = document.getElementById('batchDeliveryCompletedCount');
+    const claimedEl = document.getElementById('batchDeliveryClaimedCount');
+    const madeEl = document.getElementById('batchDeliveryMadeCount');
+    if (completedEl) completedEl.innerText = completedCount;
+    if (claimedEl) claimedEl.innerText = claimedCount;
+    if (madeEl) madeEl.innerText = madeCount;
+}
+
+function toggleBatchDeliveryAll(checkbox) {
+    document.querySelectorAll('#batchDeliveryTable .batch-delivery-checkbox').forEach(item => {
+        item.checked = checkbox.checked;
+    });
+    updateBatchDeliverySelectedCount();
+}
+
+function handleBatchDeliverySubmit() {
+    const checkboxes = Array.from(document.querySelectorAll('#batchDeliveryTable .batch-delivery-checkbox'));
+    const selectedCount = checkboxes.filter(checkbox => checkbox.checked).length;
+    const remainingCount = Math.max(checkboxes.length - selectedCount, 0);
+
+    if (!checkboxes.length || remainingCount === 0) {
+        navigateTo('batch-page');
+        return;
+    }
+
+    const selectedEl = document.getElementById('batchDeliveryConfirmSelected');
+    const remainEl = document.getElementById('batchDeliveryConfirmRemain');
+    if (selectedEl) selectedEl.innerText = selectedCount;
+    if (remainEl) remainEl.innerText = remainingCount;
+    openModal('modal-batch-delivery-confirm');
+}
+
+function confirmBatchDeliverySubmit() {
+    closeModal('modal-batch-delivery-confirm');
+    navigateTo('batch-page');
 }
 
 function setSelectValue(select, value) {
@@ -2501,7 +2578,7 @@ function closeOrderDetailDrawer() {
     }, 220);
 }
 
-function openAddBatchDrawer() {
+function openAddBatchDrawer(source = null, mode = 'add') {
     const overlay = document.getElementById('addBatchDrawerOverlay');
     const drawer = document.getElementById('addBatchDrawer');
     const body = document.getElementById('addBatchDrawerBody');
@@ -2514,6 +2591,16 @@ function openAddBatchDrawer() {
     const fixedFooter = temp.querySelector('div[style*="position:fixed"]');
     if (fixedFooter) fixedFooter.remove();
     body.innerHTML = temp.innerHTML;
+
+    const title = drawer.querySelector('.node-type-drawer-header h3');
+    if (title) title.innerText = mode === 'edit' ? '编辑批次' : '新增批次';
+    const workflowSelect = body.querySelector('[data-batch-workflow-select]');
+    if (workflowSelect && mode === 'edit') {
+        workflowSelect.disabled = true;
+        workflowSelect.style.background = '#F5F5F5';
+        workflowSelect.style.color = 'var(--gray-500)';
+        workflowSelect.style.cursor = 'not-allowed';
+    }
 
     overlay.style.display = 'flex';
     setTimeout(() => drawer.classList.add('active'), 10);
@@ -2547,6 +2634,153 @@ function switchBatchDetailTab(type) {
     productTab.style.color = isMake ? 'var(--gray-600)' : 'var(--primary)';
     productTab.style.borderBottom = isMake ? '2px solid transparent' : '2px solid var(--primary)';
     productTab.style.fontWeight = isMake ? '500' : '600';
+}
+
+let selectedBatchStaffRows = [];
+const batchStaffOperationLogs = [];
+const batchWorkflowNodes = ['作词', '作词审核', '作曲', '作曲审核'];
+
+function getSelectedBatchFlowRows() {
+    return Array.from(document.querySelectorAll('.batch-flow-checkbox:checked')).map(checkbox => checkbox.closest('.batch-flow-row')).filter(Boolean);
+}
+
+function setBatchStaffEditableSteps(currentNodeName) {
+    const currentIndex = batchWorkflowNodes.indexOf(currentNodeName);
+    batchWorkflowNodes.forEach((nodeName, index) => {
+        const select = document.getElementById(`batchStaffStepSelect${index}`);
+        const row = select?.closest('.batch-staff-step-row');
+        if (!select || !row) return;
+        const editable = index >= currentIndex && currentIndex >= 0;
+        select.disabled = !editable;
+        select.value = '';
+        select.style.background = editable ? '#fff' : '#F5F5F5';
+        select.style.color = editable ? 'var(--gray-800)' : 'var(--gray-400)';
+        row.style.opacity = editable ? '1' : '0.55';
+    });
+}
+
+function setSingleStaffEditableSteps(currentNodeName) {
+    const currentIndex = batchWorkflowNodes.indexOf(currentNodeName);
+    batchWorkflowNodes.forEach((nodeName, index) => {
+        const select = document.getElementById(`singleStaffStepSelect${index}`);
+        const row = select?.closest('.single-staff-step-row');
+        if (!select || !row) return;
+        const editable = index >= currentIndex && currentIndex >= 0;
+        select.disabled = !editable;
+        select.value = '';
+        select.style.background = editable ? '#fff' : '#F5F5F5';
+        select.style.color = editable ? 'var(--gray-800)' : 'var(--gray-400)';
+        row.style.opacity = editable ? '1' : '0.55';
+    });
+}
+
+function openSingleStaffMaintenance(button) {
+    const row = button?.closest('.batch-flow-row');
+    const nodeName = row?.dataset.node || '';
+    setSingleStaffEditableSteps(nodeName);
+    openModal('modal-staff-maintenance');
+}
+
+function handleBatchEditStaffClick() {
+    const selectedRows = getSelectedBatchFlowRows();
+    if (!selectedRows.length) {
+        alert('请先选择需要维护人员的制作任务。');
+        return;
+    }
+
+    const invalidRows = selectedRows.filter(row => {
+        const status = row.dataset.status || '';
+        const node = row.dataset.node || '';
+        return status === '已终止' || !node || node === '-';
+    });
+    const nodeNames = Array.from(new Set(selectedRows.map(row => row.dataset.node || '')));
+    if (invalidRows.length || nodeNames.length !== 1) {
+        alert('请选择状态为非终止、且当前运行至同一节点的流水数据进行操作。');
+        return;
+    }
+
+    selectedBatchStaffRows = selectedRows;
+    const flowIds = selectedRows.map(row => row.children[1]?.innerText || '-');
+    const owners = Array.from(new Set(selectedRows.map(row => row.querySelector('.batch-flow-owner-cell')?.innerText || '-')));
+    const nodeName = nodeNames[0];
+
+    document.getElementById('batchStaffSelectedCount').innerText = selectedRows.length;
+    document.getElementById('batchStaffNodeName').innerText = nodeName;
+    document.getElementById('batchStaffFlowIds').innerText = flowIds.join('、');
+    document.getElementById('batchStaffOriginalOwners').innerText = owners.join('、');
+    setBatchStaffEditableSteps(nodeName);
+    openModal('modal-batch-edit-staff');
+}
+
+function submitBatchStaffEdit() {
+    const selectedOwners = batchWorkflowNodes.map((nodeName, index) => {
+        const select = document.getElementById(`batchStaffStepSelect${index}`);
+        return {
+            nodeName,
+            owner: select && !select.disabled ? select.value : ''
+        };
+    }).filter(item => item.owner);
+    if (!selectedOwners.length) {
+        alert('请至少选择一个需要维护节点的新执行人。');
+        return;
+    }
+    const operator = '当前用户';
+    const operationTime = new Date().toLocaleString('zh-CN', { hour12: false });
+    selectedBatchStaffRows.forEach(row => {
+        const flowId = row.children[1]?.innerText || '-';
+        const nodeName = row.dataset.node || '-';
+        const ownerCell = row.querySelector('.batch-flow-owner-cell');
+        const oldOwner = ownerCell?.innerText || '-';
+        const currentNodeOwner = selectedOwners.find(item => item.nodeName === nodeName)?.owner;
+        if (ownerCell && currentNodeOwner) ownerCell.innerText = currentNodeOwner;
+        if (row.dataset.status === '待分配') {
+            row.dataset.status = '进行中';
+            const statusCell = row.querySelector('.batch-flow-status-cell');
+            if (statusCell) statusCell.innerHTML = '<span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span>';
+        }
+        selectedOwners.forEach(item => {
+            batchStaffOperationLogs.push({
+                operationType: '批量修改人员',
+                flowId,
+                nodeName: item.nodeName,
+                operator,
+                operationTime,
+                oldOwner: item.nodeName === nodeName ? oldOwner : '-',
+                newOwner: item.owner
+            });
+        });
+    });
+    document.querySelectorAll('.batch-flow-checkbox:checked').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    closeModal('modal-batch-edit-staff');
+    alert(`修改成功，已记录操作人、操作时间、原执行人及新执行人。`);
+}
+
+function filterBatchClaimSongs() {
+    const songName = (document.getElementById('batchClaimSongNameFilter')?.value || '').trim().toLowerCase();
+    const songCode = (document.getElementById('batchClaimSongCodeFilter')?.value || '').trim().toLowerCase();
+    const singer = (document.getElementById('batchClaimSingerFilter')?.value || '').trim().toLowerCase();
+    document.querySelectorAll('.batch-claim-song-row').forEach(row => {
+        const cells = row.querySelectorAll('td');
+        const rowCode = (cells[0]?.innerText || '').toLowerCase();
+        const rowName = (cells[1]?.innerText || '').toLowerCase();
+        const rowSinger = (cells[3]?.innerText || '').toLowerCase();
+        const matched = (!songName || rowName.includes(songName)) &&
+            (!songCode || rowCode.includes(songCode)) &&
+            (!singer || rowSinger.includes(singer));
+        row.style.display = matched ? '' : 'none';
+    });
+}
+
+function resetBatchClaimSongs() {
+    ['batchClaimSongNameFilter', 'batchClaimSongCodeFilter', 'batchClaimSingerFilter'].forEach(id => {
+        const input = document.getElementById(id);
+        if (input) input.value = '';
+    });
+    document.querySelectorAll('.batch-claim-song-row').forEach(row => {
+        row.style.display = '';
+    });
 }
 
 function switchOrderSongTab(type) {
