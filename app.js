@@ -2075,19 +2075,18 @@ const pages = {
     'copyright-page': {
         title: '版权管理',
         content: `
-            <div class="filter-bar">
-                <div class="filter-row">
+            <div class="filter-bar copyright-filter-bar">
+                <div class="copyright-filter-fields">
                     <div class="filter-item"><label>订单名称</label><input type="text" placeholder="请输入订单名称"></div>
-                    <div class="filter-item"><label>批次名称</label><input type="text" placeholder="请输入批次名称"></div>
                     <div class="filter-item"><label>订单编号</label><input type="text" placeholder="请输入订单编号"></div>
+                    <div class="filter-item"><label>批次名称</label><input type="text" placeholder="请输入批次名称"></div>
                     <div class="filter-item"><label>批次编号</label><input type="text" placeholder="请输入批次编号"></div>
-                </div>
-                <div class="filter-row">
                     <div class="filter-item"><label>交付编号</label><input type="text" placeholder="请输入交付编号"></div>
-                    <div class="filter-item"><label>交付歌名</label><input type="text" placeholder="请输入交付歌名"></div>
-                    <div class="filter-item"><label>版权状态</label><select><option>请选择版权状态</option><option>未维护</option><option>已维护</option></select></div>
-                    <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
+                    <div class="filter-item"><label>歌名</label><input type="text" placeholder="请输入歌名"></div>
+                    <div class="filter-item"><label>状态</label><select><option>请选择状态</option><option>未维护</option><option>已维护</option></select></div>
                 </div>
+                <div class="filter-actions copyright-filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
+            </div>
             </div>
             <div class="action-bar" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
                 <div style="display:flex; align-items:center; gap:12px;">
@@ -2103,13 +2102,13 @@ const pages = {
                 <button class="btn-default"><i class="fas fa-download"></i> 下载</button>
             </div>
             <div class="table-container">
-                <table class="data-table">
-                    <thead><tr><th>所属订单名</th><th>所属批次名</th><th>交付编号（不可为空）</th><th>歌名（成品信息带过来的）</th><th>成品编号</th><th>版权状态（未维护、已维护）</th><th>词信息</th><th>作词人</th><th>曲信息</th><th>作曲人</th><th>制作完成时间</th><th>授权时间</th><th>授权开始时间</th><th>授权结束时间</th><th>授权期限（天）</th><th>发行日期</th><th>上线日期</th><th>下架日期</th><th>授权地区（枚举）</th><th>发行地区（枚举）</th><th>版权情况（枚举）</th><th>在线状态（枚举）</th><th>上架平台（枚举）</th><th>端口应上线平台（枚举）</th><th>发行端口（枚举）</th><th>分成比例（字符串）</th><th>商用情况（枚举）</th><th>外显歌手（枚举）</th><th>外显词作者（枚举）</th><th>外显曲作者（枚举）</th><th>上线外显（字符串）</th><th class="sticky-right copyright-download-actions">操作</th></tr></thead>
+                <table class="data-table copyright-management-table">
+                    <thead><tr><th>所属订单名</th><th>所属批次名</th><th>交付编号</th><th>歌名</th><th>成品编号</th><th>状态</th><th>词信息</th><th>作词人</th><th>曲信息</th><th>作曲人</th><th>制作完成时间</th><th>授权时间</th><th>授权开始时间</th><th>授权结束时间</th><th>授权期限（天）</th><th>发行日期</th><th>上线日期</th><th>下架日期</th><th>授权地区（枚举）</th><th>发行地区（枚举）</th><th>版权情况（枚举）</th><th>在线状态（枚举）</th><th>上架平台（枚举）</th><th>端口应上线平台（枚举）</th><th>发行端口（枚举）</th><th>分成比例（字符串）</th><th>商用情况（枚举）</th><th>外显歌手（枚举）</th><th>外显词作者（枚举）</th><th>外显曲作者（枚举）</th><th>上线外显（字符串）</th><th class="sticky-right copyright-download-actions">操作</th></tr></thead>
                     <tbody>
-                        <tr><td>订单 1</td><td>001</td><td>JF-2605-001</td><td>窗外</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>张三</td><td>曲信息</td><td>张三</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
-                        <tr><td>订单 2</td><td>002</td><td>JF-2605-002</td><td>他不懂</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>李四</td><td>曲信息</td><td>李四</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
-                        <tr><td>订单 3</td><td>003</td><td>JF-2605-003</td><td>这就是爱</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>王五</td><td>曲信息</td><td>王五</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>中国大陆</td><td>全球</td><td>独家</td><td>在线</td><td>网易云音乐</td><td>网易云/QQ音乐</td><td>网页端</td><td>50%</td><td>可商用</td><td>张杰</td><td>王五</td><td>王五</td><td>已上线</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
-                        <tr><td>订单 4</td><td>004</td><td>JF-2605-004</td><td>云中的angle</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>赵六</td><td>曲信息</td><td>赵六</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>全球</td><td>全球</td><td>非独家</td><td>在线</td><td>QQ音乐</td><td>QQ音乐</td><td>移动端</td><td>30%</td><td>可商用</td><td>张杰</td><td>赵六</td><td>赵六</td><td>上线中</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 1</td><td>001</td><td>DEL202606020001</td><td>窗外</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>张三</td><td>曲信息</td><td>张三</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 1</td><td>001</td><td>DEL202606020001</td><td>他不懂</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>李四</td><td>曲信息</td><td>李四</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 2</td><td>002</td><td>DEL202606020002</td><td>这就是爱</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>王五</td><td>曲信息</td><td>王五</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>中国大陆</td><td>全球</td><td>独家</td><td>在线</td><td>网易云音乐</td><td>网易云/QQ音乐</td><td>网页端</td><td>50%</td><td>可商用</td><td>张杰</td><td>王五</td><td>王五</td><td>已上线</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 2</td><td>002</td><td>DEL202606020002</td><td>云中的angle</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>赵六</td><td>曲信息</td><td>赵六</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>全球</td><td>全球</td><td>非独家</td><td>在线</td><td>QQ音乐</td><td>QQ音乐</td><td>移动端</td><td>30%</td><td>可商用</td><td>张杰</td><td>赵六</td><td>赵六</td><td>上线中</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2324,6 +2323,77 @@ function toggleCopyrightImportDropdown(event) {
 function closeCopyrightImportDropdown() {
     const menu = document.getElementById('copyrightImportDropdown');
     if (menu) menu.style.display = 'none';
+}
+
+function formatDateInputValue(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+function updateCopyrightAuthEndDate() {
+    const startInput = document.getElementById('copyrightAuthStartDate');
+    const durationSelect = document.getElementById('copyrightAuthDuration');
+    const endInput = document.getElementById('copyrightAuthEndDate');
+    if (!startInput || !durationSelect || !endInput || !startInput.value) return;
+
+    const durationYears = {
+        '一年': 1,
+        '两年': 2,
+        '三年': 3,
+        '五年': 5
+    };
+    const duration = durationSelect.value;
+    if (duration === '永久') {
+        endInput.value = '9999-12-31';
+        return;
+    }
+    if (!durationYears[duration]) return;
+
+    const endDate = new Date(`${startInput.value}T00:00:00`);
+    endDate.setFullYear(endDate.getFullYear() + durationYears[duration]);
+    endDate.setDate(endDate.getDate() - 1);
+    endInput.value = formatDateInputValue(endDate);
+}
+
+function closeCopyrightMultiDropdowns(exceptDropdown = null) {
+    document.querySelectorAll('.copyright-multi-dropdown.open').forEach(dropdown => {
+        if (dropdown !== exceptDropdown) dropdown.classList.remove('open');
+    });
+}
+
+function toggleCopyrightMultiDropdown(event, trigger) {
+    event.stopPropagation();
+    const dropdown = trigger?.closest('.copyright-multi-dropdown');
+    if (!dropdown) return;
+    const willOpen = !dropdown.classList.contains('open');
+    closeCopyrightMultiDropdowns(dropdown);
+    dropdown.classList.toggle('open', willOpen);
+}
+
+function updateCopyrightMultiSelect(checkbox) {
+    const dropdown = checkbox?.closest('.copyright-multi-dropdown');
+    const tagsWrap = dropdown?.querySelector('.copyright-multi-tags');
+    if (!dropdown || !tagsWrap) return;
+
+    const selectedLabels = Array.from(dropdown.querySelectorAll('.copyright-multi-menu input:checked')).map(input => input.parentElement.textContent.trim());
+    if (!selectedLabels.length) {
+        tagsWrap.innerHTML = `<span class="copyright-multi-placeholder">${dropdown.dataset.placeholder || '请选择'}</span>`;
+        return;
+    }
+    tagsWrap.innerHTML = selectedLabels.map(label => `<span class="copyright-tag" onclick="removeCopyrightMultiSelectTag(event, this, '${label}')">${label} <span class="copyright-tag-close">×</span></span>`).join('');
+}
+
+function removeCopyrightMultiSelectTag(event, tag, label) {
+    event.stopPropagation();
+    const dropdown = tag?.closest('.copyright-multi-dropdown');
+    if (!dropdown) return;
+
+    const checkbox = Array.from(dropdown.querySelectorAll('.copyright-multi-menu input')).find(input => input.parentElement.textContent.trim() === label);
+    if (!checkbox) return;
+    checkbox.checked = false;
+    updateCopyrightMultiSelect(checkbox);
 }
 
 function updateBatchDeliverySelectedCount() {
@@ -3116,6 +3186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    document.addEventListener('click', () => closeCopyrightMultiDropdowns());
 });
 
 // 交付批次直接完成

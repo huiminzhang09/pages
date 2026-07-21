@@ -918,7 +918,7 @@
             <div class="copyright-maintain-section">
                 <div class="copyright-maintain-title">歌曲信息</div>
                 <div class="copyright-form-grid">
-                    <div class="copyright-form-field"><label>交付歌名</label><input type="text" value="夜空中最亮的星（完整版）" placeholder="请输入交付歌名"></div>
+                    <div class="copyright-form-field"><label>歌名 <span class="required">*</span></label><input type="text" value="夜空中最亮的星（完整版）" placeholder="请输入歌名"></div>
                     <div class="copyright-form-field"><label>外显词作者 <span class="required">*</span></label><select><option>请选择外显词作者</option><option>作词人A</option><option>张三</option></select></div>
                     <div class="copyright-form-field"><label>外显曲作者 <span class="required">*</span></label><select><option>请选择外显曲作者</option><option>作曲人A</option><option>李四</option></select></div>
                     <div class="copyright-form-field"><label>外显歌手 <span class="required">*</span></label><select><option>请选择外显歌手</option><option>张三</option><option>虚拟歌手 小A</option></select></div>
@@ -928,23 +928,23 @@
             <div class="copyright-maintain-section">
                 <div class="copyright-maintain-title">交付打包信息</div>
                 <div class="copyright-form-grid">
-                    <div class="copyright-form-field"><label>授权开始时间 <span class="required">*</span></label><input type="date" placeholder="请选择授权开始时间"></div>
-                    <div class="copyright-form-field"><label>授权结束时间 <span class="required">*</span></label><input type="date" placeholder="请选择授权结束时间"></div>
-                    <div class="copyright-form-field"><label>授权时间 <span class="required">*</span></label><select><option>请选择授权时间</option><option>一年</option><option>三年</option><option>五年</option></select></div>
-                    <div class="copyright-form-field"><label>商用情况 <span class="required">*</span></label><select><option>请选择商用情况</option><option>可商用</option><option>不可商用</option></select></div>
+                    <div class="copyright-form-field"><label>授权开始时间 <span class="required">*</span></label><input type="date" id="copyrightAuthStartDate" onchange="updateCopyrightAuthEndDate()" placeholder="请选择授权开始时间"></div>
+                    <div class="copyright-form-field"><label>授权时间 <span class="required">*</span></label><select id="copyrightAuthDuration" onchange="updateCopyrightAuthEndDate()"><option>请选择授权时间</option><option>一年</option><option>两年</option><option>三年</option><option>五年</option><option>永久</option></select></div>
+                    <div class="copyright-form-field"><label>授权结束时间 <span class="required">*</span></label><input type="date" id="copyrightAuthEndDate" placeholder="请选择授权结束时间"></div>
+                    <div class="copyright-form-field"><label>商用情况 <span class="required">*</span></label><select><option>请选择商用情况</option><option>独家</option><option>非独家</option><option>买断</option></select></div>
                     <div class="copyright-form-field"><label>分成比例 <span class="required">*</span></label><input type="text" placeholder="请输入分成比例"></div>
-                    <div class="copyright-form-field"><label>授权地区 <span class="required">*</span></label><div class="copyright-tag-select"><span class="copyright-tags"><span class="copyright-tag">中国大陆 ×</span><span class="copyright-tag">港澳台 ×</span></span><i class="fas fa-chevron-down"></i></div></div>
-                    <div class="copyright-form-field"><label>发行地区 <span class="required">*</span></label><div class="copyright-tag-select"><span class="copyright-tags"><span class="copyright-tag">中国大陆 ×</span></span><i class="fas fa-chevron-down"></i></div></div>
-                    <div class="copyright-form-field"><label>版权情况 <span class="required">*</span></label><select><option>请选择版权情况</option><option>独家</option><option>非独家</option><option>买断</option><option>分成</option></select></div>
+                    <div class="copyright-form-field"><label>授权地区 <span class="required">*</span></label><select><option>请选择授权地区</option><option>中国大陆</option><option>港澳台</option><option>海外</option><option>全球</option></select></div>
+                    <div class="copyright-form-field"><label>发行地区 <span class="required">*</span></label><select><option>请选择发行地区</option><option>中国大陆</option><option>港澳台</option><option>海外</option><option>全球</option></select></div>
+                    <div class="copyright-form-field"><label>版权情况 <span class="required">*</span></label><select><option>请选择版权情况</option><option>自有</option><option>外部</option><option>授权</option><option>音核引力代理发行</option><option>外部demo</option><option>自由歌曲版权</option><option>番茄自有自主上传</option><option>番茄保底分成</option></select></div>
                 </div>
             </div>
 
             <div class="copyright-maintain-section">
                 <div class="copyright-maintain-title">上架核对信息</div>
                 <div class="copyright-form-grid">
-                    <div class="copyright-form-field full"><label>上架平台 <span class="required">*</span></label><div class="copyright-tag-select"><span class="copyright-tags"><span class="copyright-tag">汽水 ×</span><span class="copyright-tag">TME ×</span></span><i class="fas fa-chevron-down"></i></div></div>
-                    <div class="copyright-form-field"><label>端口应上架平台 <span class="required">*</span></label><div class="copyright-tag-select"><span class="copyright-tags"><span class="copyright-tag">汽水 ×</span><span class="copyright-tag">TME ×</span></span><i class="fas fa-chevron-down"></i></div></div>
-                    <div class="copyright-form-field"><label>发行端口 <span class="required">*</span></label><select><option>请输入发行端口</option><option>网页端</option><option>移动端</option><option>全端口</option></select></div>
+                    <div class="copyright-form-field full"><label>上架平台 <span class="required">*</span></label><div class="copyright-multi-dropdown" data-placeholder="请选择上架平台"><button type="button" class="copyright-multi-trigger" onclick="toggleCopyrightMultiDropdown(event, this)"><span class="copyright-multi-tags"><span class="copyright-tag" onclick="removeCopyrightMultiSelectTag(event, this, '番茄')">番茄 <span class="copyright-tag-close">×</span></span><span class="copyright-tag" onclick="removeCopyrightMultiSelectTag(event, this, 'TME')">TME <span class="copyright-tag-close">×</span></span><span class="copyright-tag" onclick="removeCopyrightMultiSelectTag(event, this, '汽水')">汽水 <span class="copyright-tag-close">×</span></span></span><i class="fas fa-chevron-down"></i></button><div class="copyright-multi-menu" onclick="event.stopPropagation()"><label><input type="checkbox" checked onchange="updateCopyrightMultiSelect(this)"> 番茄</label><label><input type="checkbox" checked onchange="updateCopyrightMultiSelect(this)"> TME</label><label><input type="checkbox" checked onchange="updateCopyrightMultiSelect(this)"> 汽水</label><label><input type="checkbox" onchange="updateCopyrightMultiSelect(this)"> SP</label><label><input type="checkbox" onchange="updateCopyrightMultiSelect(this)"> YT</label><label><input type="checkbox" onchange="updateCopyrightMultiSelect(this)"> 番茄音乐</label><label><input type="checkbox" onchange="updateCopyrightMultiSelect(this)"> 网易云</label></div></div></div>
+                    <div class="copyright-form-field"><label>端口应上线平台 <span class="required">*</span></label><div class="copyright-multi-dropdown" data-placeholder="请选择端口应上线平台"><button type="button" class="copyright-multi-trigger" onclick="toggleCopyrightMultiDropdown(event, this)"><span class="copyright-multi-tags"><span class="copyright-tag" onclick="removeCopyrightMultiSelectTag(event, this, '汽水全网')">汽水全网 <span class="copyright-tag-close">×</span></span><span class="copyright-tag" onclick="removeCopyrightMultiSelectTag(event, this, 'TME')">TME <span class="copyright-tag-close">×</span></span><span class="copyright-tag" onclick="removeCopyrightMultiSelectTag(event, this, '番茄音乐')">番茄音乐 <span class="copyright-tag-close">×</span></span></span><i class="fas fa-chevron-down"></i></button><div class="copyright-multi-menu" onclick="event.stopPropagation()"><label><input type="checkbox" checked onchange="updateCopyrightMultiSelect(this)"> 汽水全网</label><label><input type="checkbox" checked onchange="updateCopyrightMultiSelect(this)"> TME</label><label><input type="checkbox" checked onchange="updateCopyrightMultiSelect(this)"> 番茄音乐</label><label><input type="checkbox" onchange="updateCopyrightMultiSelect(this)"> 汽水</label></div></div></div>
+                    <div class="copyright-form-field"><label>发行端口 <span class="required">*</span></label><select><option>请选择发行端口</option><option>汽水全网</option><option>TME</option><option>番茄音乐</option></select></div>
                     <div class="copyright-form-field"><label>上线外显 <span class="required">*</span></label><input type="text" placeholder="请输入上线外显"></div>
                     <div class="copyright-form-field"><label>发行时间 <span class="required">*</span></label><input type="date" placeholder="请选择发行时间"></div>
                     <div class="copyright-form-field"><label>上线日期 <span class="required">*</span></label><input type="date" placeholder="请选择上线时间"></div>
@@ -955,8 +955,8 @@
             <div class="copyright-maintain-section">
                 <div class="copyright-maintain-title">上架补充信息</div>
                 <div class="copyright-form-grid">
-                    <div class="copyright-form-field"><label>在线状态 <span class="required">*</span></label><select><option>请选择在线状态</option><option>在线</option><option>下线</option></select></div>
-                    <div class="copyright-form-field"><label>下架时间 <span class="required">*</span></label><input type="date" placeholder="请选择下架时间"></div>
+                    <div class="copyright-form-field"><label>在线状态 <span class="required">*</span></label><select><option>请选择在线状态</option><option>在线中</option><option>已下架</option><option>未上线</option></select></div>
+                    <div class="copyright-form-field"><label>下架时间</label><input type="date" placeholder="请选择下架时间"></div>
                 </div>
             </div>
 
