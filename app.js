@@ -2404,6 +2404,32 @@ function closeModal(id) {
     if (modal) modal.style.display = 'none';
 }
 
+function closeClaimStyleDropdowns(exceptDropdown = null) {
+    document.querySelectorAll('.claim-style-dropdown.open').forEach(dropdown => {
+        if (dropdown !== exceptDropdown) dropdown.classList.remove('open');
+    });
+}
+
+function toggleClaimStyleDropdown(event, trigger) {
+    event.stopPropagation();
+    const dropdown = trigger?.closest('.claim-style-dropdown');
+    if (!dropdown) return;
+    const willOpen = !dropdown.classList.contains('open');
+    closeClaimStyleDropdowns(dropdown);
+    dropdown.classList.toggle('open', willOpen);
+}
+
+function selectClaimStyle(button) {
+    const dropdown = button?.closest('.claim-style-dropdown');
+    if (!dropdown) return;
+    const valueEl = dropdown.querySelector('.claim-style-value');
+    if (valueEl) valueEl.innerText = button.textContent.trim();
+    dropdown.classList.add('selected');
+    dropdown.querySelectorAll('.claim-style-menu button.active').forEach(item => item.classList.remove('active'));
+    button.classList.add('active');
+    dropdown.classList.remove('open');
+}
+
 function toggleCopyrightImportDropdown(event) {
     event.stopPropagation();
     const menu = document.getElementById('copyrightImportDropdown');
@@ -3277,7 +3303,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    document.addEventListener('click', () => closeCopyrightMultiDropdowns());
+    document.addEventListener('click', () => {
+        closeCopyrightMultiDropdowns();
+        closeClaimStyleDropdowns();
+    });
 });
 
 // 交付批次直接完成

@@ -740,8 +740,7 @@
         <div class="modal-body" style="padding-bottom:12px;">
             <div style="border:1px solid #E8E8E8; border-radius:8px; padding:16px; margin-bottom:16px;">
                 <div style="display:flex; gap:16px; margin-bottom:12px;">
-                    <div style="flex:1;"><label style="display:block; margin-bottom:8px; font-size:14px; color:var(--gray-700)">批次</label><select style="width:100%; padding:8px 12px; border:1px solid #D9D9D9; border-radius:6px; background:#F5F5F5;"><option>请选择</option></select></div>
-                    <div style="flex:1;"><label style="display:block; margin-bottom:8px; font-size:14px; color:var(--gray-700)">风格</label><select style="width:100%; padding:8px 12px; border:1px solid #D9D9D9; border-radius:6px; background:#F5F5F5;"><option>请选择</option></select></div>
+                    <div style="flex:1;"><label style="display:block; margin-bottom:8px; font-size:14px; color:var(--gray-700)">风格</label><div class="claim-style-dropdown" onclick="event.stopPropagation()"><button type="button" class="claim-style-trigger" onclick="toggleClaimStyleDropdown(event, this)"><span class="claim-style-value">请选择</span><i class="fas fa-chevron-down"></i></button><div class="claim-style-menu"><div class="claim-style-group">全部</div><button type="button" onclick="selectClaimStyle(this)">80金曲</button><button type="button" onclick="selectClaimStyle(this)">草原风</button><button type="button" onclick="selectClaimStyle(this)">经典摇滚</button><button type="button" onclick="selectClaimStyle(this)">老年下沉</button><button type="button" onclick="selectClaimStyle(this)">年轻下沉</button><button type="button" onclick="selectClaimStyle(this)">中年下沉</button><button type="button" onclick="selectClaimStyle(this)">古风</button><div class="claim-style-group">词</div><button type="button" onclick="selectClaimStyle(this)">潮流摇滚</button><button type="button" onclick="selectClaimStyle(this)">国风</button><button type="button" onclick="selectClaimStyle(this)">老年</button><button type="button" onclick="selectClaimStyle(this)">青年</button><button type="button" onclick="selectClaimStyle(this)">山歌</button><button type="button" onclick="selectClaimStyle(this)">中年</button><div class="claim-style-group">曲</div><button type="button" onclick="selectClaimStyle(this)">中青下沉</button><button type="button" onclick="selectClaimStyle(this)">山民风</button><button type="button" onclick="selectClaimStyle(this)">新金曲</button><button type="button" onclick="selectClaimStyle(this)">古早网络风</button><button type="button" onclick="selectClaimStyle(this)">经典流行</button><button type="button" onclick="selectClaimStyle(this)">8090怀旧</button><button type="button" onclick="selectClaimStyle(this)">年轻网易风</button><button type="button" onclick="selectClaimStyle(this)">中年苦情</button><button type="button" onclick="selectClaimStyle(this)">老年苦情</button><button type="button" onclick="selectClaimStyle(this)">广场舞DJ</button><button type="button" onclick="selectClaimStyle(this)">车载DJ</button><button type="button" onclick="selectClaimStyle(this)">流行</button><button type="button" onclick="selectClaimStyle(this)">说唱</button><button type="button" onclick="selectClaimStyle(this)">摇滚</button><button type="button" onclick="selectClaimStyle(this)">民谣</button><button type="button" onclick="selectClaimStyle(this)">电子</button><button type="button" onclick="selectClaimStyle(this)">旋律说唱</button><button type="button" onclick="selectClaimStyle(this)">年轻流行</button><button type="button" onclick="selectClaimStyle(this)">国风rnb</button><button type="button" onclick="selectClaimStyle(this)">草原</button><button type="button" onclick="selectClaimStyle(this)">草原流行</button><button type="button" onclick="selectClaimStyle(this)">镜像</button><button type="button" onclick="selectClaimStyle(this)">年轻下沉-抖音</button><button type="button" onclick="selectClaimStyle(this)">山歌民歌</button><button type="button" onclick="selectClaimStyle(this)">R&B</button><button type="button" onclick="selectClaimStyle(this)">DJ</button></div></div></div>
                     <div style="flex:1;"><label style="display:block; margin-bottom:8px; font-size:14px; color:var(--gray-700)">歌名</label><div class="input-with-icon" style="border:1px solid #D9D9D9; border-radius:6px; padding:6px 12px; background:#F5F5F5;"><i class="fas fa-search" style="color:var(--gray-400)"></i><input type="text" placeholder="搜索订单编号" style="background:transparent; border:none; font-size:14px; margin-left:8px; width:calc(100% - 24px); outline:none;"></div></div>
                     <div style="display:flex; align-items:flex-end; gap:8px;">
                         <button class="btn-primary" style="height:36px; padding: 0 16px;">查询</button>
@@ -754,9 +753,8 @@
                 <thead>
                     <tr>
                         <th style="width:40px; text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></th>
-                        <th>批次名称</th>
-                        <th>歌曲原名</th>
-                        <th>交付歌名</th>
+                        <th>原歌名</th>
+                        <th>新歌名</th>
                         <th>风格</th>
                         <th>作词信息</th>
                         <th>作曲信息</th>
@@ -764,11 +762,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>2 月 300 首</td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>古风</td><td>执红烛轻扫眉笔...</td><td>文件</td><td>2026-02-23</td></tr>
-                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>6 月 300 首</td><td>这一路</td><td>这一路</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
-                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>4 月 300 首</td><td>执念</td><td>执念</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
-                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>300 首</td><td>惦记</td><td>惦记</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
-                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>第一批次</td><td>义气</td><td>义气</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>古风</td><td>执红烛轻扫眉笔...</td><td>文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>这一路</td><td>这一路</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>执念</td><td>执念</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>惦记</td><td>惦记</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
+                    <tr><td style="text-align:center;"><input type="checkbox" style="accent-color:var(--primary);"></td><td>义气</td><td>义气</td><td>民谣</td><td>这里是歌词...</td><td>这里是文件</td><td>2026-02-23</td></tr>
                 </tbody>
             </table>
         </div>
