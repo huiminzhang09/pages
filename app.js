@@ -2103,12 +2103,12 @@ const pages = {
             </div>
             <div class="table-container">
                 <table class="data-table copyright-management-table">
-                    <thead><tr><th>所属订单名</th><th>所属批次名</th><th>交付编号</th><th>歌名</th><th>成品编号</th><th>状态</th><th>词信息</th><th>作词人</th><th>曲信息</th><th>作曲人</th><th>制作完成时间</th><th>授权时间</th><th>授权开始时间</th><th>授权结束时间</th><th>授权期限（天）</th><th>发行日期</th><th>上线日期</th><th>下架日期</th><th>授权地区（枚举）</th><th>发行地区（枚举）</th><th>版权情况（枚举）</th><th>在线状态（枚举）</th><th>上架平台（枚举）</th><th>端口应上线平台（枚举）</th><th>发行端口（枚举）</th><th>分成比例（字符串）</th><th>商用情况（枚举）</th><th>外显歌手（枚举）</th><th>外显词作者（枚举）</th><th>外显曲作者（枚举）</th><th>上线外显（字符串）</th><th class="sticky-right copyright-download-actions">操作</th></tr></thead>
+                    <thead><tr><th>所属订单名</th><th>所属批次名</th><th>交付编号</th><th>歌名</th><th>成品编号</th><th>状态</th><th>词信息</th><th>作词人</th><th>曲信息</th><th>作曲人</th><th>制作完成时间</th><th>授权时间</th><th>授权开始时间</th><th>授权结束时间</th><th>授权期限</th><th>发行日期</th><th>上线日期</th><th>下架日期</th><th>授权地区（枚举）</th><th>发行地区（枚举）</th><th>版权情况（枚举）</th><th>在线状态（枚举）</th><th>上架平台（枚举）</th><th>端口应上线平台（枚举）</th><th>发行端口（枚举）</th><th>分成比例（字符串）</th><th>商用情况（枚举）</th><th>外显歌手（枚举）</th><th>外显词作者（枚举）</th><th>外显曲作者（枚举）</th><th>上线外显（字符串）</th><th class="sticky-right copyright-download-actions">操作</th></tr></thead>
                     <tbody>
-                        <tr><td>订单 1</td><td>001</td><td>DEL202606020001</td><td>窗外</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>张三</td><td>曲信息</td><td>张三</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
-                        <tr><td>订单 1</td><td>001</td><td>DEL202606020001</td><td>他不懂</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>李四</td><td>曲信息</td><td>李四</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
-                        <tr><td>订单 2</td><td>002</td><td>DEL202606020002</td><td>这就是爱</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>王五</td><td>曲信息</td><td>王五</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>中国大陆</td><td>全球</td><td>独家</td><td>在线</td><td>网易云音乐</td><td>网易云/QQ音乐</td><td>网页端</td><td>50%</td><td>可商用</td><td>张杰</td><td>王五</td><td>王五</td><td>已上线</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
-                        <tr><td>订单 2</td><td>002</td><td>DEL202606020002</td><td>云中的angle</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>赵六</td><td>曲信息</td><td>赵六</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>1095</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>全球</td><td>全球</td><td>非独家</td><td>在线</td><td>QQ音乐</td><td>QQ音乐</td><td>移动端</td><td>30%</td><td>可商用</td><td>张杰</td><td>赵六</td><td>赵六</td><td>上线中</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openModal('modal-copyright-maintain')">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 1</td><td>001</td><td>DEL202606020001</td><td>窗外</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>张三</td><td>曲信息</td><td>张三</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openCopyrightMaintainModal(this)">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 1</td><td>001</td><td>DEL202606020001</td><td>他不懂</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>李四</td><td>曲信息</td><td>李四</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openCopyrightMaintainModal(this)">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 2</td><td>002</td><td>DEL202606020002</td><td>这就是爱</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>王五</td><td>曲信息</td><td>王五</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>三年</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>中国大陆</td><td>全球</td><td>独家</td><td>在线</td><td>网易云音乐</td><td>网易云/QQ音乐</td><td>网页端</td><td>50%</td><td>可商用</td><td>张杰</td><td>王五</td><td>王五</td><td>已上线</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openCopyrightMaintainModal(this)">版权维护</button><button class="btn-text">下载</button></td></tr>
+                        <tr><td>订单 2</td><td>002</td><td>DEL202606020002</td><td>云中的angle</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-green">已维护</span></td><td>歌词</td><td>赵六</td><td>曲信息</td><td>赵六</td><td>2026-05-15 11:22:23</td><td>2026-05-15 11:22:23</td><td>2026-05-15</td><td>2029-05-15</td><td>三年</td><td>2026-05-16</td><td>2026-05-17</td><td>--</td><td>全球</td><td>全球</td><td>非独家</td><td>在线</td><td>QQ音乐</td><td>QQ音乐</td><td>移动端</td><td>30%</td><td>可商用</td><td>张杰</td><td>赵六</td><td>赵六</td><td>上线中</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openCopyrightMaintainModal(this)">版权维护</button><button class="btn-text">下载</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2306,6 +2306,97 @@ function navigateTo(pageKey, navEl = null) {
 function openModal(id) {
     const modal = document.getElementById(id);
     if (modal) modal.style.display = 'flex';
+}
+
+function normalizeCopyrightValue(value) {
+    const text = (value || '').trim();
+    return text === '--' ? '' : text;
+}
+
+function getCopyrightRowValue(cells, index) {
+    return normalizeCopyrightValue(cells?.[index]?.textContent);
+}
+
+function getCopyrightDateValue(value) {
+    const match = normalizeCopyrightValue(value).match(/\d{4}-\d{2}-\d{2}/);
+    return match ? match[0] : '';
+}
+
+function setCopyrightInputValue(id, value, isDate = false) {
+    const field = document.getElementById(id);
+    if (!field) return;
+    field.value = isDate ? getCopyrightDateValue(value) : normalizeCopyrightValue(value);
+}
+
+function setCopyrightSelectValue(id, value) {
+    const select = document.getElementById(id);
+    const normalizedValue = normalizeCopyrightValue(value);
+    if (!select) return;
+    if (!normalizedValue) {
+        select.selectedIndex = 0;
+        return;
+    }
+    const exists = Array.from(select.options).some(option => option.value === normalizedValue || option.textContent.trim() === normalizedValue);
+    if (!exists) {
+        select.add(new Option(normalizedValue, normalizedValue));
+    }
+    select.value = normalizedValue;
+}
+
+function splitCopyrightMultiValues(value) {
+    return normalizeCopyrightValue(value).split(/[、,，/]+/).map(item => item.trim()).filter(Boolean);
+}
+
+function setCopyrightMultiSelectValue(id, value) {
+    const dropdown = document.getElementById(id);
+    if (!dropdown) return;
+    const selectedValues = splitCopyrightMultiValues(value);
+    const menu = dropdown.querySelector('.copyright-multi-menu');
+    const knownLabels = Array.from(menu.querySelectorAll('label')).map(label => label.textContent.trim());
+
+    selectedValues.forEach(label => {
+        if (!knownLabels.includes(label)) {
+            const newLabel = document.createElement('label');
+            newLabel.innerHTML = `<input type="checkbox" onchange="updateCopyrightMultiSelect(this)"> ${label}`;
+            menu.appendChild(newLabel);
+            knownLabels.push(label);
+        }
+    });
+
+    dropdown.querySelectorAll('.copyright-multi-menu input').forEach(input => {
+        input.checked = selectedValues.includes(input.parentElement.textContent.trim());
+    });
+    const firstCheckbox = dropdown.querySelector('.copyright-multi-menu input');
+    if (firstCheckbox) updateCopyrightMultiSelect(firstCheckbox);
+}
+
+function openCopyrightMaintainModal(button) {
+    const row = button?.closest('tr');
+    const cells = row?.children;
+    setCopyrightInputValue('copyrightSongName', getCopyrightRowValue(cells, 3));
+    setCopyrightSelectValue('copyrightMaintainStatus', getCopyrightRowValue(cells, 5));
+    setCopyrightSelectValue('copyrightAuthDuration', getCopyrightRowValue(cells, 14));
+    setCopyrightInputValue('copyrightAuthStartDate', getCopyrightRowValue(cells, 12), true);
+    setCopyrightInputValue('copyrightAuthEndDate', getCopyrightRowValue(cells, 13), true);
+    setCopyrightInputValue('copyrightIssueDate', getCopyrightRowValue(cells, 15), true);
+    setCopyrightInputValue('copyrightOnlineDate', getCopyrightRowValue(cells, 16), true);
+    setCopyrightInputValue('copyrightOfflineDate', getCopyrightRowValue(cells, 17), true);
+    setCopyrightSelectValue('copyrightAuthRegion', getCopyrightRowValue(cells, 18));
+    setCopyrightSelectValue('copyrightIssueRegion', getCopyrightRowValue(cells, 19));
+    setCopyrightSelectValue('copyrightSituation', getCopyrightRowValue(cells, 20));
+    setCopyrightSelectValue('copyrightOnlineStatus', getCopyrightRowValue(cells, 21));
+    setCopyrightMultiSelectValue('copyrightShelfPlatforms', getCopyrightRowValue(cells, 22));
+    setCopyrightMultiSelectValue('copyrightPortPlatforms', getCopyrightRowValue(cells, 23));
+    setCopyrightSelectValue('copyrightIssuePort', getCopyrightRowValue(cells, 24));
+    setCopyrightInputValue('copyrightShareRatio', getCopyrightRowValue(cells, 25));
+    setCopyrightSelectValue('copyrightCommercial', getCopyrightRowValue(cells, 26));
+    setCopyrightSelectValue('copyrightDisplaySinger', getCopyrightRowValue(cells, 27));
+    setCopyrightSelectValue('copyrightDisplayLyricist', getCopyrightRowValue(cells, 28));
+    setCopyrightSelectValue('copyrightDisplayComposer', getCopyrightRowValue(cells, 29));
+    setCopyrightInputValue('copyrightOnlineDisplay', getCopyrightRowValue(cells, 30));
+    setCopyrightInputValue('copyrightSupplier', '');
+    setCopyrightInputValue('copyrightRemark', '');
+    openModal('modal-copyright-maintain');
 }
 
 function closeModal(id) {
