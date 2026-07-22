@@ -651,9 +651,9 @@ const pages = {
                       <!-- 唯一成品 -->
                       <div id="compTrackItem1"
                         style="border: 1px solid var(--gray-200); border-radius: 8px; padding: 12px; background: var(--gray-50);">
-                        <div class="form-group" style="margin-bottom: 12px;">
-                          <label>名称</label>
-                          <input id="compFinalTrackName" class="input" value="思念的风景_v1.mp3" style="height: 38px; background: #fff;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 14px; line-height: 1.5;">
+                          <span style="color: var(--gray-600); font-weight: 500;">名称：</span>
+                          <span id="compFinalTrackName" style="color: var(--gray-800); font-weight: 600;">思念的风景_v1.mp3</span>
                         </div>
                         <audio controls style="width: 100%;">
                           <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
@@ -2103,7 +2103,7 @@ const pages = {
             </div>
             <div class="table-container">
                 <table class="data-table copyright-management-table">
-                    <thead><tr><th>所属订单名</th><th>所属批次名</th><th>交付编号</th><th>歌名</th><th>成品编号</th><th>状态</th><th>词信息</th><th>作词人</th><th>曲信息</th><th>作曲人</th><th>制作完成时间</th><th>授权时间</th><th>授权开始时间</th><th>授权结束时间</th><th>授权期限</th><th>发行日期</th><th>上线日期</th><th>下架日期</th><th>授权地区（枚举）</th><th>发行地区（枚举）</th><th>版权情况（枚举）</th><th>在线状态（枚举）</th><th>上架平台（枚举）</th><th>端口应上线平台（枚举）</th><th>发行端口（枚举）</th><th>分成比例（字符串）</th><th>商用情况（枚举）</th><th>外显歌手（枚举）</th><th>外显词作者（枚举）</th><th>外显曲作者（枚举）</th><th>上线外显（字符串）</th><th class="sticky-right copyright-download-actions">操作</th></tr></thead>
+                    <thead><tr><th>所属订单名</th><th>所属批次名</th><th>交付编号</th><th>交付歌名</th><th>成品编号</th><th>状态</th><th>词信息</th><th>作词人</th><th>曲信息</th><th>作曲人</th><th>制作完成时间</th><th>授权时间</th><th>授权开始时间</th><th>授权结束时间</th><th>授权期限</th><th>发行日期</th><th>上线日期</th><th>下架日期</th><th>授权地区（枚举）</th><th>发行地区（枚举）</th><th>版权情况（枚举）</th><th>在线状态（枚举）</th><th>上架平台（枚举）</th><th>端口应上线平台（枚举）</th><th>发行端口（枚举）</th><th>分成比例（字符串）</th><th>商用情况（枚举）</th><th>外显歌手（枚举）</th><th>外显词作者（枚举）</th><th>外显曲作者（枚举）</th><th>上线外显（字符串）</th><th class="sticky-right copyright-download-actions">操作</th></tr></thead>
                     <tbody>
                         <tr><td>订单 1</td><td>001</td><td>DEL202606020001</td><td>窗外</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>张三</td><td>曲信息</td><td>张三</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openCopyrightMaintainModal(this)">版权维护</button><button class="btn-text">下载</button></td></tr>
                         <tr><td>订单 1</td><td>001</td><td>DEL202606020001</td><td>他不懂</td><td>AIBeat-recuGx37YKvfkw</td><td><span class="badge badge-gray">未维护</span></td><td>这是歌词</td><td>李四</td><td>曲信息</td><td>李四</td><td>2026-05-15 11:22:23</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td><td class="sticky-right copyright-download-actions"><button class="btn-text" style="color:var(--primary)" onclick="openCopyrightMaintainModal(this)">版权维护</button><button class="btn-text">下载</button></td></tr>
@@ -2428,6 +2428,52 @@ function selectClaimStyle(button) {
     dropdown.querySelectorAll('.claim-style-menu button.active').forEach(item => item.classList.remove('active'));
     button.classList.add('active');
     dropdown.classList.remove('open');
+}
+
+function closePlaylistStyleDropdowns(exceptDropdown = null) {
+    document.querySelectorAll('.playlist-style-dropdown.open').forEach(dropdown => {
+        if (dropdown !== exceptDropdown) dropdown.classList.remove('open');
+    });
+}
+
+function togglePlaylistStyleDropdown(event, trigger) {
+    event.stopPropagation();
+    const dropdown = trigger?.closest('.playlist-style-dropdown');
+    if (!dropdown) return;
+    const willOpen = !dropdown.classList.contains('open');
+    closePlaylistStyleDropdowns(dropdown);
+    dropdown.classList.toggle('open', willOpen);
+}
+
+function updatePlaylistImportStyles(dropdown) {
+    const selectedButtons = Array.from(dropdown.querySelectorAll('.playlist-style-menu button.active'));
+    const selectedValues = selectedButtons.map(button => button.textContent.trim());
+    const tagsWrap = dropdown.querySelector('.playlist-style-tags');
+    const hiddenInput = document.getElementById('inputImportTags');
+    if (hiddenInput) hiddenInput.value = selectedValues.join(',');
+    if (!tagsWrap) return;
+    if (!selectedValues.length) {
+        tagsWrap.innerHTML = '<span class="playlist-style-placeholder">请选择风格</span>';
+        return;
+    }
+    tagsWrap.innerHTML = selectedValues.map(value => `<span class="playlist-style-tag" onclick="removePlaylistImportStyle(event, this, '${value}')">${value} ×</span>`).join('');
+}
+
+function togglePlaylistImportStyle(button) {
+    const dropdown = button?.closest('.playlist-style-dropdown');
+    if (!dropdown) return;
+    button.classList.toggle('active');
+    updatePlaylistImportStyles(dropdown);
+    dropdown.classList.remove('open');
+}
+
+function removePlaylistImportStyle(event, tag, value) {
+    event.stopPropagation();
+    const dropdown = tag?.closest('.playlist-style-dropdown');
+    if (!dropdown) return;
+    const button = Array.from(dropdown.querySelectorAll('.playlist-style-menu button')).find(item => item.textContent.trim() === value);
+    if (button) button.classList.remove('active');
+    updatePlaylistImportStyles(dropdown);
 }
 
 function toggleCopyrightImportDropdown(event) {
@@ -3306,6 +3352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', () => {
         closeCopyrightMultiDropdowns();
         closeClaimStyleDropdowns();
+        closePlaylistStyleDropdowns();
     });
 });
 
@@ -3901,8 +3948,9 @@ function selectCompositionResult(num) {
     const selectBtn2 = document.getElementById('compSelectBtn2');
     const finalTrackName = document.getElementById('compFinalTrackName');
 
+    const nextTrackName = '思念的风景_v' + num + '.mp3';
     if (!result1Block || !selectBtn1 || !result2Block || !selectBtn2) {
-        if (finalTrackName) finalTrackName.value = '思念的风景_v' + num + '.mp3';
+        if (finalTrackName) finalTrackName.textContent = nextTrackName;
         return;
     }
     if (!finalTrackName) return;
@@ -3937,7 +3985,7 @@ function selectCompositionResult(num) {
     targetBtn.style.border = '1px solid var(--primary)';
 
     // Update step 2 final track name
-    finalTrackName.value = '思念的风景_v' + num + '.mp3';
+    finalTrackName.textContent = nextTrackName;
 }
 
 function simulateRealCompositionUpload() {

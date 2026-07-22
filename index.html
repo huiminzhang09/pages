@@ -916,7 +916,7 @@
             <div class="copyright-maintain-section">
                 <div class="copyright-maintain-title">歌曲信息</div>
                 <div class="copyright-form-grid">
-                    <div class="copyright-form-field"><label>歌名 <span class="required">*</span></label><input type="text" id="copyrightSongName" value="夜空中最亮的星（完整版）" placeholder="请输入歌名"></div>
+                    <div class="copyright-form-field"><label>交付歌名 <span class="required">*</span></label><input type="text" id="copyrightSongName" value="夜空中最亮的星（完整版）" placeholder="请输入交付歌名"></div>
                     <div class="copyright-form-field"><label>外显词作者 <span class="required">*</span></label><select id="copyrightDisplayLyricist"><option>请选择外显词作者</option><option>作词人A</option><option>张三</option></select></div>
                     <div class="copyright-form-field"><label>外显曲作者 <span class="required">*</span></label><select id="copyrightDisplayComposer"><option>请选择外显曲作者</option><option>作曲人A</option><option>李四</option></select></div>
                     <div class="copyright-form-field"><label>外显歌手 <span class="required">*</span></label><select id="copyrightDisplaySinger"><option>请选择外显歌手</option><option>张三</option><option>虚拟歌手 小A</option></select></div>
@@ -1371,8 +1371,58 @@
             </div>
 
             <div style="padding: 16px 24px; border-top: 1px solid var(--gray-200);">
-                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">统一附加风格标签（用逗号分隔）</label>
-                <input type="text" class="input" id="inputImportTags" placeholder="例如：流行, 华语, 经典" value="经典, 华语">
+                <label style="font-weight: 500; font-size: 13px; color: var(--gray-800); display: block; margin-bottom: 8px;">风格</label>
+                <input type="hidden" id="inputImportTags" value="">
+                <div class="playlist-style-dropdown" onclick="event.stopPropagation()">
+                    <button type="button" class="playlist-style-trigger" onclick="togglePlaylistStyleDropdown(event, this)">
+                        <span class="playlist-style-tags"><span class="playlist-style-placeholder">请选择风格</span></span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="playlist-style-menu">
+                        <div class="playlist-style-group">全部</div>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">80金曲</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">草原风</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">经典摇滚</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">老年下沉</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">年轻下沉</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">中年下沉</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">古风</button>
+                        <div class="playlist-style-group">词</div>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">潮流摇滚</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">国风</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">老年</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">青年</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">山歌</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">中年</button>
+                        <div class="playlist-style-group">曲</div>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">中青下沉</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">山民风</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">新金曲</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">古早网络风</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">经典流行</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">8090怀旧</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">年轻网易风</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">中年苦情</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">老年苦情</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">广场舞DJ</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">车载DJ</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">流行</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">说唱</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">摇滚</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">民谣</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">电子</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">旋律说唱</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">年轻流行</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">国风rnb</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">草原</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">草原流行</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">镜像</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">年轻下沉-抖音</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">山歌民歌</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">R&B</button>
+                        <button type="button" onclick="togglePlaylistImportStyle(this)">DJ</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer" style="background: #fafafa; border-top: 1px solid var(--gray-200); padding: 12px 24px; display: flex; justify-content: flex-end; align-items: center; gap: 12px;">
