@@ -94,6 +94,9 @@
                     <i class="fas fa-chevron-right nav-arrow"></i>
                 </a>
                 <div class="nav-group-children">
+                    <a class="nav-item sub" data-page="task-processing-page" onclick="navigateTo('task-processing-page', this)">
+                        <i class="fas fa-tasks"></i><span>任务处理</span>
+                    </a>
                     <a class="nav-item sub active" data-page="workbench-page" onclick="navigateTo('workbench-page', this)">
                         <i class="fas fa-pen"></i><span>人工写词</span>
                     </a>
@@ -858,7 +861,7 @@
 <!-- Batch Edit Staff Modal -->
 <div class="modal-overlay" id="modal-batch-edit-staff" style="display:none">
     <div class="modal modal-lg">
-        <div class="modal-header"><h3>批量修改人员</h3><button class="modal-close" onclick="closeModal('modal-batch-edit-staff')">&times;</button></div>
+        <div class="modal-header"><h3>批量维护人员</h3><button class="modal-close" onclick="closeModal('modal-batch-edit-staff')">&times;</button></div>
         <div class="modal-body">
             <div style="background:#F7F9FC; border:1px solid var(--gray-200); border-radius:8px; padding:16px; margin-bottom:16px;">
                 <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px 24px; font-size:13px;">
@@ -928,7 +931,7 @@
                 <div class="copyright-form-grid">
                     <div class="copyright-form-field"><label>授权开始时间 <span class="required">*</span></label><input type="date" id="copyrightAuthStartDate" onchange="updateCopyrightAuthEndDate()" placeholder="请选择授权开始时间"></div>
                     <div class="copyright-form-field"><label>授权时间 <span class="required">*</span></label><select id="copyrightAuthDuration" onchange="updateCopyrightAuthEndDate()"><option>请选择授权时间</option><option>一年</option><option>两年</option><option>三年</option><option>五年</option><option>永久</option></select></div>
-                    <div class="copyright-form-field"><label>授权结束时间 <span class="required">*</span></label><input type="date" id="copyrightAuthEndDate" placeholder="请选择授权结束时间"></div>
+                    <div class="copyright-form-field"><label>授权结束时间 <span class="required">*</span></label><input type="date" id="copyrightAuthEndDate" readonly class="input-disabled" placeholder="根据授权开始时间与授权时间自动计算"></div>
                     <div class="copyright-form-field"><label>商用情况 <span class="required">*</span></label><select id="copyrightCommercial"><option>请选择商用情况</option><option>独家</option><option>非独家</option><option>买断</option></select></div>
                     <div class="copyright-form-field"><label>分成比例 <span class="required">*</span></label><input type="text" id="copyrightShareRatio" placeholder="请输入分成比例"></div>
                     <div class="copyright-form-field"><label>授权地区 <span class="required">*</span></label><select id="copyrightAuthRegion"><option>请选择授权地区</option><option>中国大陆</option><option>港澳台</option><option>海外</option><option>全球</option></select></div>
@@ -1320,9 +1323,72 @@
     </div>
 </div>
 
+<!-- Task Processing Reference Song Modal -->
+<div class="modal-overlay" id="taskReferenceSongModal" style="display:none" onclick="closeTaskReferenceSongModal()">
+    <div class="modal task-reference-song-modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>选择对标歌曲</h3>
+            <button class="modal-close" onclick="closeTaskReferenceSongModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="task-reference-search">
+                <input id="taskReferenceSongSearchInput" class="input" type="text" placeholder="请输入歌名 / 歌手 / 风格搜索" oninput="filterTaskReferenceSongs(this.value)">
+                <button class="btn-default" type="button" onclick="filterTaskReferenceSongs(document.getElementById('taskReferenceSongSearchInput')?.value || '')"><i class="fas fa-search"></i> 查询</button>
+            </div>
+            <div class="table-container task-reference-table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 64px;">选择</th>
+                            <th>歌名</th>
+                            <th>歌手</th>
+                            <th>风格</th>
+                            <th>歌词摘要</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-song-name="旧日时光" data-song-lyrics="[Verse]&#10;星空下许下约定&#10;未来哪怕有风雨&#10;&#10;[Chorus]&#10;就算世界在改变&#10;我会陪在你身边">
+                            <td><input type="radio" name="taskReferenceSongRadio" checked></td>
+                            <td>旧日时光</td>
+                            <td>林夕阳</td>
+                            <td>年轻流行</td>
+                            <td class="task-reference-lyric-cell">星空下许下约定，未来哪怕有风雨</td>
+                        </tr>
+                        <tr data-song-name="夜风吹过" data-song-lyrics="[Verse]&#10;夜风吹过旧街口&#10;灯火把影子拉瘦&#10;&#10;[Chorus]&#10;我在回忆里等候&#10;等你转身再回眸">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td>
+                            <td>夜风吹过</td>
+                            <td>周南</td>
+                            <td>民谣</td>
+                            <td class="task-reference-lyric-cell">夜风吹过旧街口，灯火把影子拉瘦</td>
+                        </tr>
+                        <tr data-song-name="云缝星梦" data-song-lyrics="[Verse]&#10;把心事藏进云缝&#10;等一颗星照亮梦&#10;&#10;[Chorus]&#10;越过人海的汹涌&#10;仍想和你再相逢">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td>
+                            <td>云缝星梦</td>
+                            <td>陈禾</td>
+                            <td>流行</td>
+                            <td class="task-reference-lyric-cell">把心事藏进云缝，等一颗星照亮梦</td>
+                        </tr>
+                        <tr data-song-name="遥远的地方" data-song-lyrics="[Verse]&#10;车窗外的山很长&#10;月光落在行李箱&#10;&#10;[Chorus]&#10;去往遥远的地方&#10;把思念轻轻收藏">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td>
+                            <td>遥远的地方</td>
+                            <td>许安</td>
+                            <td>草原流行</td>
+                            <td class="task-reference-lyric-cell">车窗外的山很长，月光落在行李箱</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeTaskReferenceSongModal()">取消</button>
+            <button class="btn-primary" onclick="confirmTaskReferenceSong()">确认选择</button>
+        </div>
+    </div>
+</div>
+
 <!-- Reference Library Playlist Import Modal -->
 <div class="modal-overlay" id="importModal" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeModal('importModal')">
-    <div class="modal" style="width: 540px; max-height: 85vh; display: flex; flex-direction: column;" onclick="event.stopPropagation()">
+    <div class="modal" style="width: 600px; max-height: 85vh; display: flex; flex-direction: column;" onclick="event.stopPropagation()">
         <div class="modal-header">
             <h3>QQ 音乐歌单导入</h3>
             <button class="modal-close" onclick="closeModal('importModal')">&times;</button>
@@ -1335,39 +1401,18 @@
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--gray-600);">
                     <span id="importModalSummary">共 3 首 · 已选 2 首</span>
-                    <button class="btn-default" style="padding: 4px 8px; font-size: 12px;" onclick="toggleAllImportSongs()">全选/反选</button>
                 </div>
             </div>
             
-            <div id="importSongList" style="flex: 1; overflow-y: auto; max-height: 250px;">
-                <!-- Song Item 1 -->
-                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px;">
-                    <input type="checkbox" class="table-checkbox" name="importSongCheck" value="0" checked onchange="updateImportModalSummary()">
-                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=qilixiang" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;" alt="cover">
-                    <div class="song-info" style="flex: 1;">
-                        <div class="song-title" style="font-weight: 500;">七里香</div>
-                        <div class="song-author" style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">周杰伦</div>
-                    </div>
-                </div>
-                <!-- Song Item 2 -->
-                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px;">
-                    <input type="checkbox" class="table-checkbox" name="importSongCheck" value="1" checked onchange="updateImportModalSummary()">
-                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=yequ" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;" alt="cover">
-                    <div class="song-info" style="flex: 1;">
-                        <div class="song-title" style="font-weight: 500;">夜曲</div>
-                        <div class="song-author" style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">周杰伦</div>
-                    </div>
-                </div>
-                <!-- Song Item 3 (Imported) -->
-                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px; background: #fafafa;">
-                    <input type="checkbox" class="table-checkbox" disabled name="importSongCheck" value="2">
-                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=qinghuaci" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover; opacity: 0.5;" alt="cover">
-                    <div class="song-info" style="flex: 1;">
-                        <div class="song-title" style="font-weight: 500; color: var(--gray-400);">青花瓷</div>
-                        <div class="song-author" style="font-size: 12px; color: var(--gray-400); margin-top: 4px;">周杰伦</div>
-                    </div>
-                    <span class="song-imported" style="font-size: 12px; color: var(--success); background: var(--success-light); border: 1px solid var(--success); padding: 2px 6px; border-radius: 4px;">已导入</span>
-                </div>
+            <div id="importSongList" class="table-container import-playlist-table-wrap">
+                <table class="data-table">
+                    <thead><tr><th><input type="checkbox" class="table-checkbox import-select-all-checkbox" id="importSelectAllSongs" checked onchange="toggleAllImportSongs(this)"></th><th>歌名</th><th>对标 ID</th><th>歌词</th></tr></thead>
+                    <tbody>
+                        <tr class="song-list-item" data-author="周杰伦"><td><label class="import-song-index"><input type="checkbox" class="table-checkbox" name="importSongCheck" value="0" checked onchange="updateImportModalSummary()">1</label></td><td><span class="song-title">七里香</span></td><td>993782</td><td><div class="batch-playlist-lyrics" title="窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉">窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉</div></td></tr>
+                        <tr class="song-list-item" data-author="周杰伦"><td><label class="import-song-index"><input type="checkbox" class="table-checkbox" name="importSongCheck" value="1" checked onchange="updateImportModalSummary()">2</label></td><td><span class="song-title">夜曲</span></td><td>998172</td><td><div class="batch-playlist-lyrics" title="一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景">一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景</div></td></tr>
+                        <tr class="song-list-item imported" data-author="周杰伦"><td><label class="import-song-index"><input type="checkbox" class="table-checkbox" disabled name="importSongCheck" value="2">3</label></td><td><span class="song-title">青花瓷</span></td><td>771812</td><td><div class="batch-playlist-lyrics" title="素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆">素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆</div></td></tr>
+                    </tbody>
+                </table>
             </div>
 
             <div style="padding: 16px 24px; border-top: 1px solid var(--gray-200);">
@@ -1429,6 +1474,168 @@
             <span style="font-size: 12px; color: var(--gray-500); margin-right: auto;">将自动抓取歌词并清洗入库</span>
             <button class="btn-default" onclick="closeModal('importModal')">取消</button>
             <button class="btn-primary" id="btnConfirmImport" onclick="confirmImportPlaylist()">导入 2 首</button>
+        </div>
+    </div>
+</div>
+
+<!-- Reference Library Batch Playlist Import Modal -->
+<div class="modal-overlay" id="batchPlaylistImportModal" style="display:none; background: rgba(0,0,0,0.45); z-index:1000;" onclick="closeModal('batchPlaylistImportModal')">
+    <div class="modal batch-playlist-modal" onclick="event.stopPropagation()">
+        <div class="modal-header batch-playlist-header">
+            <h3>QQ 音乐歌单导入</h3>
+            <button class="modal-close" onclick="closeModal('batchPlaylistImportModal')">&times;</button>
+        </div>
+        <div class="batch-playlist-body">
+            <div class="batch-playlist-input-row">
+                <div class="batch-playlist-step-label">
+                    <strong>1. 输入歌单 ID</strong>
+                </div>
+                <div class="batch-playlist-search-box">
+                    <input type="text" value="7713574197, 8812378213, 1128731827" placeholder="请输入歌单 ID">
+                    <button class="btn-primary" onclick="queryBatchPlaylistImport()"><i class="fas fa-search"></i> 查询</button>
+                    <p>支持多个歌单 Id，使用“，”分割</p>
+                </div>
+            </div>
+
+            <div class="batch-playlist-main">
+                <div class="batch-playlist-task-panel">
+                    <div class="batch-playlist-panel-title">
+                        <h4>2.解析数据</h4>
+                        <button class="btn-default batch-playlist-refresh-btn" onclick="queryBatchPlaylistImport()"><i class="fas fa-sync-alt"></i> 刷新</button>
+                    </div>
+                    <div class="batch-playlist-loading" id="batchPlaylistTaskLoading" style="display:none;">
+                        <span></span>
+                        <p>正在解析歌单数据...</p>
+                    </div>
+                    <div class="batch-playlist-task-list" id="batchPlaylistTaskList">
+                        <div class="batch-playlist-task-card active" data-id="7713574197" data-name="周杰伦经典合集" data-count="26 首歌曲" data-status="已解析" data-status-type="success" onclick="selectBatchPlaylistTask(this)">
+                            <div class="batch-playlist-task-info">
+                                <strong>7713574197</strong>
+                                <p>26 首歌曲</p>
+                                <p>解析时间：2025-06-01 14:32:21</p>
+                            </div>
+                            <span class="batch-playlist-status success">已解析</span>
+                        </div>
+                        <div class="batch-playlist-task-card" data-id="8812378213" data-name="华语流行金曲100首" data-count="18 首歌曲" data-status="已解析" data-status-type="success" onclick="selectBatchPlaylistTask(this)">
+                            <div class="batch-playlist-task-info">
+                                <strong>8812378213</strong>
+                                <p>18 首歌曲</p>
+                                <p>解析时间：2025-06-01 14:20:15</p>
+                            </div>
+                            <span class="batch-playlist-status success">已解析</span>
+                        </div>
+                        <div class="batch-playlist-task-card" data-id="1128731827" data-name="伤感情歌精选" data-count="0 首歌曲" data-status="解析失败" data-status-type="danger" onclick="selectBatchPlaylistTask(this)">
+                            <div class="batch-playlist-task-info">
+                                <strong>1128731827</strong>
+                                <p>0 首歌曲</p>
+                                <p>解析时间：2025-06-01 14:10:03</p>
+                            </div>
+                            <span class="batch-playlist-status danger">解析失败</span>
+                        </div>
+                    </div>
+                    <button class="batch-playlist-retry" id="batchPlaylistRetryBtn"><i class="fas fa-sync-alt"></i> 全部重试失败项</button>
+                </div>
+
+                <div class="batch-playlist-result-panel">
+                    <div class="batch-playlist-panel-title">
+                        <h4>3. 解析结果（仅展示选中歌单的数据）</h4>
+                    </div>
+                    <div class="batch-playlist-loading" id="batchPlaylistResultLoading" style="display:none;">
+                        <span></span>
+                        <p>正在获取解析结果...</p>
+                    </div>
+                    <div class="batch-playlist-result-head" id="batchPlaylistResultHead">
+                        <span class="batch-playlist-task-icon success"><i class="fas fa-check"></i></span>
+                        <strong id="batchPlaylistResultId">7713574197</strong>
+                        <span id="batchPlaylistResultCount">26 首歌曲</span>
+                        <span class="batch-playlist-status success" id="batchPlaylistResultStatus">已解析</span>
+                        <div class="batch-playlist-result-style">
+                            <label>风格</label>
+                            <input type="hidden" id="inputBatchImportTags" value="">
+                            <div class="playlist-style-dropdown" data-target-input="inputBatchImportTags" onclick="event.stopPropagation()">
+                                <button type="button" class="playlist-style-trigger" onclick="togglePlaylistStyleDropdown(event, this)">
+                                    <span class="playlist-style-tags"><span class="playlist-style-placeholder">请选择风格</span></span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="playlist-style-menu">
+                                    <div class="playlist-style-group">全部</div>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">80金曲</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">草原风</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">经典摇滚</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">老年下沉</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">年轻下沉</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">中年下沉</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">古风</button>
+                                    <div class="playlist-style-group">词</div>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">潮流摇滚</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">国风</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">老年</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">青年</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">山歌</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">中年</button>
+                                    <div class="playlist-style-group">曲</div>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">中青下沉</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">山民风</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">新金曲</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">古早网络风</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">经典流行</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">8090怀旧</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">年轻网易风</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">中年苦情</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">老年苦情</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">广场舞DJ</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">车载DJ</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">流行</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">说唱</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">摇滚</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">民谣</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">电子</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">旋律说唱</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">年轻流行</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">国风rnb</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">草原</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">草原流行</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">镜像</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">年轻下沉-抖音</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">山歌民歌</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">R&B</button>
+                                    <button type="button" onclick="togglePlaylistImportStyle(this)">DJ</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-primary batch-playlist-import-btn" id="batchPlaylistImportBtn" onclick="confirmBatchPlaylistImport()">导入该歌单</button>
+                    </div>
+                    <div class="table-container batch-playlist-table-wrap" id="batchPlaylistSongList">
+                        <table class="data-table">
+                            <thead><tr><th>序号</th><th>歌名</th><th>对标 ID</th><th>歌词</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>七里香</td><td>993782</td><td><div class="batch-playlist-lyrics" title="窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉">窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉</div></td></tr>
+                                <tr><td>2</td><td>夜曲</td><td>998172</td><td><div class="batch-playlist-lyrics" title="一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景">一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景</div></td></tr>
+                                <tr><td>3</td><td>青花瓷</td><td>771812</td><td><div class="batch-playlist-lyrics" title="素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆">素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆</div></td></tr>
+                                <tr><td>4</td><td>稻香</td><td>223812</td><td><div class="batch-playlist-lyrics" title="对这个世界如果你有太多的抱怨 跌倒了就不敢继续往前走">对这个世界如果你有太多的抱怨 跌倒了就不敢继续往前走</div></td></tr>
+                                <tr><td>5</td><td>告白气球</td><td>771298</td><td><div class="batch-playlist-lyrics" title="塞纳河畔 左岸的咖啡 我手一杯 品尝你的美">塞纳河畔 左岸的咖啡 我手一杯 品尝你的美</div></td></tr>
+                                <tr><td>6</td><td>晴天</td><td>998731</td><td><div class="batch-playlist-lyrics" title="故事的小黄花 从出生那年就飘着 童年的荡秋千 随记忆一直晃到现在">故事的小黄花 从出生那年就飘着 童年的荡秋千 随记忆一直晃到现在</div></td></tr>
+                                <tr><td>7</td><td>本草纲目</td><td>882712</td><td><span class="text-muted">--</span></td></tr>
+                                <tr><td>8</td><td>简单爱</td><td>771823</td><td><div class="batch-playlist-lyrics" title="说不上为什么 我变得很主动 若爱上一个人 什么都会值得去做">说不上为什么 我变得很主动 若爱上一个人 什么都会值得去做</div></td></tr>
+                                <tr><td>9</td><td>爱在西元前</td><td>661281</td><td><div class="batch-playlist-lyrics" title="古巴比伦王颁布了汉摩拉比法典 刻在黑色的玄武岩 距今已经三千七百多年">古巴比伦王颁布了汉摩拉比法典 刻在黑色的玄武岩 距今已经三千七百多年</div></td></tr>
+                                <tr><td>10</td><td>双截棍</td><td>661282</td><td><div class="batch-playlist-lyrics" title="岩烧店的烟味弥漫 隔壁是国术馆 店里面的妈妈桑 茶道有三段">岩烧店的烟味弥漫 隔壁是国术馆 店里面的妈妈桑 茶道有三段</div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="batch-playlist-pagination" id="batchPlaylistPagination">
+                        <span>共 26 条</span>
+                        <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                        <select class="page-size-select"><option>10 条/页</option></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="batch-playlist-footer">
+            <button class="btn-default" onclick="closeModal('batchPlaylistImportModal')">取消</button>
         </div>
     </div>
 </div>

@@ -29,12 +29,12 @@ const pages = {
                                 <!-- 原版参考 -->
                                 <div style="background: var(--gray-50); padding: 16px; border-radius: 8px; border: 1px solid var(--gray-200); flex: 1;">
                                     <div class="form-group" style="position: relative;">
-                                        <label>原歌名参考 (original_title)</label>
+                                        <label>对标歌名参考 (original_title)</label>
                                         <input type="text" value="《旧日时光》" readonly style="background: var(--gray-100); padding-right: 40px;">
                                         <span class="copy-icon" onclick="copyField(this, '《旧日时光》')" style="position: absolute; right: 10px; top: 35px; cursor: pointer; opacity: 0.6; font-size: 16px;">📋</span>
                                     </div>
                                     <div class="form-group" style="position: relative; margin-bottom: 0;">
-                                        <label>原歌词参考 (original_lyrics)</label>
+                                        <label>对标歌词参考 (original_lyrics)</label>
                                         <textarea readonly style="min-height: 240px; background: var(--gray-100); resize: none; padding-right: 40px;">[Verse]
 星空下许下约定
 未来哪怕有风雨
@@ -1026,7 +1026,10 @@ const pages = {
                     <!-- Toolbar -->
                     <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-bottom: 1px solid var(--gray-200);">
                         <div style="font-weight: 600; font-size: 14px; color: var(--gray-800);">参考歌曲列表</div>
-                        <button class="btn-primary" onclick="openModal('importModal')"><i class="fas fa-plus"></i> 歌单导入</button>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button class="btn-default" onclick="openModal('batchPlaylistImportModal')"><i class="fas fa-layer-group"></i> 批量导入歌单</button>
+                            <button class="btn-primary" onclick="openModal('importModal')"><i class="fas fa-plus"></i> 歌单导入</button>
+                        </div>
                     </div>
 
                     <!-- Table Container -->
@@ -1556,7 +1559,7 @@ const pages = {
                     <div class="filter-item"><label>客户名称</label><select><option>全部</option><option>客户A</option><option>客户B</option></select></div>
                     <div class="filter-item"><label>订单性质</label><select><option>全部</option><option>买断</option><option>分成</option><option>独家</option><option>分成-独家</option><option>非独家</option><option>共同开发</option><option>仅需要配合/接收</option><option>申请提取</option></select></div>
                     <div class="filter-item"><label>生产周期</label><select><option>全部</option><option>长期</option><option>批次</option><option>单次</option></select></div>
-                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待启动</option><option>生产中</option><option>部分交付</option><option>已完成</option></select></div>
+                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待启动</option><option>生产中</option><option>部分交付</option><option>已完成</option><option>已终止</option></select></div>
                     <div class="filter-item" style="min-width: 320px;">
                         <label>创建时间</label>
                         <div class="date-range-picker">
@@ -1582,6 +1585,7 @@ const pages = {
                         <tr data-reference-files=""><td>YQ202604180002</td><td>用户权限模块优化</td><td>客户C</td><td>Beat</td><td>仅需要配合/接收</td><td>长期</td><td>0</td><td>0</td><td>0</td><td><span class="badge badge-gray">待启动</span></td><td>2026-04-15 14:22:09</td><td>李四</td><td>-</td><td><button class="btn-text" onclick="openOrderModalFromRow(this)">编辑</button><button class="btn-text" onclick="openAddBatchDrawer(this)">新增批次</button><button class="btn-text" onclick="openModal('modal-log')">操作日志</button></td></tr>
                         <tr data-reference-files="歌词参考.txt|原曲参考.wav|授权材料.docx"><td>YQ202604180003</td><td>数据报表功能</td><td>客户D</td><td>Hit</td><td>申请提取</td><td>批次</td><td>2</td><td>120</td><td>120</td><td><span class="badge badge-green">已完成</span></td><td>2026-04-10 09:35:47</td><td>王五</td><td>重点批次交付</td><td><button class="btn-text" onclick="openOrderModalFromRow(this)">编辑</button><button class="btn-text" onclick="openAddBatchDrawer(this)">新增批次</button><button class="btn-text" onclick="openModal('modal-log')">操作日志</button></td></tr>
                         <tr data-reference-files=""><td>YQ202604180004</td><td>数据中台联调</td><td>客户B</td><td>全案</td><td>分成</td><td>单次</td><td>1</td><td>20</td><td>0</td><td><span class="badge badge-orange">生产中</span></td><td>2026-04-18 16:05:21</td><td>赵六</td><td>新增测试订单</td><td><button class="btn-text" onclick="openOrderModalFromRow(this)">编辑</button><button class="btn-text" onclick="openAddBatchDrawer(this)">新增批次</button><button class="btn-text" onclick="openModal('modal-log')">操作日志</button></td></tr>
+                        <tr data-reference-files="原曲参考.wav"><td>YQ202604180005</td><td>终止测试订单</td><td>客户E</td><td>混音</td><td>买断</td><td>批次</td><td>1</td><td>30</td><td>0</td><td><span class="badge badge-red">已终止</span></td><td>2026-04-19 10:28:16</td><td>钱七</td><td>客户暂停推进</td><td><button class="btn-text" onclick="openOrderModalFromRow(this)">编辑</button><button class="btn-text" onclick="openAddBatchDrawer(this)">新增批次</button><button class="btn-text" onclick="openModal('modal-log')">操作日志</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -1601,7 +1605,7 @@ const pages = {
             <div class="filter-bar">
                 <div class="filter-row">
                     <div class="filter-item"><label>批次编号</label><input type="text" placeholder="搜索批次编号"></div>
-                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待生产</option><option>生产中</option><option>已终止</option><option>部分交付</option><option>已交付</option></select></div>
+                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待生产</option><option>生产中</option><option>待交付</option><option>已终止</option><option>部分交付</option><option>已交付</option></select></div>
                     <div class="filter-item"><label>订单名称</label><select><option>全部</option></select></div>
                     <div class="filter-item"><label>工作流</label><select><option>全部</option></select></div>
                     <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
@@ -1613,9 +1617,9 @@ const pages = {
             </div>
             <div class="batch-summary-bar">
                 <span class="batch-summary-dot"></span>
-                <span>共<strong>5</strong>个批次</span>
-                <span>需求总数量<strong>450</strong>首</span>
-                <span>生产完成<strong>275</strong>首</span>
+                <span>共<strong>6</strong>个批次</span>
+                <span>需求总数量<strong>510</strong>首</span>
+                <span>生产完成<strong>335</strong>首</span>
                 <span>领用数量<strong>68</strong>首</span>
             </div>
             <div class="table-container">
@@ -1623,7 +1627,8 @@ const pages = {
                     <thead><tr><th>批次编号</th><th>批次名称</th><th>订单名称</th><th>需求数量</th><th>生产完成数量</th><th>领用数量</th><th>生产进度</th><th>生产类型</th><th>制作方式</th><th>工作流</th><th>预计交付周期（天）</th><th>创建时间</th><th>操作</th></tr></thead>
                     <tbody>
                         <tr><td>PC202604200001</td><td>4 月 500 首草原风</td><td>需求管理系统开发</td><td>100</td><td>0</td><td>0</td><td><span class="badge badge-gray">待生产</span></td><td>全案</td><td>全案</td><td>工作流1</td><td>23</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
-                        <tr><td>PC202604210002</td><td>30 首草原风</td><td>需求管理系统开发</td><td>50</td><td>25</td><td>0</td><td><span class="badge badge-orange">生产中</span></td><td>Hit</td><td>Hit</td><td>工作流2</td><td>44</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
+                        <tr><td>PC202604210002</td><td>30 首草原风</td><td>需求管理系统开发</td><td>50</td><td>25</td><td>0</td><td><span class="badge badge-orange">生产中</span></td><td>Hit</td><td>Hit</td><td>工作流2</td><td>44</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
+                        <tr><td>PC202604250006</td><td>7 月 60 首国风</td><td>数据报表功能</td><td>60</td><td>60</td><td>0</td><td><span class="badge badge-purple">待交付</span></td><td>全案</td><td>全案</td><td>工作流2</td><td>21</td><td>2026-05-12 11:24:36</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
                         <tr><td>PC202604220003</td><td>20 首 DJ</td><td>用户权限模块优化</td><td>80</td><td>30</td><td>0</td><td><span class="badge badge-red">已终止</span></td><td>DJ</td><td>DJ</td><td>工作流1</td><td>55</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
                         <tr><td>PC202604230004</td><td>5 月 120 首流行</td><td>数据报表功能</td><td>120</td><td>80</td><td>68</td><td><span class="badge badge-blue">部分交付</span></td><td>全案</td><td>全案</td><td>工作流2</td><td>30</td><td>2026-05-08 09:18:45</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
                         <tr><td>PC202604240005</td><td>6 月 100 首民谣</td><td>数据中台联调</td><td>100</td><td>100</td><td>100</td><td><span class="badge badge-green">已交付</span></td><td>Hit</td><td>Hit</td><td>工作流3</td><td>28</td><td>2026-05-10 16:30:12</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
@@ -1847,24 +1852,25 @@ const pages = {
                 <div id="batchDetailMakePanel">
                     <div class="filter-bar" style="margin-bottom: 24px;">
                         <div class="filter-row">
-                            <div class="filter-item"><label>歌曲ID</label><input type="text"></div>
-                            <div class="filter-item"><label>当前状态</label><select><option>全部</option></select></div>
+                            <div class="filter-item"><label>成品编号</label><input type="text"></div>
+                            <div class="filter-item"><label>状态</label><select><option>全部</option></select></div>
                             <div class="filter-item"><label>当前节点</label><select><option>全部</option></select></div>
-                            <div class="filter-item"><label>任务执行人</label><div class="input-with-icon" style="border:1px solid var(--gray-300); border-radius:6px; padding:2px 8px; margin-top:2px;"><i class="fas fa-search"></i><input type="text" placeholder="搜索执行人" style="font-size:14px; padding:4px;"></div></div>
+                            <div class="filter-item"><label>当前执行人</label><div class="input-with-icon" style="border:1px solid var(--gray-300); border-radius:6px; padding:2px 8px; margin-top:2px;"><i class="fas fa-search"></i><input type="text" placeholder="搜索执行人" style="font-size:14px; padding:4px;"></div></div>
                             <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
                         </div>
                     </div>
                     <div class="action-bar">
-                        <button class="btn-primary" onclick="handleBatchEditStaffClick()">批量修改人员</button>
+                        <button class="btn-primary" onclick="handleBatchEditStaffClick()">批量维护人员</button>
                     </div>
                     <div class="table-container">
                         <table class="data-table">
-                    <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水ID</th><th>原歌名</th><th>新歌名</th><th>歌曲编号</th><th>状态</th><th>节点</th><th>当前执行人</th><th>操作</th></tr></thead>
+                    <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水ID</th><th>对标歌名</th><th>歌名</th><th>成品编号</th><th>状态</th><th>当前节点</th><th>当前执行人</th><th>操作</th></tr></thead>
                     <tbody>
                         <tr class="batch-flow-row" data-status="进行中" data-node="作词"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200001</td><td>窗外</td><td>窗外</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td class="batch-flow-node-cell">作词</td><td class="batch-flow-owner-cell">张三</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
                         <tr class="batch-flow-row" data-status="已终止" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox" disabled title="已终止流水不可参与批量维护"></td><td>FLOW2026060200002</td><td>他不懂</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #F5222D; color:#F5222D; background:transparent;">已终止</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">李四</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button></td></tr>
                         <tr class="batch-flow-row" data-status="已完成" data-node="-"><td><input type="checkbox" class="batch-flow-checkbox" disabled title="无当前运行节点，不可参与批量维护"></td><td>FLOW2026060200003</td><td>这就是爱</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td class="batch-flow-node-cell">-</td><td class="batch-flow-owner-cell">王五</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button></td></tr>
                         <tr class="batch-flow-row" data-status="进行中" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200004</td><td>云中的angle</td><td>云中的angle</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">赵六</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
+                        <tr class="batch-flow-row" data-status="执行失败" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200006</td><td>晚风渡口</td><td>晚风渡口</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #FA541C; color:#FA541C; background:#FFF2E8;">执行失败</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">钱七</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
                         <tr class="batch-flow-row" data-status="待分配" data-node="作词"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200005</td><td>--</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge badge-gray">待分配</span></td><td class="batch-flow-node-cell">作词</td><td class="batch-flow-owner-cell">-</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
                     </tbody>
                 </table>
@@ -1873,15 +1879,15 @@ const pages = {
                 <div id="batchDetailProductPanel" style="display:none;">
                     <div class="filter-bar" style="margin-bottom: 24px;">
                         <div class="filter-row">
-                            <div class="filter-item"><label>新歌名</label><input type="text" id="batchClaimSongNameFilter" placeholder="请输入新歌名"></div>
-                            <div class="filter-item"><label>歌曲编号</label><input type="text" id="batchClaimSongCodeFilter" placeholder="请输入歌曲编号"></div>
+                            <div class="filter-item"><label>歌名</label><input type="text" id="batchClaimSongNameFilter" placeholder="请输入歌名"></div>
+                            <div class="filter-item"><label>成品编号</label><input type="text" id="batchClaimSongCodeFilter" placeholder="请输入成品编号"></div>
                             <div class="filter-item"><label>歌手</label><input type="text" id="batchClaimSingerFilter" placeholder="请输入歌手"></div>
                             <div class="filter-actions"><button class="btn-primary" onclick="filterBatchClaimSongs()">查询</button><button class="btn-default" onclick="resetBatchClaimSongs()">重置</button></div>
                         </div>
                     </div>
                     <div class="table-container">
                         <table class="data-table">
-                            <thead><tr><th>歌曲编号</th><th>新歌名</th><th>状态</th><th>歌手</th><th>音频信息</th><th>歌词</th><th>作词</th><th>作曲</th><th>制作时间</th></tr></thead>
+                            <thead><tr><th>成品编号</th><th>歌名</th><th>状态</th><th>歌手</th><th>音频信息</th><th>歌词</th><th>作词</th><th>作曲</th><th>制作时间</th></tr></thead>
                             <tbody>
                                 <tr class="batch-claim-song-row"><td>AIB-20260717-001</td><td>窗外</td><td><span class="badge badge-orange">待交付</span></td><td>虚拟歌手 小A</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td>这是歌词内容...</td><td>张三</td><td>李四</td><td>2026-07-17 10:18:32</td></tr>
                                 <tr class="batch-claim-song-row"><td>AIB-20260717-002</td><td>他不懂</td><td><span class="badge badge-orange">待交付</span></td><td>独立音乐人 B</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td>这是歌词内容...</td><td>李四</td><td>赵六</td><td>2026-07-17 10:32:45</td></tr>
@@ -1920,9 +1926,9 @@ const pages = {
                     <div class="form-group"><label>版权情况 <span style="color:#F5222D">*</span></label><select><option>请选择版权情况</option><option>独家</option><option>非独家</option><option>买断</option><option>分成</option></select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>授权时间</label><select><option>请选择授权时间</option><option>一年</option><option>三年</option><option>五年</option></select></div>
-                    <div class="form-group"><label>授权开始时间</label><input type="date" value="2026-05-09"></div>
-                    <div class="form-group"><label>授权结束时间</label><input type="date" value="2029-05-09"></div>
+                    <div class="form-group"><label>授权时间</label><select id="batchDeliveryAuthDuration" onchange="updateBatchDeliveryAuthEndDate()"><option>请选择授权时间</option><option>一年</option><option>两年</option><option>三年</option><option>五年</option><option>永久</option></select></div>
+                    <div class="form-group"><label>授权开始时间</label><input type="date" id="batchDeliveryAuthStartDate" value="2026-05-09" onchange="updateBatchDeliveryAuthEndDate()"></div>
+                    <div class="form-group"><label>授权结束时间</label><input type="date" id="batchDeliveryAuthEndDate" value="2029-05-08" readonly class="input-disabled"></div>
                     <div class="form-group"><label>供应商信息</label><input type="text" placeholder="请输入供应商信息"></div>
                 </div>
                 <div class="form-group"><label>备注信息</label><textarea rows="3" placeholder="请输入备注信息"></textarea></div>
@@ -1936,7 +1942,7 @@ const pages = {
                 </div>
                 <div class="table-container">
                     <table class="data-table" id="batchDeliveryTable">
-                        <thead><tr><th style="width:40px;"><input type="checkbox" onchange="toggleBatchDeliveryAll(this)"></th><th>原歌名</th><th>新歌名</th><th>歌手</th><th>歌曲编号</th><th>状态</th><th>歌词信息</th><th>音频信息</th><th>操作</th></tr></thead>
+                        <thead><tr><th style="width:40px;"><input type="checkbox" onchange="toggleBatchDeliveryAll(this)"></th><th>对标歌名</th><th>歌名</th><th>歌手</th><th>成品编号</th><th>状态</th><th>歌词信息</th><th>音频信息</th><th>操作</th></tr></thead>
                         <tbody>
                             <tr data-source="制作"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>窗外</td><td>窗外</td><td>虚拟歌手 小A</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="窗外.mp3">下载音频</a></td></tr>
                             <tr data-source="领用"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>他不懂</td><td>他不懂</td><td>独立音乐人 B</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="他不懂.mp3">下载音频</a></td></tr>
@@ -2229,6 +2235,94 @@ const pages = {
     },
 };
 
+pages['task-processing-page'] = {
+    title: '工作台 (任务处理)',
+    content: `
+        <div class="task-processing-layout">
+            <aside class="task-processing-sidebar">
+                <div class="task-processing-title">任务列表</div>
+                <div class="task-processing-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="歌曲、批次、流水号...">
+                </div>
+                <div class="task-processing-tabs">
+                    <button class="active" data-status="全部" onclick="filterTaskProcessingTasks(this)">全部 7</button>
+                    <button data-status="待办" onclick="filterTaskProcessingTasks(this)">待办 1</button>
+                    <button data-status="待处理" onclick="filterTaskProcessingTasks(this)">待处理 4</button>
+                    <button data-status="已完成" onclick="filterTaskProcessingTasks(this)">已完成 1</button>
+                    <button data-status="已终止" onclick="filterTaskProcessingTasks(this)">已终止 1</button>
+                </div>
+                <div class="task-processing-list">
+                    <div class="task-card active" data-status="待处理" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>夜风吹过</strong>
+                            <span class="task-node">作曲</span>
+                            <span class="task-status status-running">待处理</span>
+                        </div>
+                        <p>PL-20260710-0023</p>
+                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                    </div>
+                    <div class="task-card" data-status="待处理" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>破晓时分</strong>
+                            <span class="task-node">曲审核</span>
+                            <span class="task-status status-running">待处理</span>
+                        </div>
+                        <p>PL-20260710-0023</p>
+                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                    </div>
+                    <div class="task-card" data-status="待处理" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>云雀漫步</strong>
+                            <span class="task-node">作词</span>
+                            <span class="task-status status-running">待处理</span>
+                        </div>
+                        <p>PL-20260710-0023</p>
+                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                    </div>
+                    <div class="task-card" data-status="待办" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>山海回声</strong>
+                            <span class="task-node">作词</span>
+                            <span class="task-status status-pending">待办</span>
+                        </div>
+                        <p>PL-20260710-0028</p>
+                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:08</p>
+                    </div>
+                    <div class="task-card" data-status="已完成" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>落叶之歌</strong>
+                            <span class="task-node">词审核</span>
+                            <span class="task-status status-done">已完成</span>
+                        </div>
+                        <p>PL-20260710-0023</p>
+                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                    </div>
+                    <div class="task-card" data-status="已终止" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>午夜霓虹</strong>
+                            <span class="task-node">曲审核</span>
+                            <span class="task-status status-stopped">已终止</span>
+                        </div>
+                        <p>PL-20260710-0023</p>
+                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                    </div>
+                    <div class="task-card" data-status="待处理" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>遥远的地方</strong>
+                            <span class="task-node">词审核</span>
+                            <span class="task-status status-running">待处理</span>
+                        </div>
+                        <p>PL-20260710-0023</p>
+                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                    </div>
+                </div>
+            </aside>
+            <section class="task-processing-content" id="taskProcessingContent"></section>
+        </div>
+    `
+};
+
 // 页面切换逻辑
 function showPage(pageId) {
     document.querySelectorAll('body > div[id$="-page"], body > div#app-shell').forEach(el => el.style.display = 'none');
@@ -2267,6 +2361,9 @@ function navigateTo(pageKey, navEl = null) {
         if (pageKey === 'manual-composition-page') {
             setTimeout(initCompositionPromptSelect, 50);
         }
+        if (pageKey === 'task-processing-page') {
+            setTimeout(initTaskProcessingPage, 50);
+        }
         if (pageKey === 'singer-library-page') {
             setTimeout(() => {
                 renderSingersTable();
@@ -2295,6 +2392,7 @@ function navigateTo(pageKey, navEl = null) {
         }
         if (pageKey === 'batch-delivery-page') {
             setTimeout(() => {
+                updateBatchDeliveryAuthEndDate();
                 updateBatchDeliverySongSummary();
                 updateBatchDeliverySelectedCount();
             }, 50);
@@ -2449,7 +2547,8 @@ function updatePlaylistImportStyles(dropdown) {
     const selectedButtons = Array.from(dropdown.querySelectorAll('.playlist-style-menu button.active'));
     const selectedValues = selectedButtons.map(button => button.textContent.trim());
     const tagsWrap = dropdown.querySelector('.playlist-style-tags');
-    const hiddenInput = document.getElementById('inputImportTags');
+    const hiddenInputId = dropdown.getAttribute('data-target-input') || 'inputImportTags';
+    const hiddenInput = document.getElementById(hiddenInputId);
     if (hiddenInput) hiddenInput.value = selectedValues.join(',');
     if (!tagsWrap) return;
     if (!selectedValues.length) {
@@ -2476,6 +2575,270 @@ function removePlaylistImportStyle(event, tag, value) {
     updatePlaylistImportStyles(dropdown);
 }
 
+function selectBatchPlaylistTask(card) {
+    if (!card) return;
+    const modal = card.closest('#batchPlaylistImportModal');
+    if (!modal) return;
+
+    modal.querySelectorAll('.batch-playlist-task-card.active').forEach(item => item.classList.remove('active'));
+    card.classList.add('active');
+
+    const statusType = card.dataset.statusType || 'success';
+    const resultId = document.getElementById('batchPlaylistResultId');
+    const resultCount = document.getElementById('batchPlaylistResultCount');
+    const resultStatus = document.getElementById('batchPlaylistResultStatus');
+    const resultIcon = modal.querySelector('.batch-playlist-result-head .batch-playlist-task-icon');
+    const songList = document.getElementById('batchPlaylistSongList');
+    const pagination = document.getElementById('batchPlaylistPagination');
+    const importBtn = document.getElementById('batchPlaylistImportBtn');
+    const isFailed = statusType === 'danger';
+
+    if (resultId) resultId.innerText = card.dataset.id || '';
+    if (resultCount) resultCount.innerText = card.dataset.count || '';
+    if (resultStatus) {
+        resultStatus.innerText = card.dataset.status || '';
+        resultStatus.className = `batch-playlist-status ${statusType}`;
+    }
+    if (resultIcon) {
+        resultIcon.className = `batch-playlist-task-icon ${statusType}`;
+        resultIcon.innerHTML = '<i class="fas fa-check"></i>';
+        resultIcon.style.display = isFailed ? 'none' : 'inline-flex';
+    }
+    if (songList) songList.style.display = isFailed ? 'none' : '';
+    if (pagination) pagination.style.display = isFailed ? 'none' : '';
+    if (importBtn) importBtn.disabled = isFailed;
+}
+
+function setBatchPlaylistLoading(isLoading) {
+    const taskLoading = document.getElementById('batchPlaylistTaskLoading');
+    const resultLoading = document.getElementById('batchPlaylistResultLoading');
+    const taskList = document.getElementById('batchPlaylistTaskList');
+    const retryBtn = document.getElementById('batchPlaylistRetryBtn');
+    const resultHead = document.getElementById('batchPlaylistResultHead');
+    const songList = document.getElementById('batchPlaylistSongList');
+    const pagination = document.getElementById('batchPlaylistPagination');
+
+    if (taskLoading) taskLoading.style.display = isLoading ? 'flex' : 'none';
+    if (resultLoading) resultLoading.style.display = isLoading ? 'flex' : 'none';
+    if (taskList) taskList.style.display = isLoading ? 'none' : '';
+    if (retryBtn) retryBtn.style.display = isLoading ? 'none' : '';
+    if (resultHead) resultHead.style.display = isLoading ? 'none' : '';
+    if (songList) songList.style.display = isLoading ? 'none' : '';
+    if (pagination) pagination.style.display = isLoading ? 'none' : '';
+}
+
+function queryBatchPlaylistImport() {
+    setBatchPlaylistLoading(true);
+    window.clearTimeout(window.batchPlaylistQueryTimer);
+    window.batchPlaylistQueryTimer = window.setTimeout(() => {
+        setBatchPlaylistLoading(false);
+        const firstResolvedCard = document.querySelector('#batchPlaylistImportModal .batch-playlist-task-card[data-status-type="success"]');
+        if (firstResolvedCard) selectBatchPlaylistTask(firstResolvedCard);
+    }, 1200);
+}
+
+function initEmbeddedWorkbenchPage(pageKey) {
+    if (pageKey === 'song-review-page') {
+        setTimeout(initSongReviewCoverPanel, 50);
+    }
+    if (pageKey === 'manual-composition-page') {
+        setTimeout(initCompositionPromptSelect, 50);
+    }
+    if (pageKey === 'workbench-page') {
+        setTimeout(initTaskProcessingLyricPage, 50);
+    }
+}
+
+function initTaskProcessingLyricPage() {
+    const container = document.getElementById('taskProcessingContent');
+    if (!container) return;
+
+    const firstCard = container.querySelector('#step1Content .info-card');
+    if (!firstCard || firstCard.querySelector('.task-change-reference-btn')) return;
+
+    const title = firstCard.querySelector('h4');
+    if (!title) return;
+    title.innerHTML = '📝 作词信息';
+
+    const header = document.createElement('div');
+    header.className = 'task-lyric-info-header';
+    title.parentNode.insertBefore(header, title);
+    header.appendChild(title);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn-default task-change-reference-btn';
+    button.innerHTML = '<i class="fas fa-exchange-alt"></i> 更换对标';
+    button.onclick = openTaskReferenceSongModal;
+    header.appendChild(button);
+}
+
+function openTaskReferenceSongModal() {
+    const modal = document.getElementById('taskReferenceSongModal');
+    if (modal) modal.style.display = 'flex';
+    filterTaskReferenceSongs(document.getElementById('taskReferenceSongSearchInput')?.value || '');
+}
+
+function closeTaskReferenceSongModal() {
+    const modal = document.getElementById('taskReferenceSongModal');
+    if (modal) modal.style.display = 'none';
+}
+
+function filterTaskReferenceSongs(keyword = '') {
+    const modal = document.getElementById('taskReferenceSongModal');
+    if (!modal) return;
+    const searchText = String(keyword).trim().toLowerCase();
+    let firstVisibleRadio = null;
+    modal.querySelectorAll('tbody tr').forEach(row => {
+        const matched = !searchText || row.textContent.toLowerCase().includes(searchText);
+        row.style.display = matched ? '' : 'none';
+        if (matched && !firstVisibleRadio) firstVisibleRadio = row.querySelector('input[type="radio"]');
+    });
+
+    const checked = modal.querySelector('input[name="taskReferenceSongRadio"]:checked');
+    const checkedRow = checked ? checked.closest('tr') : null;
+    if ((!checked || checkedRow?.style.display === 'none') && firstVisibleRadio) {
+        firstVisibleRadio.checked = true;
+    }
+}
+
+function confirmTaskReferenceSong() {
+    const checked = document.querySelector('#taskReferenceSongModal input[name="taskReferenceSongRadio"]:checked');
+    const row = checked ? checked.closest('tr') : null;
+    if (!row) {
+        alert('请选择一个对标歌曲');
+        return;
+    }
+
+    const songName = row.dataset.songName || '';
+    const lyrics = row.dataset.songLyrics || '';
+    const taskContent = document.getElementById('taskProcessingContent');
+    const stepContent = taskContent ? taskContent.querySelector('#step1Content') : null;
+    const titleInput = stepContent ? stepContent.querySelector('.info-card:first-child input[readonly]') : null;
+    const lyricsTextarea = stepContent ? stepContent.querySelector('.info-card:first-child textarea[readonly]') : null;
+
+    if (titleInput) titleInput.value = songName ? `《${songName}》` : '';
+    if (lyricsTextarea) lyricsTextarea.value = lyrics;
+
+    closeTaskReferenceSongModal();
+    if (typeof showSuccessMessage === 'function') {
+        showSuccessMessage('已更换对标歌曲');
+    }
+}
+
+function renderTaskProcessingContent(pageKey = 'manual-composition-page') {
+    const container = document.getElementById('taskProcessingContent');
+    const pageData = pages[pageKey];
+    if (!container || !pageData) return;
+    container.innerHTML = pageData.content;
+    initEmbeddedWorkbenchPage(pageKey);
+}
+
+function initTaskProcessingPage() {
+    const activeTask = document.querySelector('.task-processing-list .task-card.active') || document.querySelector('.task-processing-list .task-card');
+    if (activeTask) {
+        activeTask.classList.add('active');
+        renderTaskProcessingContent(activeTask.dataset.pageKey);
+    }
+}
+
+function selectTaskProcessingTask(card) {
+    if (!card) return;
+    document.querySelectorAll('.task-processing-list .task-card').forEach(item => item.classList.remove('active'));
+    card.classList.add('active');
+    renderTaskProcessingContent(card.dataset.pageKey);
+}
+
+function filterTaskProcessingTasks(button) {
+    if (!button) return;
+    const status = button.dataset.status || '全部';
+    const wrapper = button.closest('.task-processing-layout');
+    if (!wrapper) return;
+
+    wrapper.querySelectorAll('.task-processing-tabs button').forEach(item => item.classList.remove('active'));
+    button.classList.add('active');
+
+    const cards = Array.from(wrapper.querySelectorAll('.task-processing-list .task-card'));
+    const visibleCards = [];
+    cards.forEach(card => {
+        const shouldShow = status === '全部' || card.dataset.status === status;
+        card.style.display = shouldShow ? '' : 'none';
+        card.classList.remove('active');
+        if (shouldShow) visibleCards.push(card);
+    });
+
+    if (visibleCards.length) {
+        visibleCards[0].classList.add('active');
+        renderTaskProcessingContent(visibleCards[0].dataset.pageKey);
+    } else {
+        const container = document.getElementById('taskProcessingContent');
+        if (container) {
+            container.innerHTML = '<div class="task-empty-state">暂无对应状态的任务</div>';
+        }
+    }
+}
+
+function showSuccessMessage(message) {
+    document.querySelectorAll('.success-message-toast').forEach(item => item.remove());
+    const toast = document.createElement('div');
+    toast.className = 'success-message-toast';
+    toast.innerHTML = `<i class="fas fa-check-circle"></i><span>${message}</span>`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2200);
+}
+
+function confirmBatchPlaylistImport() {
+    const activeCard = document.querySelector('#batchPlaylistImportModal .batch-playlist-task-card.active');
+    if (!activeCard || activeCard.dataset.statusType === 'danger') return;
+    closeModal('batchPlaylistImportModal');
+    showSuccessMessage('导入成功');
+}
+
+function showLyricsTooltip(target) {
+    if (!target) return;
+    const text = target.dataset.tooltip || target.getAttribute('title') || target.textContent.trim();
+    if (!text || text === '--') return;
+    target.dataset.tooltip = text;
+    target.removeAttribute('title');
+
+    document.querySelectorAll('.lyrics-tooltip-popover').forEach(item => item.remove());
+    const tooltip = document.createElement('div');
+    tooltip.className = 'lyrics-tooltip-popover';
+    tooltip.textContent = text;
+    document.body.appendChild(tooltip);
+
+    const rect = target.getBoundingClientRect();
+    const gap = 8;
+    const maxLeft = window.innerWidth - tooltip.offsetWidth - 16;
+    const left = Math.max(16, Math.min(rect.left, maxLeft));
+    let top = rect.bottom + gap;
+    if (top + tooltip.offsetHeight > window.innerHeight - 16) {
+        top = Math.max(16, rect.top - tooltip.offsetHeight - gap);
+        tooltip.classList.add('above');
+    }
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+}
+
+function hideLyricsTooltip() {
+    document.querySelectorAll('.lyrics-tooltip-popover').forEach(item => item.remove());
+}
+
+document.addEventListener('mouseover', event => {
+    const target = event.target.closest('.batch-playlist-lyrics');
+    if (!target) return;
+    if (target.contains(event.relatedTarget)) return;
+    showLyricsTooltip(target);
+});
+
+document.addEventListener('mouseout', event => {
+    const target = event.target.closest('.batch-playlist-lyrics');
+    if (!target) return;
+    if (target.contains(event.relatedTarget)) return;
+    hideLyricsTooltip();
+});
+document.addEventListener('scroll', hideLyricsTooltip, true);
+
 function toggleCopyrightImportDropdown(event) {
     event.stopPropagation();
     const menu = document.getElementById('copyrightImportDropdown');
@@ -2495,29 +2858,43 @@ function formatDateInputValue(date) {
     return `${year}-${month}-${day}`;
 }
 
-function updateCopyrightAuthEndDate() {
-    const startInput = document.getElementById('copyrightAuthStartDate');
-    const durationSelect = document.getElementById('copyrightAuthDuration');
-    const endInput = document.getElementById('copyrightAuthEndDate');
-    if (!startInput || !durationSelect || !endInput || !startInput.value) return;
-
+function calculateAuthEndDateValue(startValue, duration) {
+    if (!startValue) return '';
     const durationYears = {
         '一年': 1,
         '两年': 2,
         '三年': 3,
         '五年': 5
     };
-    const duration = durationSelect.value;
     if (duration === '永久') {
-        endInput.value = '9999-12-31';
-        return;
+        return '9999-12-31';
     }
-    if (!durationYears[duration]) return;
+    if (!durationYears[duration]) return '';
 
-    const endDate = new Date(`${startInput.value}T00:00:00`);
+    const endDate = new Date(`${startValue}T00:00:00`);
     endDate.setFullYear(endDate.getFullYear() + durationYears[duration]);
     endDate.setDate(endDate.getDate() - 1);
-    endInput.value = formatDateInputValue(endDate);
+    return formatDateInputValue(endDate);
+}
+
+function updateCopyrightAuthEndDate() {
+    const startInput = document.getElementById('copyrightAuthStartDate');
+    const durationSelect = document.getElementById('copyrightAuthDuration');
+    const endInput = document.getElementById('copyrightAuthEndDate');
+    if (!startInput || !durationSelect || !endInput) return;
+
+    const endValue = calculateAuthEndDateValue(startInput.value, durationSelect.value);
+    if (endValue) endInput.value = endValue;
+}
+
+function updateBatchDeliveryAuthEndDate() {
+    const startInput = document.getElementById('batchDeliveryAuthStartDate');
+    const durationSelect = document.getElementById('batchDeliveryAuthDuration');
+    const endInput = document.getElementById('batchDeliveryAuthEndDate');
+    if (!startInput || !durationSelect || !endInput) return;
+
+    const endValue = calculateAuthEndDateValue(startInput.value, durationSelect.value);
+    if (endValue) endInput.value = endValue;
 }
 
 function closeCopyrightMultiDropdowns(exceptDropdown = null) {
@@ -2973,7 +3350,7 @@ function submitBatchStaffEdit() {
         }
         selectedOwners.forEach(item => {
             batchStaffOperationLogs.push({
-                operationType: '批量修改人员',
+                operationType: '批量维护人员',
                 flowId,
                 nodeName: item.nodeName,
                 operator,
@@ -4773,56 +5150,44 @@ function simulateParsePlaylist() {
         const songList = document.getElementById('importSongList');
         if (songList) {
             songList.innerHTML = `
-                <!-- Song Item 1 -->
-                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px;">
-                    <input type="checkbox" class="table-checkbox" name="importSongCheck" value="0" checked onchange="updateImportModalSummary()">
-                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=qilixiang" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;" alt="cover">
-                    <div class="song-info" style="flex: 1;">
-                        <div class="song-title" style="font-weight: 500;">七里香</div>
-                        <div class="song-author" style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">周杰伦</div>
-                    </div>
-                </div>
-                <!-- Song Item 2 -->
-                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px;">
-                    <input type="checkbox" class="table-checkbox" name="importSongCheck" value="1" checked onchange="updateImportModalSummary()">
-                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=yequ" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover;" alt="cover">
-                    <div class="song-info" style="flex: 1;">
-                        <div class="song-title" style="font-weight: 500;">夜曲</div>
-                        <div class="song-author" style="font-size: 12px; color: var(--gray-500); margin-top: 4px;">周杰伦</div>
-                    </div>
-                </div>
-                <!-- Song Item 3 (Imported) -->
-                <div class="song-list-item" style="display: flex; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--gray-200); gap: 12px; background: #fafafa;">
-                    <input type="checkbox" class="table-checkbox" disabled name="importSongCheck" value="2">
-                    <img class="song-cover" src="https://api.dicebear.com/7.x/shapes/svg?seed=qinghuaci" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover; opacity: 0.5;" alt="cover">
-                    <div class="song-info" style="flex: 1;">
-                        <div class="song-title" style="font-weight: 500; color: var(--gray-400);">青花瓷</div>
-                        <div class="song-author" style="font-size: 12px; color: var(--gray-400); margin-top: 4px;">周杰伦</div>
-                    </div>
-                    <span class="song-imported" style="font-size: 12px; color: var(--success); background: var(--success-light); border: 1px solid var(--success); padding: 2px 6px; border-radius: 4px;">已导入</span>
-                </div>
+                <table class="data-table">
+                    <thead><tr><th><input type="checkbox" class="table-checkbox import-select-all-checkbox" id="importSelectAllSongs" checked onchange="toggleAllImportSongs(this)"></th><th>歌名</th><th>对标 ID</th><th>歌词</th></tr></thead>
+                    <tbody>
+                        <tr class="song-list-item" data-author="周杰伦"><td><label class="import-song-index"><input type="checkbox" class="table-checkbox" name="importSongCheck" value="0" checked onchange="updateImportModalSummary()">1</label></td><td><span class="song-title">七里香</span></td><td>993782</td><td><div class="batch-playlist-lyrics" title="窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉">窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉</div></td></tr>
+                        <tr class="song-list-item" data-author="周杰伦"><td><label class="import-song-index"><input type="checkbox" class="table-checkbox" name="importSongCheck" value="1" checked onchange="updateImportModalSummary()">2</label></td><td><span class="song-title">夜曲</span></td><td>998172</td><td><div class="batch-playlist-lyrics" title="一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景">一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景</div></td></tr>
+                        <tr class="song-list-item imported" data-author="周杰伦"><td><label class="import-song-index"><input type="checkbox" class="table-checkbox" disabled name="importSongCheck" value="2">3</label></td><td><span class="song-title">青花瓷</span></td><td>771812</td><td><div class="batch-playlist-lyrics" title="素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆">素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆</div></td></tr>
+                    </tbody>
+                </table>
             `;
         }
         updateImportModalSummary();
     }, 400);
 }
 
-function toggleAllImportSongs() {
+function toggleAllImportSongs(masterCheckbox = null) {
     const checks = document.querySelectorAll('input[name="importSongCheck"]:not(:disabled)');
-    const anyUnchecked = Array.from(checks).some(c => !c.checked);
-    checks.forEach(c => c.checked = anyUnchecked);
+    const shouldCheck = masterCheckbox ? masterCheckbox.checked : Array.from(checks).some(c => !c.checked);
+    checks.forEach(c => c.checked = shouldCheck);
     updateImportModalSummary();
 }
 
 function updateImportModalSummary() {
     const total = document.querySelectorAll('input[name="importSongCheck"]').length;
     const checked = document.querySelectorAll('input[name="importSongCheck"]:checked').length;
+    const enabledChecks = document.querySelectorAll('input[name="importSongCheck"]:not(:disabled)');
+    const checkedEnabled = document.querySelectorAll('input[name="importSongCheck"]:not(:disabled):checked');
     
     const summary = document.getElementById('importModalSummary');
     if (summary) summary.innerText = `共 ${total} 首 · 已选 ${checked} 首`;
 
     const btn = document.getElementById('btnConfirmImport');
     if (btn) btn.innerText = `导入 ${checked} 首`;
+
+    const master = document.getElementById('importSelectAllSongs');
+    if (master) {
+        master.checked = enabledChecks.length > 0 && checkedEnabled.length === enabledChecks.length;
+        master.indeterminate = checkedEnabled.length > 0 && checkedEnabled.length < enabledChecks.length;
+    }
 }
 
 function confirmImportPlaylist() {
@@ -4844,7 +5209,7 @@ function confirmImportPlaylist() {
     checkedBoxes.forEach(box => {
         const itemRow = box.closest('.song-list-item');
         const title = itemRow.querySelector('.song-title').innerText;
-        const author = itemRow.querySelector('.song-author').innerText;
+        const author = itemRow.dataset.author || itemRow.querySelector('.song-author')?.innerText || '周杰伦';
 
         const maxId = Math.max(...refSongsData.map(s => parseInt(s.id)));
         const newId = String(maxId + 1);
