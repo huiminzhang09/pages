@@ -1887,11 +1887,11 @@ const pages = {
                     </div>
                     <div class="table-container">
                         <table class="data-table">
-                            <thead><tr><th>成品编号</th><th>歌名</th><th>状态</th><th>歌手</th><th>音频信息</th><th>歌词</th><th>作词</th><th>作曲</th><th>制作时间</th></tr></thead>
+                            <thead><tr><th>对标歌名</th><th>歌名</th><th>歌手</th><th>成品编号</th><th>歌词信息</th><th>音频信息</th></tr></thead>
                             <tbody>
-                                <tr class="batch-claim-song-row"><td>AIB-20260717-001</td><td>窗外</td><td><span class="badge badge-orange">待交付</span></td><td>虚拟歌手 小A</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td>这是歌词内容...</td><td>张三</td><td>李四</td><td>2026-07-17 10:18:32</td></tr>
-                                <tr class="batch-claim-song-row"><td>AIB-20260717-002</td><td>他不懂</td><td><span class="badge badge-orange">待交付</span></td><td>独立音乐人 B</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td>这是歌词内容...</td><td>李四</td><td>赵六</td><td>2026-07-17 10:32:45</td></tr>
-                                <tr class="batch-claim-song-row"><td>AIB-20260717-003</td><td>这就是爱</td><td><span class="badge badge-orange">待交付</span></td><td>歌手 C</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td>这是歌词内容...</td><td>王五</td><td>李四</td><td>2026-07-17 11:05:09</td></tr>
+                                <tr class="batch-claim-song-row"><td>窗外</td><td>窗外</td><td>虚拟歌手 小A</td><td>AIB-20260717-001</td><td>这是歌词内容...</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td></tr>
+                                <tr class="batch-claim-song-row"><td>他不懂</td><td>他不懂</td><td>独立音乐人 B</td><td>AIB-20260717-002</td><td>这是歌词内容...</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td></tr>
+                                <tr class="batch-claim-song-row"><td>这就是爱</td><td>这就是爱</td><td>歌手 C</td><td>AIB-20260717-003</td><td>这是歌词内容...</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -1942,12 +1942,12 @@ const pages = {
                 </div>
                 <div class="table-container">
                     <table class="data-table" id="batchDeliveryTable">
-                        <thead><tr><th style="width:40px;"><input type="checkbox" onchange="toggleBatchDeliveryAll(this)"></th><th>对标歌名</th><th>歌名</th><th>歌手</th><th>成品编号</th><th>状态</th><th>歌词信息</th><th>音频信息</th><th>操作</th></tr></thead>
+                        <thead><tr><th style="width:40px;"><input type="checkbox" onchange="toggleBatchDeliveryAll(this)"></th><th>对标歌名</th><th>歌名</th><th>歌手</th><th>成品编号</th><th>歌词信息</th><th>音频信息</th><th>操作</th></tr></thead>
                         <tbody>
-                            <tr data-source="制作"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>窗外</td><td>窗外</td><td>虚拟歌手 小A</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="窗外.mp3">下载音频</a></td></tr>
-                            <tr data-source="领用"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>他不懂</td><td>他不懂</td><td>独立音乐人 B</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="他不懂.mp3">下载音频</a></td></tr>
-                            <tr data-source="领用"><td><input type="checkbox" class="batch-delivery-checkbox" checked onchange="updateBatchDeliverySelectedCount()"></td><td>这就是爱</td><td>这就是爱</td><td>歌手 C</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="这就是爱.mp3">下载音频</a></td></tr>
-                            <tr data-source="制作"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>云中的angle</td><td>云中的angle</td><td>赵六</td><td>AlBeat-recuGx37YKvFkw</td><td><span class="badge badge-orange">待交付</span></td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="云中的angle.mp3">下载音频</a></td></tr>
+                            <tr data-source="制作"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>窗外</td><td>窗外</td><td>虚拟歌手 小A</td><td>AlBeat-recuGx37YKvFkw</td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="窗外.mp3">下载音频</a></td></tr>
+                            <tr data-source="领用"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>他不懂</td><td>他不懂</td><td>独立音乐人 B</td><td>AlBeat-recuGx37YKvFkw</td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="他不懂.mp3">下载音频</a></td></tr>
+                            <tr data-source="领用"><td><input type="checkbox" class="batch-delivery-checkbox" checked onchange="updateBatchDeliverySelectedCount()"></td><td>这就是爱</td><td>这就是爱</td><td>歌手 C</td><td>AlBeat-recuGx37YKvFkw</td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="这就是爱.mp3">下载音频</a></td></tr>
+                            <tr data-source="制作"><td><input type="checkbox" class="batch-delivery-checkbox" onchange="updateBatchDeliverySelectedCount()"></td><td>云中的angle</td><td>云中的angle</td><td>赵六</td><td>AlBeat-recuGx37YKvFkw</td><td>这个是歌词</td><td><div class="batch-inline-audio"><button class="batch-inline-audio-play" onclick="alert('播放音频')"><i class="fas fa-play"></i></button><span class="batch-inline-audio-time">00:00 / 03:45</span><span class="batch-inline-audio-track"></span><i class="fas fa-volume-up batch-inline-audio-volume"></i></div></td><td><a class="btn-text" href="https://www.w3schools.com/html/horse.mp3" download="云中的angle.mp3">下载音频</a></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -2246,36 +2246,36 @@ pages['task-processing-page'] = {
                     <input type="text" placeholder="歌曲、批次、流水号...">
                 </div>
                 <div class="task-processing-tabs">
-                    <button class="active" data-status="全部" onclick="filterTaskProcessingTasks(this)">全部 7</button>
+                    <button class="active" data-status="全部" onclick="filterTaskProcessingTasks(this)">全部 8</button>
                     <button data-status="待办" onclick="filterTaskProcessingTasks(this)">待办 1</button>
-                    <button data-status="待处理" onclick="filterTaskProcessingTasks(this)">待处理 4</button>
-                    <button data-status="已完成" onclick="filterTaskProcessingTasks(this)">已完成 1</button>
+                    <button data-status="进行中" onclick="filterTaskProcessingTasks(this)">进行中 4</button>
                     <button data-status="已终止" onclick="filterTaskProcessingTasks(this)">已终止 1</button>
+                    <button data-status="最近完成" onclick="filterTaskProcessingTasks(this)">最近完成 2</button>
                 </div>
                 <div class="task-processing-list">
-                    <div class="task-card active" data-status="待处理" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card active" data-status="进行中" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>夜风吹过</strong>
                             <span class="task-node">作曲</span>
-                            <span class="task-status status-running">待处理</span>
+                            <span class="task-status status-running">进行中</span>
                         </div>
                         <p>PL-20260710-0023</p>
                         <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
                     </div>
-                    <div class="task-card" data-status="待处理" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="进行中" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>破晓时分</strong>
                             <span class="task-node">曲审核</span>
-                            <span class="task-status status-running">待处理</span>
+                            <span class="task-status status-running">进行中</span>
                         </div>
                         <p>PL-20260710-0023</p>
                         <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
                     </div>
-                    <div class="task-card" data-status="待处理" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="进行中" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>云雀漫步</strong>
                             <span class="task-node">作词</span>
-                            <span class="task-status status-running">待处理</span>
+                            <span class="task-status status-running">进行中</span>
                         </div>
                         <p>PL-20260710-0023</p>
                         <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
@@ -2289,11 +2289,11 @@ pages['task-processing-page'] = {
                         <p>PL-20260710-0028</p>
                         <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:08</p>
                     </div>
-                    <div class="task-card" data-status="已完成" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="最近完成" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>落叶之歌</strong>
                             <span class="task-node">词审核</span>
-                            <span class="task-status status-done">已完成</span>
+                            <span class="task-status status-recent">最近完成</span>
                         </div>
                         <p>PL-20260710-0023</p>
                         <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
@@ -2307,11 +2307,20 @@ pages['task-processing-page'] = {
                         <p>PL-20260710-0023</p>
                         <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
                     </div>
-                    <div class="task-card" data-status="待处理" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="最近完成" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>星河旅人</strong>
+                            <span class="task-node">作曲</span>
+                            <span class="task-status status-recent">最近完成</span>
+                        </div>
+                        <p>PL-20260710-0029</p>
+                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:20</p>
+                    </div>
+                    <div class="task-card" data-status="进行中" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>遥远的地方</strong>
                             <span class="task-node">词审核</span>
-                            <span class="task-status status-running">待处理</span>
+                            <span class="task-status status-running">进行中</span>
                         </div>
                         <p>PL-20260710-0023</p>
                         <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>

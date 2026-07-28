@@ -192,6 +192,7 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
 .task-status.status-running { border: 1px solid #91CAFF; background: #E6F4FF; color: #1677FF; }
 .task-status.status-pending { border: 1px solid #FFD666; background: #FFF7E6; color: #D48806; }
 .task-status.status-done { border: 1px solid #B7EB8F; background: #E6FFED; color: #52C41A; }
+.task-status.status-recent { border: 1px solid #87E8DE; background: #E6FFFB; color: #08979C; }
 .task-status.status-stopped { border: 1px solid var(--gray-300); background: var(--gray-100); color: var(--gray-600); }
 .task-processing-content {
     min-width: 0;
