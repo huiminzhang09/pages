@@ -867,7 +867,7 @@
                 <div style="display:grid; grid-template-columns: repeat(2, 1fr); gap:12px 24px; font-size:13px;">
                     <div><span style="color:var(--gray-500);">已选流水：</span><strong id="batchStaffSelectedCount">0</strong> 条</div>
                     <div><span style="color:var(--gray-500);">当前节点：</span><strong id="batchStaffNodeName">-</strong></div>
-                    <div style="grid-column: span 2;"><span style="color:var(--gray-500);">流水ID：</span><span id="batchStaffFlowIds">-</span></div>
+                    <div style="grid-column: span 2;"><span style="color:var(--gray-500);">流水编号：</span><span id="batchStaffFlowIds">-</span></div>
                     <div style="grid-column: span 2;"><span style="color:var(--gray-500);">原执行人：</span><span id="batchStaffOriginalOwners">-</span></div>
                 </div>
             </div>
@@ -1091,7 +1091,7 @@
             <h3 style="font-size:16px; font-weight:600;">流水线详情与进度</h3>
             <button class="modal-close" style="border:none; background:none; font-size:18px; cursor:pointer;" onclick="closeDrawer()">&times;</button>
         </div>
-        <div style="font-size: 16px; font-weight: 600; margin-bottom: 20px;" id="detail-pipeline-id">PL-20260514-001</div>
+        <div style="font-size: 16px; font-weight: 600; margin-bottom: 20px;" id="detail-pipeline-id">FLOW2026051400001</div>
         
         <div class="timeline" style="position: relative; padding-left: 20px; margin-top: 10px;">
             <div style="position: absolute; left: 6px; top: 0; bottom: 0; width: 2px; background: var(--gray-200);"></div>
@@ -1170,7 +1170,7 @@
             <h4 style="font-size:15px; font-weight:600; margin-bottom:12px;">基础信息</h4>
             <table class="data-table" style="margin-bottom: 24px; border: 1px solid var(--gray-200);">
                 <tbody>
-                    <tr><td style="background:var(--gray-100);width:15%;text-align:right;">流水ID</td><td style="width:35%">FLOW2026060200001</td><td style="background:var(--gray-100);width:15%;text-align:right;">歌曲编号</td><td style="width:35%">AIBae...fw</td></tr>
+                    <tr><td style="background:var(--gray-100);width:15%;text-align:right;">流水编号</td><td style="width:35%">FLOW2026060200001</td><td style="background:var(--gray-100);width:15%;text-align:right;">歌曲编号</td><td style="width:35%">AIBae...fw</td></tr>
                     <tr><td style="background:var(--gray-100);text-align:right;">原歌名</td><td>窗外</td><td style="background:var(--gray-100);text-align:right;">新歌名</td><td>窗外</td></tr>
                     <tr><td style="background:var(--gray-100);text-align:right;">当前状态</td><td><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td style="background:var(--gray-100);text-align:right;">当前节点</td><td>作词</td></tr>
                 </tbody>
@@ -1501,7 +1501,6 @@
                 <div class="batch-playlist-task-panel">
                     <div class="batch-playlist-panel-title">
                         <h4>2.解析数据</h4>
-                        <button class="btn-default batch-playlist-refresh-btn" onclick="queryBatchPlaylistImport()"><i class="fas fa-sync-alt"></i> 刷新</button>
                     </div>
                     <div class="batch-playlist-loading" id="batchPlaylistTaskLoading" style="display:none;">
                         <span></span>
@@ -1549,6 +1548,24 @@
                         <strong id="batchPlaylistResultId">7713574197</strong>
                         <span id="batchPlaylistResultCount">26 首歌曲</span>
                         <span class="batch-playlist-status success" id="batchPlaylistResultStatus">已解析</span>
+                    </div>
+                    <div class="table-container batch-playlist-table-wrap" id="batchPlaylistSongList">
+                        <table class="data-table">
+                            <thead><tr><th>序号</th><th>歌名</th><th>对标 ID</th><th>歌词</th></tr></thead>
+                            <tbody>
+                                <tr><td>1</td><td>七里香</td><td>993782</td><td><div class="batch-playlist-lyrics" title="窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉">窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉</div></td></tr>
+                                <tr><td>2</td><td>夜曲</td><td>998172</td><td><div class="batch-playlist-lyrics" title="一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景">一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景</div></td></tr>
+                                <tr><td>3</td><td>青花瓷</td><td>771812</td><td><div class="batch-playlist-lyrics" title="素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆">素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆</div></td></tr>
+                                <tr><td>4</td><td>稻香</td><td>223812</td><td><div class="batch-playlist-lyrics" title="对这个世界如果你有太多的抱怨 跌倒了就不敢继续往前走">对这个世界如果你有太多的抱怨 跌倒了就不敢继续往前走</div></td></tr>
+                                <tr><td>5</td><td>告白气球</td><td>771298</td><td><div class="batch-playlist-lyrics" title="塞纳河畔 左岸的咖啡 我手一杯 品尝你的美">塞纳河畔 左岸的咖啡 我手一杯 品尝你的美</div></td></tr>
+                                <tr><td>6</td><td>晴天</td><td>998731</td><td><div class="batch-playlist-lyrics" title="故事的小黄花 从出生那年就飘着 童年的荡秋千 随记忆一直晃到现在">故事的小黄花 从出生那年就飘着 童年的荡秋千 随记忆一直晃到现在</div></td></tr>
+                                <tr><td>7</td><td>简单爱</td><td>771823</td><td><div class="batch-playlist-lyrics" title="说不上为什么 我变得很主动 若爱上一个人 什么都会值得去做">说不上为什么 我变得很主动 若爱上一个人 什么都会值得去做</div></td></tr>
+                                <tr><td>8</td><td>爱在西元前</td><td>661281</td><td><div class="batch-playlist-lyrics" title="古巴比伦王颁布了汉摩拉比法典 刻在黑色的玄武岩 距今已经三千七百多年">古巴比伦王颁布了汉摩拉比法典 刻在黑色的玄武岩 距今已经三千七百多年</div></td></tr>
+                                <tr><td>9</td><td>双截棍</td><td>661282</td><td><div class="batch-playlist-lyrics" title="岩烧店的烟味弥漫 隔壁是国术馆 店里面的妈妈桑 茶道有三段">岩烧店的烟味弥漫 隔壁是国术馆 店里面的妈妈桑 茶道有三段</div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="batch-playlist-result-actions" id="batchPlaylistResultActions">
                         <div class="batch-playlist-result-style">
                             <label>风格</label>
                             <input type="hidden" id="inputBatchImportTags" value="">
@@ -1605,37 +1622,8 @@
                         </div>
                         <button class="btn-primary batch-playlist-import-btn" id="batchPlaylistImportBtn" onclick="confirmBatchPlaylistImport()">导入该歌单</button>
                     </div>
-                    <div class="table-container batch-playlist-table-wrap" id="batchPlaylistSongList">
-                        <table class="data-table">
-                            <thead><tr><th>序号</th><th>歌名</th><th>对标 ID</th><th>歌词</th></tr></thead>
-                            <tbody>
-                                <tr><td>1</td><td>七里香</td><td>993782</td><td><div class="batch-playlist-lyrics" title="窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉">窗外的麻雀 在电线杆上多嘴 你说这一句 很有夏天的感觉</div></td></tr>
-                                <tr><td>2</td><td>夜曲</td><td>998172</td><td><div class="batch-playlist-lyrics" title="一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景">一群嗜血的蚂蚁 被腐肉所吸引 我面无表情 看孤独的风景</div></td></tr>
-                                <tr><td>3</td><td>青花瓷</td><td>771812</td><td><div class="batch-playlist-lyrics" title="素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆">素胚勾勒出青花 笔锋浓转淡 瓶身描绘的牡丹一如你初妆</div></td></tr>
-                                <tr><td>4</td><td>稻香</td><td>223812</td><td><div class="batch-playlist-lyrics" title="对这个世界如果你有太多的抱怨 跌倒了就不敢继续往前走">对这个世界如果你有太多的抱怨 跌倒了就不敢继续往前走</div></td></tr>
-                                <tr><td>5</td><td>告白气球</td><td>771298</td><td><div class="batch-playlist-lyrics" title="塞纳河畔 左岸的咖啡 我手一杯 品尝你的美">塞纳河畔 左岸的咖啡 我手一杯 品尝你的美</div></td></tr>
-                                <tr><td>6</td><td>晴天</td><td>998731</td><td><div class="batch-playlist-lyrics" title="故事的小黄花 从出生那年就飘着 童年的荡秋千 随记忆一直晃到现在">故事的小黄花 从出生那年就飘着 童年的荡秋千 随记忆一直晃到现在</div></td></tr>
-                                <tr><td>7</td><td>本草纲目</td><td>882712</td><td><span class="text-muted">--</span></td></tr>
-                                <tr><td>8</td><td>简单爱</td><td>771823</td><td><div class="batch-playlist-lyrics" title="说不上为什么 我变得很主动 若爱上一个人 什么都会值得去做">说不上为什么 我变得很主动 若爱上一个人 什么都会值得去做</div></td></tr>
-                                <tr><td>9</td><td>爱在西元前</td><td>661281</td><td><div class="batch-playlist-lyrics" title="古巴比伦王颁布了汉摩拉比法典 刻在黑色的玄武岩 距今已经三千七百多年">古巴比伦王颁布了汉摩拉比法典 刻在黑色的玄武岩 距今已经三千七百多年</div></td></tr>
-                                <tr><td>10</td><td>双截棍</td><td>661282</td><td><div class="batch-playlist-lyrics" title="岩烧店的烟味弥漫 隔壁是国术馆 店里面的妈妈桑 茶道有三段">岩烧店的烟味弥漫 隔壁是国术馆 店里面的妈妈桑 茶道有三段</div></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="batch-playlist-pagination" id="batchPlaylistPagination">
-                        <span>共 26 条</span>
-                        <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button class="page-btn active">1</button>
-                        <button class="page-btn">2</button>
-                        <button class="page-btn">3</button>
-                        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-                        <select class="page-size-select"><option>10 条/页</option></select>
-                    </div>
                 </div>
             </div>
-        </div>
-        <div class="batch-playlist-footer">
-            <button class="btn-default" onclick="closeModal('batchPlaylistImportModal')">取消</button>
         </div>
     </div>
 </div>

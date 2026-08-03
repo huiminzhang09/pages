@@ -1746,11 +1746,11 @@ const pages = {
                 </div>
                 <div id="orderSongFlowTable" class="table-container order-song-table-panel" style="box-shadow: none; border: 1px solid var(--gray-200);">
                     <table class="data-table">
-                        <thead><tr><th>批次名称</th><th>流水ID</th><th>歌曲原名</th><th>交付歌名</th><th>当前节点</th><th>当前执行人</th><th>制作状态</th><th>交付时间</th></tr></thead>
+                        <thead><tr><th>批次名称</th><th>流水编号</th><th>歌曲原名</th><th>交付歌名</th><th>当前节点</th><th>当前执行人</th><th>制作状态</th><th>交付时间</th></tr></thead>
                         <tbody>
-                            <tr data-batch="2月 300首"><td>2月 300首</td><td>LS-001</td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>作曲</td><td>张三</td><td><span class="badge badge-red">已中止</span></td><td>2026-02-23</td></tr>
-                            <tr data-batch="6月 300首"><td>6月 300首</td><td>LS-002</td><td>这一路</td><td>这一路</td><td>曲审核</td><td>李四</td><td><span class="badge badge-blue">进行中</span></td><td>-</td></tr>
-                            <tr data-batch="4月 300首"><td>4月 300首</td><td>LS-003</td><td>执念</td><td>执念</td><td>-</td><td>王五</td><td><span class="badge badge-green">已完成</span></td><td>2026-02-23</td></tr>
+                            <tr data-batch="2月 300首"><td>2月 300首</td><td>FLOW2026022300001</td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>作曲</td><td>张三</td><td><span class="badge badge-red">已中止</span></td><td>2026-02-23</td></tr>
+                            <tr data-batch="6月 300首"><td>6月 300首</td><td>FLOW2026060200001</td><td>这一路</td><td>这一路</td><td>曲审核</td><td>李四</td><td><span class="badge badge-blue">进行中</span></td><td>-</td></tr>
+                            <tr data-batch="4月 300首"><td>4月 300首</td><td>FLOW2026040200001</td><td>执念</td><td>执念</td><td>-</td><td>王五</td><td><span class="badge badge-green">已完成</span></td><td>2026-02-23</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1864,14 +1864,14 @@ const pages = {
                     </div>
                     <div class="table-container">
                         <table class="data-table">
-                    <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水ID</th><th>对标歌名</th><th>歌名</th><th>成品编号</th><th>状态</th><th>当前节点</th><th>当前执行人</th><th>操作</th></tr></thead>
+                    <thead><tr><th style="width:40px;"><input type="checkbox"></th><th>流水编号</th><th>对标歌名</th><th>歌名</th><th>成品编号</th><th>状态</th><th>当前节点</th><th>当前执行人</th><th>操作</th></tr></thead>
                     <tbody>
                         <tr class="batch-flow-row" data-status="进行中" data-node="作词"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200001</td><td>窗外</td><td>窗外</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td class="batch-flow-node-cell">作词</td><td class="batch-flow-owner-cell">张三</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
                         <tr class="batch-flow-row" data-status="已终止" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox" disabled title="已终止流水不可参与批量维护"></td><td>FLOW2026060200002</td><td>他不懂</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #F5222D; color:#F5222D; background:transparent;">已终止</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">李四</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button></td></tr>
                         <tr class="batch-flow-row" data-status="已完成" data-node="-"><td><input type="checkbox" class="batch-flow-checkbox" disabled title="无当前运行节点，不可参与批量维护"></td><td>FLOW2026060200003</td><td>这就是爱</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #52C41A; color:#52C41A; background:transparent;">已完成</span></td><td class="batch-flow-node-cell">-</td><td class="batch-flow-owner-cell">王五</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button></td></tr>
                         <tr class="batch-flow-row" data-status="进行中" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200004</td><td>云中的angle</td><td>云中的angle</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #1677FF; color:#1677FF; background:transparent;">进行中</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">赵六</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
-                        <tr class="batch-flow-row" data-status="执行失败" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200006</td><td>晚风渡口</td><td>晚风渡口</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #FA541C; color:#FA541C; background:#FFF2E8;">执行失败</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">钱七</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
-                        <tr class="batch-flow-row" data-status="待分配" data-node="作词"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200005</td><td>--</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge badge-gray">待分配</span></td><td class="batch-flow-node-cell">作词</td><td class="batch-flow-owner-cell">-</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
+                        <tr class="batch-flow-row" data-status="执行失败" data-node="作曲"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200005</td><td>晚风渡口</td><td>晚风渡口</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge" style="border:1px solid #FA541C; color:#FA541C; background:#FFF2E8;">执行失败</span></td><td class="batch-flow-node-cell">作曲</td><td class="batch-flow-owner-cell">钱七</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
+                        <tr class="batch-flow-row" data-status="待分配" data-node="作词"><td><input type="checkbox" class="batch-flow-checkbox"></td><td>FLOW2026060200006</td><td>--</td><td>--</td><td>AIBae...fw</td><td class="batch-flow-status-cell"><span class="badge badge-gray">待分配</span></td><td class="batch-flow-node-cell">作词</td><td class="batch-flow-owner-cell">-</td><td><button class="btn-text" onclick="openModal('modal-batch-flow-detail')">详情</button><button class="btn-text" onclick="openSingleStaffMaintenance(this)">人员维护</button><button class="btn-text danger" onclick="openConfirmDialog('终止确认', '确定终止该流水？终止后当前及后续节点将停止流转。', '确认终止')">终止</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -2243,87 +2243,87 @@ pages['task-processing-page'] = {
                 <div class="task-processing-title">任务列表</div>
                 <div class="task-processing-search">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="歌曲、批次、流水号...">
+                    <input type="text" placeholder="歌曲、批次、流水号..." oninput="filterTaskProcessingSearch(this)">
                 </div>
                 <div class="task-processing-tabs">
                     <button class="active" data-status="全部" onclick="filterTaskProcessingTasks(this)">全部 8</button>
                     <button data-status="待办" onclick="filterTaskProcessingTasks(this)">待办 1</button>
                     <button data-status="进行中" onclick="filterTaskProcessingTasks(this)">进行中 4</button>
+                    <button data-status="已完成" onclick="filterTaskProcessingTasks(this)">已完成 2</button>
                     <button data-status="已终止" onclick="filterTaskProcessingTasks(this)">已终止 1</button>
-                    <button data-status="最近完成" onclick="filterTaskProcessingTasks(this)">最近完成 2</button>
                 </div>
                 <div class="task-processing-list">
-                    <div class="task-card active" data-status="进行中" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card active" data-status="进行中" data-song-name="夜风吹过" data-reference-name="夜风参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 14:32:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>夜风吹过</strong>
                             <span class="task-node">作曲</span>
                             <span class="task-status status-running">进行中</span>
                         </div>
-                        <p>PL-20260710-0023</p>
-                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                        <p>FLOW2026071000001</p>
+                        <p><span class="task-batch-name">25 年 4 月 300首</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
                     </div>
-                    <div class="task-card" data-status="进行中" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="进行中" data-song-name="破晓时分" data-reference-name="破晓参考" data-batch-name="30 首草原风" data-enter-time="2026-07-10 14:40:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>破晓时分</strong>
                             <span class="task-node">曲审核</span>
                             <span class="task-status status-running">进行中</span>
                         </div>
-                        <p>PL-20260710-0023</p>
-                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                        <p>FLOW2026071000002</p>
+                        <p><span class="task-batch-name">30 首草原风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:40</p>
                     </div>
-                    <div class="task-card" data-status="进行中" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="进行中" data-song-name="云雀漫步" data-reference-name="云雀参考" data-batch-name="7 月 60 首国风" data-enter-time="2026-07-10 14:50:00" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>云雀漫步</strong>
                             <span class="task-node">作词</span>
                             <span class="task-status status-running">进行中</span>
                         </div>
-                        <p>PL-20260710-0023</p>
-                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                        <p>FLOW2026071000003</p>
+                        <p><span class="task-batch-name">7 月 60 首国风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:50</p>
                     </div>
-                    <div class="task-card" data-status="待办" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="待办" data-song-name="山海回声" data-reference-name="山海参考" data-batch-name="20 首 DJ" data-enter-time="2026-07-10 15:08:00" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>山海回声</strong>
                             <span class="task-node">作词</span>
                             <span class="task-status status-pending">待办</span>
                         </div>
-                        <p>PL-20260710-0028</p>
-                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:08</p>
+                        <p>FLOW2026071000004</p>
+                        <p><span class="task-batch-name">20 首 DJ</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:08</p>
                     </div>
-                    <div class="task-card" data-status="最近完成" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="已完成" data-song-name="落叶之歌" data-reference-name="落叶参考" data-batch-name="5 月 120 首流行" data-complete-time="2026-07-10 15:40:00" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>落叶之歌</strong>
                             <span class="task-node">词审核</span>
-                            <span class="task-status status-recent">最近完成</span>
+                            <span class="task-status status-done">已完成</span>
                         </div>
-                        <p>PL-20260710-0023</p>
-                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                        <p>FLOW2026071000005</p>
+                        <p><span class="task-batch-name">5 月 120 首流行</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:40</p>
                     </div>
-                    <div class="task-card" data-status="已终止" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="已完成" data-song-name="星河旅人" data-reference-name="星河参考" data-batch-name="6 月 100 首民谣" data-complete-time="2026-07-10 16:20:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>星河旅人</strong>
+                            <span class="task-node">作曲</span>
+                            <span class="task-status status-done">已完成</span>
+                        </div>
+                        <p>FLOW2026071000006</p>
+                        <p><span class="task-batch-name">6 月 100 首民谣</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:20</p>
+                    </div>
+                    <div class="task-card" data-status="已终止" data-song-name="午夜霓虹" data-reference-name="午夜参考" data-batch-name="4 月 500 首草原风" data-stop-time="2026-07-10 15:55:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>午夜霓虹</strong>
                             <span class="task-node">曲审核</span>
                             <span class="task-status status-stopped">已终止</span>
                         </div>
-                        <p>PL-20260710-0023</p>
-                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                        <p>FLOW2026071000007</p>
+                        <p><span class="task-batch-name">4 月 500 首草原风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:55</p>
                     </div>
-                    <div class="task-card" data-status="最近完成" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
-                        <div class="task-card-main">
-                            <strong>星河旅人</strong>
-                            <span class="task-node">作曲</span>
-                            <span class="task-status status-recent">最近完成</span>
-                        </div>
-                        <p>PL-20260710-0029</p>
-                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:20</p>
-                    </div>
-                    <div class="task-card" data-status="进行中" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="进行中" data-song-name="遥远的地方" data-reference-name="遥远参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 15:30:00" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>遥远的地方</strong>
                             <span class="task-node">词审核</span>
                             <span class="task-status status-running">进行中</span>
                         </div>
-                        <p>PL-20260710-0023</p>
-                        <p>2026-03-批次07&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
+                        <p>FLOW2026071000008</p>
+                        <p><span class="task-batch-name">25 年 4 月 300首</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:30</p>
                     </div>
                 </div>
             </aside>
@@ -2598,8 +2598,8 @@ function selectBatchPlaylistTask(card) {
     const resultStatus = document.getElementById('batchPlaylistResultStatus');
     const resultIcon = modal.querySelector('.batch-playlist-result-head .batch-playlist-task-icon');
     const songList = document.getElementById('batchPlaylistSongList');
-    const pagination = document.getElementById('batchPlaylistPagination');
     const importBtn = document.getElementById('batchPlaylistImportBtn');
+    const resultActions = document.getElementById('batchPlaylistResultActions');
     const isFailed = statusType === 'danger';
 
     if (resultId) resultId.innerText = card.dataset.id || '';
@@ -2614,7 +2614,7 @@ function selectBatchPlaylistTask(card) {
         resultIcon.style.display = isFailed ? 'none' : 'inline-flex';
     }
     if (songList) songList.style.display = isFailed ? 'none' : '';
-    if (pagination) pagination.style.display = isFailed ? 'none' : '';
+    if (resultActions) resultActions.style.display = isFailed ? 'none' : '';
     if (importBtn) importBtn.disabled = isFailed;
 }
 
@@ -2625,7 +2625,7 @@ function setBatchPlaylistLoading(isLoading) {
     const retryBtn = document.getElementById('batchPlaylistRetryBtn');
     const resultHead = document.getElementById('batchPlaylistResultHead');
     const songList = document.getElementById('batchPlaylistSongList');
-    const pagination = document.getElementById('batchPlaylistPagination');
+    const resultActions = document.getElementById('batchPlaylistResultActions');
 
     if (taskLoading) taskLoading.style.display = isLoading ? 'flex' : 'none';
     if (resultLoading) resultLoading.style.display = isLoading ? 'flex' : 'none';
@@ -2633,7 +2633,7 @@ function setBatchPlaylistLoading(isLoading) {
     if (retryBtn) retryBtn.style.display = isLoading ? 'none' : '';
     if (resultHead) resultHead.style.display = isLoading ? 'none' : '';
     if (songList) songList.style.display = isLoading ? 'none' : '';
-    if (pagination) pagination.style.display = isLoading ? 'none' : '';
+    if (resultActions) resultActions.style.display = isLoading ? 'none' : '';
 }
 
 function queryBatchPlaylistImport() {
@@ -2735,42 +2735,57 @@ function confirmTaskReferenceSong() {
     }
 }
 
-function renderTaskProcessingContent(pageKey = 'manual-composition-page') {
+function renderTaskProcessingContent(pageKey = 'manual-composition-page', taskCard = null) {
     const container = document.getElementById('taskProcessingContent');
     const pageData = pages[pageKey];
     if (!container || !pageData) return;
+    const taskStatus = taskCard?.dataset.status || '';
+    container.dataset.currentTask = taskStatus ? `${pageKey}:${taskStatus}` : pageKey;
+    delete container.dataset.readonly;
     container.innerHTML = pageData.content;
     initEmbeddedWorkbenchPage(pageKey);
+    setTimeout(() => applyTaskProcessingReadonlyState(taskCard), 120);
 }
 
 function initTaskProcessingPage() {
-    const activeTask = document.querySelector('.task-processing-list .task-card.active') || document.querySelector('.task-processing-list .task-card');
-    if (activeTask) {
-        activeTask.classList.add('active');
-        renderTaskProcessingContent(activeTask.dataset.pageKey);
-    }
+    const wrapper = document.querySelector('.task-processing-layout');
+    if (wrapper) applyTaskProcessingFilters(wrapper);
 }
 
 function selectTaskProcessingTask(card) {
     if (!card) return;
     document.querySelectorAll('.task-processing-list .task-card').forEach(item => item.classList.remove('active'));
     card.classList.add('active');
-    renderTaskProcessingContent(card.dataset.pageKey);
+    renderTaskProcessingContent(card.dataset.pageKey, card);
 }
 
 function filterTaskProcessingTasks(button) {
     if (!button) return;
-    const status = button.dataset.status || '全部';
     const wrapper = button.closest('.task-processing-layout');
     if (!wrapper) return;
 
     wrapper.querySelectorAll('.task-processing-tabs button').forEach(item => item.classList.remove('active'));
     button.classList.add('active');
+    applyTaskProcessingFilters(wrapper);
+}
 
+function filterTaskProcessingSearch(input) {
+    const wrapper = input?.closest('.task-processing-layout');
+    if (!wrapper) return;
+    applyTaskProcessingFilters(wrapper);
+}
+
+function applyTaskProcessingFilters(wrapper) {
+    const status = wrapper.querySelector('.task-processing-tabs button.active')?.dataset.status || '全部';
+    const keyword = (wrapper.querySelector('.task-processing-search input')?.value || '').trim().toLowerCase();
     const cards = Array.from(wrapper.querySelectorAll('.task-processing-list .task-card'));
+    updateTaskProcessingCardNames(cards);
+    const sortedCards = sortTaskProcessingCards(wrapper, cards, status);
     const visibleCards = [];
-    cards.forEach(card => {
-        const shouldShow = status === '全部' || card.dataset.status === status;
+    sortedCards.forEach(card => {
+        const matchedStatus = status === '全部' || card.dataset.status === status;
+        const matchedKeyword = !keyword || card.innerText.toLowerCase().includes(keyword);
+        const shouldShow = matchedStatus && matchedKeyword;
         card.style.display = shouldShow ? '' : 'none';
         card.classList.remove('active');
         if (shouldShow) visibleCards.push(card);
@@ -2778,13 +2793,105 @@ function filterTaskProcessingTasks(button) {
 
     if (visibleCards.length) {
         visibleCards[0].classList.add('active');
-        renderTaskProcessingContent(visibleCards[0].dataset.pageKey);
+        renderTaskProcessingContent(visibleCards[0].dataset.pageKey, visibleCards[0]);
     } else {
-        const container = document.getElementById('taskProcessingContent');
-        if (container) {
-            container.innerHTML = '<div class="task-empty-state">暂无对应状态的任务</div>';
-        }
+        setTaskProcessingNullState(keyword ? '暂无匹配任务' : '暂无对应状态的任务');
     }
+}
+
+function updateTaskProcessingCardNames(cards) {
+    cards.forEach(card => {
+        const title = card.querySelector('.task-card-main strong');
+        if (!title) return;
+        const songName = (card.dataset.songName || '').trim();
+        const referenceName = (card.dataset.referenceName || '').trim();
+        const displayName = songName || referenceName || '未命名歌曲';
+        title.innerText = displayName;
+        title.title = displayName;
+    });
+}
+
+function sortTaskProcessingCards(wrapper, cards, activeStatus = '全部') {
+    const list = wrapper.querySelector('.task-processing-list');
+    const statusOrder = {
+        '进行中': 1,
+        '待办': 2,
+        '已完成': 3,
+        '已终止': 4
+    };
+    const sortedCards = cards.slice().sort((a, b) => {
+        if (activeStatus === '全部') {
+            const statusDiff = (statusOrder[a.dataset.status] || 99) - (statusOrder[b.dataset.status] || 99);
+            if (statusDiff !== 0) return statusDiff;
+        }
+        return getTaskProcessingSortTime(b) - getTaskProcessingSortTime(a);
+    });
+
+    sortedCards.forEach(card => list.appendChild(card));
+    return sortedCards;
+}
+
+function getTaskProcessingSortTime(card) {
+    const status = card?.dataset.status || '';
+    const timeValue = status === '已完成'
+        ? card.dataset.completeTime
+        : status === '已终止'
+            ? card.dataset.stopTime
+            : card.dataset.enterTime;
+    return Date.parse(timeValue || card.dataset.enterTime || card.dataset.completeTime || card.dataset.stopTime || '1970-01-01 00:00:00');
+}
+
+function setTaskProcessingNullState(message = '暂无任务') {
+    document.querySelectorAll('.task-processing-list .task-card').forEach(item => item.classList.remove('active'));
+    const container = document.getElementById('taskProcessingContent');
+    if (container) {
+        container.dataset.currentTask = 'null';
+        const isSearchEmpty = message.includes('匹配');
+        container.innerHTML = `
+            <div class="task-empty-state">
+                <div class="task-empty-icon"><i class="fas fa-inbox"></i></div>
+                <div class="task-empty-title">${message}</div>
+                <div class="task-empty-desc">${isSearchEmpty ? '请调整搜索关键词后重试' : '当前状态下暂无需要处理的任务'}</div>
+            </div>
+        `;
+    }
+}
+
+function isTaskProcessingReadonlyStatus(status) {
+    return status === '已完成' || status === '已终止';
+}
+
+function applyTaskProcessingReadonlyState(taskCard) {
+    if (!taskCard || !isTaskProcessingReadonlyStatus(taskCard.dataset.status)) return;
+
+    const container = document.getElementById('taskProcessingContent');
+    if (!container) return;
+    container.dataset.readonly = 'true';
+
+    container.querySelectorAll('input, textarea, select').forEach(control => {
+        control.setAttribute('disabled', 'disabled');
+        control.classList.add('task-readonly-control');
+    });
+
+    container.querySelectorAll('[contenteditable="true"]').forEach(editor => {
+        editor.setAttribute('contenteditable', 'false');
+        editor.classList.add('task-readonly-control');
+    });
+
+    container.querySelectorAll('button').forEach(button => {
+        const text = (button.innerText || '').trim();
+        const onclick = button.getAttribute('onclick') || '';
+        const shouldHide = /提交|中止|终止|确认|重置|打回|审核通过|生成|重新上传|删除|添加|上传|保存/.test(text)
+            || /submit|abort|suspend|confirm|delete|upload|generate|save|open.*Modal/i.test(onclick);
+
+        if (shouldHide) {
+            button.style.display = 'none';
+            return;
+        }
+
+        button.disabled = true;
+        button.classList.add('task-readonly-action');
+    });
 }
 
 function showSuccessMessage(message) {
@@ -2799,6 +2906,24 @@ function showSuccessMessage(message) {
 function confirmBatchPlaylistImport() {
     const activeCard = document.querySelector('#batchPlaylistImportModal .batch-playlist-task-card.active');
     if (!activeCard || activeCard.dataset.statusType === 'danger') return;
+
+    const taskList = document.getElementById('batchPlaylistTaskList');
+    activeCard.remove();
+
+    const nextCard = taskList?.querySelector('.batch-playlist-task-card[data-status-type="success"]')
+        || taskList?.querySelector('.batch-playlist-task-card');
+    if (nextCard) {
+        selectBatchPlaylistTask(nextCard);
+    } else {
+        if (taskList) taskList.innerHTML = '<div class="batch-playlist-empty">暂无待导入歌单</div>';
+        const resultHead = document.getElementById('batchPlaylistResultHead');
+        const songList = document.getElementById('batchPlaylistSongList');
+        const resultActions = document.getElementById('batchPlaylistResultActions');
+        if (resultHead) resultHead.style.display = 'none';
+        if (songList) songList.style.display = 'none';
+        if (resultActions) resultActions.style.display = 'none';
+    }
+
     closeModal('batchPlaylistImportModal');
     showSuccessMessage('导入成功');
 }
