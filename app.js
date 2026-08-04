@@ -1605,7 +1605,7 @@ const pages = {
             <div class="filter-bar">
                 <div class="filter-row">
                     <div class="filter-item"><label>批次编号</label><input type="text" placeholder="搜索批次编号"></div>
-                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待生产</option><option>生产中</option><option>待交付</option><option>已终止</option><option>部分交付</option><option>已交付</option></select></div>
+                    <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待生产</option><option>生产中</option><option>待交付</option><option>已终止</option><option>部分交付</option><option>已交付</option><option>已完结</option></select></div>
                     <div class="filter-item"><label>订单名称</label><select><option>全部</option></select></div>
                     <div class="filter-item"><label>工作流</label><select><option>全部</option></select></div>
                     <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
@@ -1617,7 +1617,7 @@ const pages = {
             </div>
             <div class="batch-summary-bar">
                 <span class="batch-summary-dot"></span>
-                <span>共<strong>6</strong>个批次</span>
+                <span>共<strong>7</strong>个批次</span>
                 <span>需求总数量<strong>510</strong>首</span>
                 <span>生产完成<strong>335</strong>首</span>
                 <span>领用数量<strong>68</strong>首</span>
@@ -1626,12 +1626,13 @@ const pages = {
                 <table class="data-table">
                     <thead><tr><th>批次编号</th><th>批次名称</th><th>订单名称</th><th>需求数量</th><th>生产完成数量</th><th>领用数量</th><th>生产进度</th><th>生产类型</th><th>制作方式</th><th>工作流</th><th>预计交付周期（天）</th><th>创建时间</th><th>操作</th></tr></thead>
                     <tbody>
-                        <tr><td>PC202604200001</td><td>4 月 500 首草原风</td><td>需求管理系统开发</td><td>100</td><td>0</td><td>0</td><td><span class="badge badge-gray">待生产</span></td><td>全案</td><td>全案</td><td>工作流1</td><td>23</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
-                        <tr><td>PC202604210002</td><td>30 首草原风</td><td>需求管理系统开发</td><td>50</td><td>25</td><td>0</td><td><span class="badge badge-orange">生产中</span></td><td>Hit</td><td>Hit</td><td>工作流2</td><td>44</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
-                        <tr><td>PC202604250006</td><td>7 月 60 首国风</td><td>数据报表功能</td><td>60</td><td>60</td><td>0</td><td><span class="badge badge-purple">待交付</span></td><td>全案</td><td>全案</td><td>工作流2</td><td>21</td><td>2026-05-12 11:24:36</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
+                        <tr><td>PC202604200001</td><td>4 月 500 首草原风</td><td>需求管理系统开发</td><td>100</td><td>0</td><td>0</td><td><span class="badge badge-gray">待生产</span></td><td>全案</td><td>全案</td><td>工作流1</td><td>23</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text danger" style="color:var(--danger)" onclick="finishBatch(this)">完结</button></td></tr>
+                        <tr><td>PC202604210002</td><td>30 首草原风</td><td>需求管理系统开发</td><td>50</td><td>25</td><td>0</td><td><span class="badge badge-orange">生产中</span></td><td>Hit</td><td>Hit</td><td>工作流2</td><td>44</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text danger" style="color:var(--danger)" onclick="finishBatch(this)">完结</button></td></tr>
+                        <tr><td>PC202604250006</td><td>7 月 60 首国风</td><td>数据报表功能</td><td>60</td><td>60</td><td>0</td><td><span class="badge badge-purple">待交付</span></td><td>全案</td><td>全案</td><td>工作流2</td><td>21</td><td>2026-05-12 11:24:36</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button><button class="btn-text danger" style="color:var(--danger)" onclick="finishBatch(this)">完结</button></td></tr>
                         <tr><td>PC202604220003</td><td>20 首 DJ</td><td>用户权限模块优化</td><td>80</td><td>30</td><td>0</td><td><span class="badge badge-red">已终止</span></td><td>DJ</td><td>DJ</td><td>工作流1</td><td>55</td><td>2026-05-06 12:22:22</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
-                        <tr><td>PC202604230004</td><td>5 月 120 首流行</td><td>数据报表功能</td><td>120</td><td>80</td><td>68</td><td><span class="badge badge-blue">部分交付</span></td><td>全案</td><td>全案</td><td>工作流2</td><td>30</td><td>2026-05-08 09:18:45</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button></td></tr>
+                        <tr><td>PC202604230004</td><td>5 月 120 首流行</td><td>数据报表功能</td><td>120</td><td>80</td><td>68</td><td><span class="badge badge-blue">部分交付</span></td><td>全案</td><td>全案</td><td>工作流2</td><td>30</td><td>2026-05-08 09:18:45</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button><button class="btn-text" style="color:var(--danger)" onclick="navigateTo('batch-delivery-page')">交付</button><button class="btn-text danger" style="color:var(--danger)" onclick="finishBatch(this)">完结</button></td></tr>
                         <tr><td>PC202604240005</td><td>6 月 100 首民谣</td><td>数据中台联调</td><td>100</td><td>100</td><td>100</td><td><span class="badge badge-green">已交付</span></td><td>Hit</td><td>Hit</td><td>工作流3</td><td>28</td><td>2026-05-10 16:30:12</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button><button class="btn-text" onclick="openAddBatchDrawer(null, 'edit')">编辑</button></td></tr>
+                        <tr><td>PC202604260007</td><td>7 月 70 首年轻流行</td><td>数据中台联调</td><td>70</td><td>70</td><td>40</td><td><span class="badge badge-gray">已完结</span></td><td>全案</td><td>全案</td><td>工作流3</td><td>35</td><td>2026-05-14 10:26:18</td><td><button class="btn-text" onclick="navigateTo('batch-detail-page')">详情</button></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -4049,6 +4050,38 @@ function deliverBatch(btn) {
     badge.innerText = '已交付';
     btn.remove();
     alert('交付成功！');
+}
+
+let pendingBatchFinishRow = null;
+
+function finishBatch(btn) {
+    const row = btn?.closest('tr');
+    const statusBadge = row?.querySelector('td:nth-child(7) .badge');
+    const currentStatus = statusBadge?.textContent.trim() || '';
+    const allowedStatuses = ['待生产', '生产中', '待交付', '部分交付'];
+    if (!row || !statusBadge || !allowedStatuses.includes(currentStatus)) return;
+
+    pendingBatchFinishRow = row;
+    openModal('modal-batch-finish-confirm');
+}
+
+function closeBatchFinishModal() {
+    pendingBatchFinishRow = null;
+    closeModal('modal-batch-finish-confirm');
+}
+
+function confirmFinishBatch() {
+    const row = pendingBatchFinishRow;
+    if (!row) return;
+
+    const statusBadge = row.querySelector('td:nth-child(7) .badge');
+    statusBadge.className = 'badge badge-gray';
+    statusBadge.textContent = '已完结';
+    const actionCell = row.cells[row.cells.length - 1];
+    actionCell.innerHTML = '<button class="btn-text" onclick="navigateTo(\'batch-detail-page\')">详情</button>';
+    pendingBatchFinishRow = null;
+    closeModal('modal-batch-finish-confirm');
+    showSuccessMessage('批次已完结');
 }
 
 

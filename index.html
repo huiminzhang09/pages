@@ -491,6 +491,31 @@
     </div>
 </div>
 
+<!-- Batch Finish Confirm Modal -->
+<div class="modal-overlay" id="modal-batch-finish-confirm" style="display:none; z-index:2000;">
+    <div class="modal batch-finish-confirm-modal">
+        <div class="modal-header">
+            <h3>确认完结批次</h3>
+            <button class="modal-close" onclick="closeBatchFinishModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p class="batch-finish-confirm-question">确认完结该批次？</p>
+            <p class="batch-finish-confirm-title">本次操作将：</p>
+            <ul class="batch-finish-confirm-list">
+                <li>终止未完成的流水；</li>
+                <li>将已完成成品移入成品库；</li>
+                <li>解除符合条件的成品领用；</li>
+                <li>保持已经交付的成品记录不变。</li>
+            </ul>
+            <p class="batch-finish-confirm-warning">完结后，批次状态将变更为“已完结”，默认不可撤销。</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeBatchFinishModal()">取消</button>
+            <button class="batch-finish-confirm-submit" onclick="confirmFinishBatch()">确认完结</button>
+        </div>
+    </div>
+</div>
+
 <!-- Batch Delivery Confirm Modal -->
 <div class="modal-overlay" id="modal-batch-delivery-confirm" style="display:none">
     <div class="modal batch-delivery-confirm-modal">
