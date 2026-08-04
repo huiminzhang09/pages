@@ -1153,9 +1153,12 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
 .batch-playlist-status { align-self: start; flex-shrink: 0; padding: 2px 7px; border-radius: 12px; font-size: 12px; font-weight: 600; white-space: nowrap; }
 .batch-playlist-status.success { border: 1px solid #B7EFC5; background: #EAF8EF; color: #16A34A; }
 .batch-playlist-status.danger { border: 1px solid #FFC9C9; background: #FFF1F0; color: var(--danger); }
+.batch-playlist-status.loading { border: 1px solid #FFD591; background: #FFF7E6; color: #D46B08; }
 .batch-playlist-task-card.active .batch-playlist-status.success { background: #E6FFED; box-shadow: none; }
 .batch-playlist-task-card.active .batch-playlist-status.danger { background: #FFF2F0; box-shadow: none; }
 .batch-playlist-retry { width: 100%; margin-top: 72px; padding: 10px; border: 1px solid var(--gray-200); border-radius: 6px; background: #fff; color: var(--gray-800); cursor: pointer; }
+.batch-playlist-retry:disabled { color: var(--gray-400); background: var(--gray-50); cursor: not-allowed; }
+.batch-playlist-task-card.is-retrying { pointer-events: none; }
 .batch-playlist-result-head { justify-content: flex-start; align-items: center; gap: 14px; margin-bottom: 18px; color: var(--gray-900); }
 .batch-playlist-result-head > strong,
 .batch-playlist-result-head > span:not(.batch-playlist-task-icon) {
@@ -1163,12 +1166,12 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     align-items: center;
     min-height: 38px;
 }
-.batch-playlist-result-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-200); }
+.batch-playlist-result-actions { position: relative; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-200); }
 .batch-playlist-result-style { width: 340px; display: flex; align-items: center; gap: 8px; }
 .batch-playlist-result-style label { display: inline-flex; align-items: center; min-height: 38px; margin: 0; color: var(--gray-800); font-size: 13px; font-weight: 700; white-space: nowrap; }
 .batch-playlist-result-style .playlist-style-dropdown { flex: 1; min-width: 0; }
 .batch-playlist-result-style .playlist-style-trigger { min-height: 38px; }
-.batch-playlist-result-style .playlist-style-menu { top: calc(100% + 6px); bottom: auto; }
+.batch-playlist-result-style .playlist-style-menu { top: auto; bottom: calc(100% + 6px); z-index: 6000; }
 .batch-playlist-import-btn { min-height: 38px; white-space: nowrap; }
 .batch-playlist-import-btn:disabled { background: var(--gray-300); border-color: var(--gray-300); color: #fff; cursor: not-allowed; }
 .batch-playlist-empty { display: flex; align-items: center; justify-content: center; min-height: 180px; color: var(--gray-500); font-size: 13px; }
@@ -1190,6 +1193,7 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     white-space: normal;
     cursor: help;
 }
+.ref-library-lyrics { max-width: 320px; color: var(--gray-600); font-size: 13px; }
 .lyrics-tooltip-popover {
     position: fixed;
     z-index: 5000;

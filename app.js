@@ -2412,7 +2412,10 @@ function navigateTo(pageKey, navEl = null) {
 // 弹窗逻辑
 function openModal(id) {
     const modal = document.getElementById(id);
-    if (modal) modal.style.display = 'flex';
+    if (modal) {
+        modal.style.display = 'flex';
+        if (id === 'batchPlaylistImportModal') queryBatchPlaylistImport(true);
+    }
 }
 
 function normalizeCopyrightValue(value) {
@@ -2584,6 +2587,34 @@ function removePlaylistImportStyle(event, tag, value) {
     updatePlaylistImportStyles(dropdown);
 }
 
+function renderBatchPlaylistSongs(card, tbody) {
+    if (!card || !tbody) return;
+    if (!window.batchPlaylistDefaultSongRows) {
+        window.batchPlaylistDefaultSongRows = tbody.innerHTML;
+    }
+    if (card.dataset.retried !== 'true') {
+        tbody.innerHTML = window.batchPlaylistDefaultSongRows;
+        return;
+    }
+
+    const retriedSongs = [
+        { name: '遗憾清单', id: '112001', lyrics: '我们把没说完的话藏进夜里，让时间替彼此慢慢忘记。' },
+        { name: '后来的我们', id: '112002', lyrics: '后来我们走向不同的街口，却还记得那年并肩吹过的风。' },
+        { name: '雨天', id: '112003', lyrics: '雨落在空荡的屋檐，我一个人听回忆绕了好多圈。' },
+        { name: '可惜没如果', id: '112004', lyrics: '如果当时能勇敢一点，也许故事不会停在告别以前。' },
+        { name: '说散就散', id: '112005', lyrics: '说散就散的人群里，我还在寻找你转身时的背影。' },
+        { name: '如果可以', id: '112006', lyrics: '如果可以回到相遇那天，我会把每一句喜欢都说完全。' }
+    ];
+    tbody.innerHTML = retriedSongs.map((song, index) => `
+        <tr>
+            <td>${index + 1}</td>
+            <td>${escapeAttr(song.name)}</td>
+            <td>${escapeAttr(song.id)}</td>
+            <td><div class="batch-playlist-lyrics" title="${escapeAttr(song.lyrics)}">${escapeAttr(song.lyrics)}</div></td>
+        </tr>
+    `).join('');
+}
+
 function selectBatchPlaylistTask(card) {
     if (!card) return;
     const modal = card.closest('#batchPlaylistImportModal');
@@ -2598,6 +2629,7 @@ function selectBatchPlaylistTask(card) {
     const resultStatus = document.getElementById('batchPlaylistResultStatus');
     const resultIcon = modal.querySelector('.batch-playlist-result-head .batch-playlist-task-icon');
     const songList = document.getElementById('batchPlaylistSongList');
+    const songListBody = songList?.querySelector('tbody');
     const importBtn = document.getElementById('batchPlaylistImportBtn');
     const resultActions = document.getElementById('batchPlaylistResultActions');
     const isFailed = statusType === 'danger';
@@ -2613,6 +2645,7 @@ function selectBatchPlaylistTask(card) {
         resultIcon.innerHTML = '<i class="fas fa-check"></i>';
         resultIcon.style.display = isFailed ? 'none' : 'inline-flex';
     }
+    if (!isFailed) renderBatchPlaylistSongs(card, songListBody);
     if (songList) songList.style.display = isFailed ? 'none' : '';
     if (resultActions) resultActions.style.display = isFailed ? 'none' : '';
     if (importBtn) importBtn.disabled = isFailed;
@@ -2636,13 +2669,155 @@ function setBatchPlaylistLoading(isLoading) {
     if (resultActions) resultActions.style.display = isLoading ? 'none' : '';
 }
 
-function queryBatchPlaylistImport() {
-    setBatchPlaylistLoading(true);
-    window.clearTimeout(window.batchPlaylistQueryTimer);
-    window.batchPlaylistQueryTimer = window.setTimeout(() => {
-        setBatchPlaylistLoading(false);
-        const firstResolvedCard = document.querySelector('#batchPlaylistImportModal .batch-playlist-task-card[data-status-type="success"]');
-        if (firstResolvedCard) selectBatchPlaylistTask(firstResolvedCard);
+function renderBatchPlaylistTaskCards(playlistIds) {
+    const taskList = document.getElementById('batchPlaylistTaskList');
+    const retryBtn = document.getElementById('batchPlaylistRetryBtn');
+    if (!taskList) return [];
+
+    const knownPlaylists = {
+        '7713574197': { name: '周杰伦经典合集', count: 26, status: '已解析', statusType: 'success' },
+        '8812378213': { name: '华语流行金曲100首', count: 18, status: '已解析', statusType: 'success' },
+        '1128731827': { name: '伤感情歌精选', count: 0, status: '解析失败', statusType: 'danger' }
+    };
+    const parsedTime = formatDateTimeToSecond();
+
+    if (!playlistIds.length) {
+        taskList.innerHTML = '<div class="batch-playlist-empty">暂无歌单数据</div>';
+        if (retryBtn) retryBtn.style.display = 'none';
+        return [];
+    }
+
+    taskList.innerHTML = playlistIds.map((playlistId, index) => {
+        const fallbackCount = 12 + (index % 4) * 3;
+        const item = knownPlaylists[playlistId] || {
+            name: `歌单 ${playlistId}`,
+            count: fallbackCount,
+            status: '已解析',
+            statusType: 'success'
+        };
+        return `
+            <div class="batch-playlist-task-card" data-id="${escapeAttr(playlistId)}" data-name="${escapeAttr(item.name)}" data-count="${item.count} 首歌曲" data-status="${item.status}" data-status-type="${item.statusType}" onclick="selectBatchPlaylistTask(this)">
+                <div class="batch-playlist-task-info">
+                    <strong>${escapeAttr(playlistId)}</strong>
+                    <p>${item.count} 首歌曲</p>
+                    <p>解析时间：${parsedTime}</p>
+                </div>
+                <span class="batch-playlist-status ${item.statusType}">${item.status}</span>
+            </div>
+        `;
+    }).join('');
+
+    const cards = Array.from(taskList.querySelectorAll('.batch-playlist-task-card'));
+    if (retryBtn) retryBtn.style.display = cards.some(card => card.dataset.statusType === 'danger') ? '' : 'none';
+    return cards;
+}
+
+function queryBatchPlaylistImport(forceRefresh = false) {
+    const input = document.getElementById('batchPlaylistIdInput');
+    const playlistIds = [...new Set(String(input?.value || '')
+        .split(/[,，\s]+/)
+        .map(item => item.trim())
+        .filter(Boolean))];
+    const queryValue = playlistIds.join(',');
+    const lastQueryValue = input?.dataset.queriedValue || '';
+    const hasUnimportedParsedData = Boolean(document.querySelector(
+        '#batchPlaylistImportModal .batch-playlist-task-card[data-status-type="success"]'
+    ));
+
+    const parseNewData = () => {
+        if (input) input.dataset.queriedValue = queryValue;
+        setBatchPlaylistLoading(true);
+        window.clearTimeout(window.batchPlaylistQueryTimer);
+        window.batchPlaylistQueryTimer = window.setTimeout(() => {
+            setBatchPlaylistLoading(false);
+            const cards = renderBatchPlaylistTaskCards(playlistIds);
+            const firstResolvedCard = cards.find(card => card.dataset.statusType === 'success');
+            const firstCard = firstResolvedCard || cards[0];
+            if (firstCard) {
+                selectBatchPlaylistTask(firstCard);
+            } else {
+                const resultHead = document.getElementById('batchPlaylistResultHead');
+                const songList = document.getElementById('batchPlaylistSongList');
+                const resultActions = document.getElementById('batchPlaylistResultActions');
+                if (resultHead) resultHead.style.display = 'none';
+                if (songList) songList.style.display = 'none';
+                if (resultActions) resultActions.style.display = 'none';
+            }
+        }, 1200);
+    };
+
+    if (!forceRefresh && hasUnimportedParsedData && lastQueryValue && queryValue !== lastQueryValue) {
+        openConfirmDialog(
+            '确认解析新数据',
+            '目前有解析好的数据未导入，是否要放弃并进行新数据解析？',
+            '解析新数据',
+            false,
+            parseNewData
+        );
+        return;
+    }
+
+    parseNewData();
+}
+
+function retryFailedBatchPlaylists() {
+    const modal = document.getElementById('batchPlaylistImportModal');
+    const failedCards = Array.from(modal?.querySelectorAll('.batch-playlist-task-card[data-status-type="danger"]') || []);
+    const retryBtn = document.getElementById('batchPlaylistRetryBtn');
+    if (!failedCards.length) {
+        showSuccessMessage('暂无需要重试的失败歌单');
+        return;
+    }
+
+    if (retryBtn) {
+        retryBtn.disabled = true;
+        retryBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 正在重新拉取歌曲信息...';
+    }
+    failedCards.forEach(card => {
+        card.classList.add('is-retrying');
+        card.dataset.status = '解析中';
+        const status = card.querySelector('.batch-playlist-status');
+        if (status) {
+            status.className = 'batch-playlist-status loading';
+            status.textContent = '解析中';
+        }
+    });
+
+    const activeFailedCard = failedCards.find(card => card.classList.contains('active'));
+    const resultLoading = document.getElementById('batchPlaylistResultLoading');
+    if (activeFailedCard && resultLoading) {
+        resultLoading.style.display = 'flex';
+        document.getElementById('batchPlaylistResultHead').style.display = 'none';
+        document.getElementById('batchPlaylistSongList').style.display = 'none';
+        document.getElementById('batchPlaylistResultActions').style.display = 'none';
+    }
+
+    window.clearTimeout(window.batchPlaylistRetryTimer);
+    window.batchPlaylistRetryTimer = window.setTimeout(() => {
+        const parsedTime = formatDateTimeToSecond();
+        failedCards.forEach(card => {
+            card.classList.remove('is-retrying');
+            card.dataset.statusType = 'success';
+            card.dataset.status = '已解析';
+            card.dataset.count = '6 首歌曲';
+            card.dataset.retried = 'true';
+            const infoRows = card.querySelectorAll('.batch-playlist-task-info p');
+            if (infoRows[0]) infoRows[0].textContent = '6 首歌曲';
+            if (infoRows[1]) infoRows[1].textContent = `解析时间：${parsedTime}`;
+            const status = card.querySelector('.batch-playlist-status');
+            if (status) {
+                status.className = 'batch-playlist-status success';
+                status.textContent = '已解析';
+            }
+        });
+        if (resultLoading) resultLoading.style.display = 'none';
+        if (retryBtn) {
+            retryBtn.disabled = false;
+            retryBtn.innerHTML = '<i class="fas fa-sync-alt"></i> 重新重试失败项';
+            retryBtn.style.display = modal?.querySelector('.batch-playlist-task-card[data-status-type="danger"]') ? '' : 'none';
+        }
+        selectBatchPlaylistTask(failedCards[0]);
+        showSuccessMessage('失败歌单歌曲信息拉取成功');
     }, 1200);
 }
 
@@ -2924,7 +3099,6 @@ function confirmBatchPlaylistImport() {
         if (resultActions) resultActions.style.display = 'none';
     }
 
-    closeModal('batchPlaylistImportModal');
     showSuccessMessage('导入成功');
 }
 
@@ -5066,7 +5240,7 @@ let refSongsData = [
         singer: '歌手 C',
         lyrics: '翻开那本泛黄的日记，每一页都写满了过去。泛黄的照片里，有着我们青春的印记。岁月的流逝带走了美丽，却带不走深藏心底的回忆。',
         styles: ['民谣', '怀旧'],
-        status: '已使用'
+        status: '已禁用'
     }
 ];
 
@@ -5144,7 +5318,7 @@ function renderRefSongsTable() {
             <td style="font-weight: 500;">《${item.name}》</td>
             <td style="color: var(--gray-700);">${item.singer}</td>
             <td>
-                <div class="lyrics-cell" onclick="this.classList.toggle('expanded')" style="max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--gray-600); font-size: 13px; cursor: pointer;">
+                <div class="batch-playlist-lyrics ref-library-lyrics" title="${escapeAttr(item.lyrics)}">
                     ${item.lyrics}
                 </div>
             </td>
