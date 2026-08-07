@@ -2254,13 +2254,13 @@ pages['task-processing-page'] = {
                     <button data-status="已终止" onclick="filterTaskProcessingTasks(this)">已终止 1</button>
                 </div>
                 <div class="task-processing-list">
-                    <div class="task-card active" data-status="进行中" data-song-name="夜风吹过" data-reference-name="夜风参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 14:32:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="进行中" data-song-name="夜风吹过" data-reference-name="夜风参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 14:32:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>夜风吹过</strong>
                             <span class="task-node">作曲</span>
                             <span class="task-status status-running">进行中</span>
                         </div>
-                        <p>FLOW2026071000001</p>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流1">工作流1</span><span>FLOW2026071000001</span></p>
                         <p><span class="task-batch-name">25 年 4 月 300首</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:32</p>
                     </div>
                     <div class="task-card" data-status="进行中" data-song-name="破晓时分" data-reference-name="破晓参考" data-batch-name="30 首草原风" data-enter-time="2026-07-10 14:40:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
@@ -2269,7 +2269,7 @@ pages['task-processing-page'] = {
                             <span class="task-node">曲审核</span>
                             <span class="task-status status-running">进行中</span>
                         </div>
-                        <p>FLOW2026071000002</p>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流1">工作流1</span><span>FLOW2026071000002</span></p>
                         <p><span class="task-batch-name">30 首草原风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:40</p>
                     </div>
                     <div class="task-card" data-status="进行中" data-song-name="云雀漫步" data-reference-name="云雀参考" data-batch-name="7 月 60 首国风" data-enter-time="2026-07-10 14:50:00" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
@@ -2278,7 +2278,7 @@ pages['task-processing-page'] = {
                             <span class="task-node">作词</span>
                             <span class="task-status status-running">进行中</span>
                         </div>
-                        <p>FLOW2026071000003</p>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000003</span></p>
                         <p><span class="task-batch-name">7 月 60 首国风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:50</p>
                     </div>
                     <div class="task-card" data-status="待办" data-song-name="山海回声" data-reference-name="山海参考" data-batch-name="20 首 DJ" data-enter-time="2026-07-10 15:08:00" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
@@ -2287,7 +2287,7 @@ pages['task-processing-page'] = {
                             <span class="task-node">作词</span>
                             <span class="task-status status-pending">待办</span>
                         </div>
-                        <p>FLOW2026071000004</p>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流3">工作流3</span><span>FLOW2026071000004</span></p>
                         <p><span class="task-batch-name">20 首 DJ</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:08</p>
                     </div>
                     <div class="task-card" data-status="已完成" data-song-name="落叶之歌" data-reference-name="落叶参考" data-batch-name="5 月 120 首流行" data-complete-time="2026-07-10 15:40:00" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
@@ -2296,7 +2296,7 @@ pages['task-processing-page'] = {
                             <span class="task-node">词审核</span>
                             <span class="task-status status-done">已完成</span>
                         </div>
-                        <p>FLOW2026071000005</p>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000005</span></p>
                         <p><span class="task-batch-name">5 月 120 首流行</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:40</p>
                     </div>
                     <div class="task-card" data-status="已完成" data-song-name="星河旅人" data-reference-name="星河参考" data-batch-name="6 月 100 首民谣" data-complete-time="2026-07-10 16:20:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
@@ -2305,7 +2305,7 @@ pages['task-processing-page'] = {
                             <span class="task-node">作曲</span>
                             <span class="task-status status-done">已完成</span>
                         </div>
-                        <p>FLOW2026071000006</p>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000006</span></p>
                         <p><span class="task-batch-name">6 月 100 首民谣</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:20</p>
                     </div>
                     <div class="task-card" data-status="已终止" data-song-name="午夜霓虹" data-reference-name="午夜参考" data-batch-name="4 月 500 首草原风" data-stop-time="2026-07-10 15:55:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
@@ -2314,7 +2314,7 @@ pages['task-processing-page'] = {
                             <span class="task-node">曲审核</span>
                             <span class="task-status status-stopped">已终止</span>
                         </div>
-                        <p>FLOW2026071000007</p>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流1">工作流1</span><span>FLOW2026071000007</span></p>
                         <p><span class="task-batch-name">4 月 500 首草原风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:55</p>
                     </div>
                     <div class="task-card" data-status="进行中" data-song-name="遥远的地方" data-reference-name="遥远参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 15:30:00" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
@@ -2323,7 +2323,7 @@ pages['task-processing-page'] = {
                             <span class="task-node">词审核</span>
                             <span class="task-status status-running">进行中</span>
                         </div>
-                        <p>FLOW2026071000008</p>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流1">工作流1</span><span>FLOW2026071000008</span></p>
                         <p><span class="task-batch-name">25 年 4 月 300首</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:30</p>
                     </div>
                 </div>
@@ -2824,6 +2824,7 @@ function retryFailedBatchPlaylists() {
 
 function initEmbeddedWorkbenchPage(pageKey) {
     if (pageKey === 'song-review-page') {
+        document.querySelector('#taskProcessingContent .content-wrapper > .col-right')?.remove();
         setTimeout(initSongReviewCoverPanel, 50);
     }
     if (pageKey === 'manual-composition-page') {
@@ -2925,7 +2926,7 @@ function renderTaskProcessingContent(pageKey = 'manual-composition-page', taskCa
 
 function initTaskProcessingPage() {
     const wrapper = document.querySelector('.task-processing-layout');
-    if (wrapper) applyTaskProcessingFilters(wrapper);
+    if (wrapper) applyTaskProcessingFilters(wrapper, false);
 }
 
 function selectTaskProcessingTask(card) {
@@ -2942,16 +2943,16 @@ function filterTaskProcessingTasks(button) {
 
     wrapper.querySelectorAll('.task-processing-tabs button').forEach(item => item.classList.remove('active'));
     button.classList.add('active');
-    applyTaskProcessingFilters(wrapper);
+    applyTaskProcessingFilters(wrapper, false);
 }
 
 function filterTaskProcessingSearch(input) {
     const wrapper = input?.closest('.task-processing-layout');
     if (!wrapper) return;
-    applyTaskProcessingFilters(wrapper);
+    applyTaskProcessingFilters(wrapper, false);
 }
 
-function applyTaskProcessingFilters(wrapper) {
+function applyTaskProcessingFilters(wrapper, autoSelect = true) {
     const status = wrapper.querySelector('.task-processing-tabs button.active')?.dataset.status || '全部';
     const keyword = (wrapper.querySelector('.task-processing-search input')?.value || '').trim().toLowerCase();
     const cards = Array.from(wrapper.querySelectorAll('.task-processing-list .task-card'));
@@ -2967,9 +2968,11 @@ function applyTaskProcessingFilters(wrapper) {
         if (shouldShow) visibleCards.push(card);
     });
 
-    if (visibleCards.length) {
+    if (visibleCards.length && autoSelect) {
         visibleCards[0].classList.add('active');
         renderTaskProcessingContent(visibleCards[0].dataset.pageKey, visibleCards[0]);
+    } else if (visibleCards.length) {
+        setTaskProcessingNullState('请选择任务');
     } else {
         setTaskProcessingNullState(keyword ? '暂无匹配任务' : '暂无对应状态的任务');
     }
@@ -3023,11 +3026,16 @@ function setTaskProcessingNullState(message = '暂无任务') {
     if (container) {
         container.dataset.currentTask = 'null';
         const isSearchEmpty = message.includes('匹配');
+        const emptyDescription = message === '请选择任务'
+            ? ''
+            : isSearchEmpty
+                ? '请调整搜索关键词后重试'
+                : '当前状态下暂无需要处理的任务';
         container.innerHTML = `
             <div class="task-empty-state">
                 <div class="task-empty-icon"><i class="fas fa-inbox"></i></div>
                 <div class="task-empty-title">${message}</div>
-                <div class="task-empty-desc">${isSearchEmpty ? '请调整搜索关键词后重试' : '当前状态下暂无需要处理的任务'}</div>
+                ${emptyDescription ? `<div class="task-empty-desc">${emptyDescription}</div>` : ''}
             </div>
         `;
     }

@@ -78,9 +78,11 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     min-height: calc(100vh - 100px);
 }
 .task-processing-sidebar {
+    display: flex;
+    flex-direction: column;
     min-width: 0;
     height: calc(100vh - 100px);
-    overflow-y: auto;
+    overflow: hidden;
     padding: 16px;
     border: 1px solid var(--gray-200);
     border-radius: var(--radius);
@@ -88,12 +90,14 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     box-shadow: var(--shadow-sm);
 }
 .task-processing-title {
+    flex-shrink: 0;
     margin-bottom: 12px;
     color: var(--gray-900);
     font-size: 16px;
     font-weight: 700;
 }
 .task-processing-search {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -112,6 +116,7 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     font-size: 13px;
 }
 .task-processing-tabs {
+    flex-shrink: 0;
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
@@ -134,7 +139,12 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
 .task-processing-list {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-height: 0;
     gap: 8px;
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-gutter: stable;
 }
 .task-card {
     padding: 12px;
@@ -181,6 +191,20 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     margin: 0 0 4px;
     color: var(--gray-500);
     font-size: 12px;
+}
+.task-card-workflow-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+.task-workflow-name {
+    max-width: 45%;
+    overflow: hidden;
+    color: var(--gray-700);
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .task-status {
     flex-shrink: 0;
@@ -1068,11 +1092,19 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     height: 16px;
     accent-color: var(--primary);
 }
+.task-reference-style-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.task-reference-style-tag { display: inline-flex; align-items: center; min-height: 26px; padding: 3px 9px; border: 1px solid #91CAFF; border-radius: 5px; background: #EBF5FF; color: #1677FF; font-size: 12px; white-space: nowrap; }
 .task-reference-lyric-cell {
-    max-width: 240px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    max-width: 320px;
+    max-height: 44px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
+    line-height: 1.55;
+    cursor: help;
 }
 
 .batch-delivery-confirm-modal {

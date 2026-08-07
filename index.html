@@ -1207,15 +1207,16 @@
                     <tr>
                         <th>节点名称</th>
                         <th>执行人</th>
-                        <th>执行时间</th>
+                        <th>备注</th>
                         <th>节点状态</th>
+                        <th>执行时间</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>作词</td><td>张三</td><td>2026-06-02 10:15:32</td><td><span class="badge badge-blue">进行中</span></td></tr>
-                    <tr><td>作词审核</td><td>李四</td><td>2026-06-02 11:02:18</td><td><span class="badge badge-green">已完成</span></td></tr>
-                    <tr><td>作曲</td><td>王五</td><td>2026-06-02 13:26:44</td><td><span class="badge badge-gray">待开始</span></td></tr>
-                    <tr><td>作曲审核</td><td>赵六</td><td>-</td><td><span class="badge badge-gray">待开始</span></td></tr>
+                    <tr><td>作词</td><td>张三</td><td>歌词创作中</td><td><span class="badge badge-blue">进行中</span></td><td>2026-06-02 10:15:32</td></tr>
+                    <tr><td>作词审核</td><td>李四</td><td>审核通过</td><td><span class="badge badge-green">已完成</span></td><td>2026-06-02 11:02:18</td></tr>
+                    <tr><td>作曲</td><td>王五</td><td>-</td><td><span class="badge badge-gray">待开始</span></td><td>2026-06-02 13:26:44</td></tr>
+                    <tr><td>作曲审核</td><td>赵六</td><td>-</td><td><span class="badge badge-gray">待开始</span></td><td>-</td></tr>
                 </tbody>
             </table>
         </div>
@@ -1357,7 +1358,7 @@
         </div>
         <div class="modal-body">
             <div class="task-reference-search">
-                <input id="taskReferenceSongSearchInput" class="input" type="text" placeholder="请输入歌名 / 歌手 / 风格搜索" oninput="filterTaskReferenceSongs(this.value)">
+                <input id="taskReferenceSongSearchInput" class="input" type="text" placeholder="请输入对标歌名 / 风格搜索" oninput="filterTaskReferenceSongs(this.value)">
                 <button class="btn-default" type="button" onclick="filterTaskReferenceSongs(document.getElementById('taskReferenceSongSearchInput')?.value || '')"><i class="fas fa-search"></i> 查询</button>
             </div>
             <div class="table-container task-reference-table-wrap">
@@ -1365,40 +1366,35 @@
                     <thead>
                         <tr>
                             <th style="width: 64px;">选择</th>
-                            <th>歌名</th>
-                            <th>歌手</th>
+                            <th style="width: 150px;">对标歌名</th>
                             <th>风格</th>
-                            <th>歌词摘要</th>
+                            <th>歌词</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr data-song-name="旧日时光" data-song-lyrics="[Verse]&#10;星空下许下约定&#10;未来哪怕有风雨&#10;&#10;[Chorus]&#10;就算世界在改变&#10;我会陪在你身边">
                             <td><input type="radio" name="taskReferenceSongRadio" checked></td>
                             <td>旧日时光</td>
-                            <td>林夕阳</td>
-                            <td>年轻流行</td>
-                            <td class="task-reference-lyric-cell">星空下许下约定，未来哪怕有风雨</td>
+                            <td><div class="task-reference-style-tags"><span class="task-reference-style-tag">年轻流行</span><span class="task-reference-style-tag">流行</span></div></td>
+                            <td><div class="task-reference-lyric-cell" title="星空下许下约定，未来哪怕有风雨；就算世界在改变，我会陪在你身边。">星空下许下约定，未来哪怕有风雨；就算世界在改变，我会陪在你身边。</div></td>
                         </tr>
                         <tr data-song-name="夜风吹过" data-song-lyrics="[Verse]&#10;夜风吹过旧街口&#10;灯火把影子拉瘦&#10;&#10;[Chorus]&#10;我在回忆里等候&#10;等你转身再回眸">
                             <td><input type="radio" name="taskReferenceSongRadio"></td>
                             <td>夜风吹过</td>
-                            <td>周南</td>
-                            <td>民谣</td>
-                            <td class="task-reference-lyric-cell">夜风吹过旧街口，灯火把影子拉瘦</td>
+                            <td><div class="task-reference-style-tags"><span class="task-reference-style-tag">民谣</span><span class="task-reference-style-tag">怀旧</span></div></td>
+                            <td><div class="task-reference-lyric-cell" title="夜风吹过旧街口，灯火把影子拉瘦；我在回忆里等候，等你转身再回眸。">夜风吹过旧街口，灯火把影子拉瘦；我在回忆里等候，等你转身再回眸。</div></td>
                         </tr>
                         <tr data-song-name="云缝星梦" data-song-lyrics="[Verse]&#10;把心事藏进云缝&#10;等一颗星照亮梦&#10;&#10;[Chorus]&#10;越过人海的汹涌&#10;仍想和你再相逢">
                             <td><input type="radio" name="taskReferenceSongRadio"></td>
                             <td>云缝星梦</td>
-                            <td>陈禾</td>
-                            <td>流行</td>
-                            <td class="task-reference-lyric-cell">把心事藏进云缝，等一颗星照亮梦</td>
+                            <td><div class="task-reference-style-tags"><span class="task-reference-style-tag">流行</span><span class="task-reference-style-tag">电子</span></div></td>
+                            <td><div class="task-reference-lyric-cell" title="把心事藏进云缝，等一颗星照亮梦；越过人海的汹涌，仍想和你再相逢。">把心事藏进云缝，等一颗星照亮梦；越过人海的汹涌，仍想和你再相逢。</div></td>
                         </tr>
                         <tr data-song-name="遥远的地方" data-song-lyrics="[Verse]&#10;车窗外的山很长&#10;月光落在行李箱&#10;&#10;[Chorus]&#10;去往遥远的地方&#10;把思念轻轻收藏">
                             <td><input type="radio" name="taskReferenceSongRadio"></td>
                             <td>遥远的地方</td>
-                            <td>许安</td>
-                            <td>草原流行</td>
-                            <td class="task-reference-lyric-cell">车窗外的山很长，月光落在行李箱</td>
+                            <td><div class="task-reference-style-tags"><span class="task-reference-style-tag">草原流行</span><span class="task-reference-style-tag">民谣</span></div></td>
+                            <td><div class="task-reference-lyric-cell" title="车窗外的山很长，月光落在行李箱；去往遥远的地方，把思念轻轻收藏。">车窗外的山很长，月光落在行李箱；去往遥远的地方，把思念轻轻收藏。</div></td>
                         </tr>
                     </tbody>
                 </table>
