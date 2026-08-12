@@ -133,7 +133,7 @@ const pages = {
 
                         <!-- Step 1 底部操作栏 -->
                         <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: auto; padding: 16px 0;">
-                            <button class="btn-default" style="color: var(--danger); border-color: var(--danger);" onclick="showAbortModal()">中止任务</button>
+                            <button class="btn-default" style="color: var(--danger); border-color: var(--danger);" onclick="showAbortModal()">终止任务</button>
                             <button class="btn-primary" onclick="switchStep(2)">下一步：润色与提交 ➡️</button>
                         </div>
                     </div>
@@ -164,7 +164,7 @@ const pages = {
                         <!-- Step 2 底部操作栏 -->
                         <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: auto; padding: 16px 0;">
                             <button class="btn-default" onclick="switchStep(1)">⬅️ 返回配置</button>
-                            <button class="btn-default" style="color: var(--danger); border-color: var(--danger);" onclick="showAbortModal()">中止任务</button>
+                            <button class="btn-default" style="color: var(--danger); border-color: var(--danger);" onclick="showAbortModal()">终止任务</button>
                             <button class="btn-primary" id="submitBtn" onclick="submitTask()">提交填写结果</button>
                         </div>
                     </div>
@@ -598,7 +598,7 @@ const pages = {
 
                   <!-- 底部操作栏 -->
                   <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--gray-200);">
-                    <button class="btn-primary" style="background: var(--danger); border-color: var(--danger); color: #fff;" onclick="showCompositionAbortModal()">中止任务</button>
+                    <button class="btn-primary" style="background: var(--danger); border-color: var(--danger); color: #fff;" onclick="showCompositionAbortModal()">终止任务</button>
                     <button class="btn-primary" onclick="switchCompositionStep(2)">下一步：成品获取与提交 ➡️</button>
                   </div>
 
@@ -674,7 +674,7 @@ const pages = {
                   <div style="display: flex; justify-content: flex-end; gap: 16px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--gray-200);">
                     <button class="btn-primary" style="background: #fff; border: 1px solid var(--gray-300); color: var(--gray-700);"
                       onclick="switchCompositionStep(1)">⬅️ 返回前一步</button>
-                    <button class="btn-primary" style="background: var(--danger); border-color: var(--danger); color: #fff;" onclick="showCompositionAbortModal()">中止任务</button>
+                    <button class="btn-primary" style="background: var(--danger); border-color: var(--danger); color: #fff;" onclick="showCompositionAbortModal()">终止任务</button>
                     <button class="btn-primary" id="compSubmitBtn" disabled onclick="showCompositionSubmitModal()">确认提交结果</button>
                   </div>
                 </div>
@@ -924,6 +924,7 @@ const pages = {
 
                     <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-200); display: flex; justify-content: flex-end; gap: 12px;">
                       <button class="btn-primary" style="background: #fff; border: 1px solid var(--gray-300); color: var(--gray-700);" onclick="resetSongReview()">重置</button>
+                      <button class="btn-primary" id="srRejectBtn" style="display: none; background: #fff; border: 1px solid var(--danger); color: var(--danger);" onclick="rejectSongReview()">打回</button>
                       <button class="btn-primary" id="srSubmitBtn" onclick="submitSongReview()">提交审核结果</button>
                     </div>
                   </div>
@@ -931,15 +932,15 @@ const pages = {
                   <div class="modal-overlay" id="srAbortModalOverlay" style="display:none;">
                     <div class="modal modal-sm" style="width: 480px;">
                       <div class="modal-header">
-                        <h3>中止任务</h3>
+                        <h3>终止任务</h3>
                         <button class="modal-close" onclick="closeSongReviewAbortModal()">&times;</button>
                       </div>
                       <div class="modal-body">
-                        <p style="line-height: 1.6; color: var(--gray-800); font-size: 14px; margin: 0;">是否确认中止当前任务？中止后当前任务将停止继续流转。</p>
+                        <p style="line-height: 1.6; color: var(--gray-800); font-size: 14px; margin: 0;">是否确认终止当前任务？终止后当前任务将停止继续流转。</p>
                       </div>
                       <div class="modal-footer">
                         <button class="btn-default" onclick="closeSongReviewAbortModal()">取消</button>
-                        <button class="btn-primary" style="background: var(--danger); border-color: var(--danger);" onclick="confirmSongReviewAbort()">确认中止</button>
+                        <button class="btn-primary" style="background: var(--danger); border-color: var(--danger);" onclick="confirmSongReviewAbort()">确认终止</button>
                       </div>
                     </div>
                   </div>
@@ -1006,6 +1007,15 @@ const pages = {
                             <label>风格标签</label>
                             <select class="input" id="refLibSearchStyle">
                                 <option value="">全部</option>
+                            </select>
+                        </div>
+                        <div class="filter-item" style="max-width: 180px; flex: 1;">
+                            <label>状态</label>
+                            <select class="input" id="refLibSearchStatus">
+                                <option value="">全部</option>
+                                <option value="已入库">已入库</option>
+                                <option value="已使用">已使用</option>
+                                <option value="已禁用">已禁用</option>
                             </select>
                         </div>
                         <div class="filter-item" style="flex: none; display: flex; gap: 10px; flex-direction: row; align-items: flex-end; height: 38px;">
@@ -1749,7 +1759,7 @@ const pages = {
                     <table class="data-table">
                         <thead><tr><th>批次名称</th><th>流水编号</th><th>歌曲原名</th><th>交付歌名</th><th>当前节点</th><th>当前执行人</th><th>制作状态</th><th>交付时间</th></tr></thead>
                         <tbody>
-                            <tr data-batch="2月 300首"><td>2月 300首</td><td>FLOW2026022300001</td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>作曲</td><td>张三</td><td><span class="badge badge-red">已中止</span></td><td>2026-02-23</td></tr>
+                            <tr data-batch="2月 300首"><td>2月 300首</td><td>FLOW2026022300001</td><td>泪似桃花瓣飘落溪</td><td>泪似桃花瓣飘落溪</td><td>作曲</td><td>张三</td><td><span class="badge badge-red">已终止</span></td><td>2026-02-23</td></tr>
                             <tr data-batch="6月 300首"><td>6月 300首</td><td>FLOW2026060200001</td><td>这一路</td><td>这一路</td><td>曲审核</td><td>李四</td><td><span class="badge badge-blue">进行中</span></td><td>-</td></tr>
                             <tr data-batch="4月 300首"><td>4月 300首</td><td>FLOW2026040200001</td><td>执念</td><td>执念</td><td>-</td><td>王五</td><td><span class="badge badge-green">已完成</span></td><td>2026-02-23</td></tr>
                         </tbody>
@@ -2243,15 +2253,16 @@ pages['task-processing-page'] = {
             <aside class="task-processing-sidebar">
                 <div class="task-processing-title">任务列表</div>
                 <div class="task-processing-search">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="歌曲、批次、流水号..." oninput="filterTaskProcessingSearch(this)">
+                    <div class="task-processing-search-input">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="歌曲、批次、流水号...">
+                    </div>
+                    <button type="button" class="task-processing-search-btn" onclick="filterTaskProcessingSearch(this.parentElement.querySelector('input'))"><i class="fas fa-search"></i> 搜索</button>
                 </div>
                 <div class="task-processing-tabs">
-                    <button class="active" data-status="全部" onclick="filterTaskProcessingTasks(this)">全部 8</button>
-                    <button data-status="待办" onclick="filterTaskProcessingTasks(this)">待办 1</button>
-                    <button data-status="进行中" onclick="filterTaskProcessingTasks(this)">进行中 4</button>
-                    <button data-status="已完成" onclick="filterTaskProcessingTasks(this)">已完成 2</button>
-                    <button data-status="已终止" onclick="filterTaskProcessingTasks(this)">已终止 1</button>
+                    <button class="active" data-status="全部" onclick="filterTaskProcessingTasks(this)">全部 12</button>
+                    <button data-status="进行中" onclick="filterTaskProcessingTasks(this)">进行中 7</button>
+                    <button data-status="已完成" onclick="filterTaskProcessingTasks(this)">已完成 5</button>
                 </div>
                 <div class="task-processing-list">
                     <div class="task-card" data-status="进行中" data-song-name="夜风吹过" data-reference-name="夜风参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 14:32:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
@@ -2281,11 +2292,34 @@ pages['task-processing-page'] = {
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000003</span></p>
                         <p><span class="task-batch-name">7 月 60 首国风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:50</p>
                     </div>
-                    <div class="task-card" data-status="待办" data-song-name="山海回声" data-reference-name="山海参考" data-batch-name="20 首 DJ" data-enter-time="2026-07-10 15:08:00" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="进行中" data-song-name="城市晚风" data-reference-name="城市晚风参考" data-batch-name="20 首 DJ" data-enter-time="2026-07-10 17:02:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>城市晚风</strong>
+                            <span class="task-node">作曲</span>
+                            <span class="task-status status-running">进行中</span>
+                        </div>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流3">工作流3</span><span>FLOW2026071000011</span></p>
+                        <p><span class="task-batch-name">20 首 DJ</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 17:02</p>
+                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-failed">执行失败</strong></p>
+                    </div>
+                    <div class="task-card" data-status="进行中" data-song-name="山河入梦" data-reference-name="山河参考" data-batch-name="7 月 60 首国风" data-enter-time="2026-07-10 17:18:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>山河入梦</strong>
+                            <span class="task-node">入库</span>
+                            <span class="task-status status-running">进行中</span>
+                        </div>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000012</span></p>
+                        <p><span class="task-batch-name">7 月 60 首国风</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="task-card-time">07-10 17:18</span></p>
+                        <p class="task-result-line">
+                            <span>处理结果：</span><strong class="task-result-failed">执行失败</strong>
+                            <button type="button" class="task-retry-btn" onclick="retryTaskProcessingMachineTask(event, this)"><i class="fas fa-redo-alt"></i> 重新执行</button>
+                        </p>
+                    </div>
+                    <div class="task-card" data-status="进行中" data-song-name="山海回声" data-reference-name="山海参考" data-batch-name="20 首 DJ" data-enter-time="2026-07-10 15:08:00" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>山海回声</strong>
                             <span class="task-node">作词</span>
-                            <span class="task-status status-pending">待办</span>
+                            <span class="task-status status-running">进行中</span>
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流3">工作流3</span><span>FLOW2026071000004</span></p>
                         <p><span class="task-batch-name">20 首 DJ</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:08</p>
@@ -2298,6 +2332,8 @@ pages['task-processing-page'] = {
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000005</span></p>
                         <p><span class="task-batch-name">5 月 120 首流行</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:40</p>
+                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-rejected">已打回</strong></p>
+                        <p class="task-result-reason" title="副歌韵脚不统一，部分歌词表达与歌曲主题不符"><span>打回原因：</span>副歌韵脚不统一，部分歌词表达与歌曲主题不符</p>
                     </div>
                     <div class="task-card" data-status="已完成" data-song-name="星河旅人" data-reference-name="星河参考" data-batch-name="6 月 100 首民谣" data-complete-time="2026-07-10 16:20:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -2307,15 +2343,38 @@ pages['task-processing-page'] = {
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000006</span></p>
                         <p><span class="task-batch-name">6 月 100 首民谣</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:20</p>
+                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-success">已提交</strong></p>
                     </div>
-                    <div class="task-card" data-status="已终止" data-song-name="午夜霓虹" data-reference-name="午夜参考" data-batch-name="4 月 500 首草原风" data-stop-time="2026-07-10 15:55:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="已完成" data-song-name="午夜霓虹" data-reference-name="午夜参考" data-batch-name="4 月 500 首草原风" data-complete-time="2026-07-10 15:55:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>午夜霓虹</strong>
                             <span class="task-node">曲审核</span>
-                            <span class="task-status status-stopped">已终止</span>
+                            <span class="task-status status-done">已完成</span>
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流1">工作流1</span><span>FLOW2026071000007</span></p>
                         <p><span class="task-batch-name">4 月 500 首草原风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:55</p>
+                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-stopped">已终止</strong></p>
+                        <p class="task-result-reason" title="副歌“你的恩情我忘不掉”旋律不流畅；同质化；音频有问题"><span>终止原因：</span>副歌“你的恩情我忘不掉”旋律不流畅；同质化；音频有问题</p>
+                    </div>
+                    <div class="task-card" data-status="已完成" data-song-name="潮汐回声" data-reference-name="潮汐参考" data-batch-name="30 首草原风" data-complete-time="2026-07-10 16:35:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>潮汐回声</strong>
+                            <span class="task-node">曲审核</span>
+                            <span class="task-status status-done">已完成</span>
+                        </div>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流1">工作流1</span><span>FLOW2026071000009</span></p>
+                        <p><span class="task-batch-name">30 首草原风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:35</p>
+                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-success">审核通过</strong></p>
+                    </div>
+                    <div class="task-card" data-status="已完成" data-song-name="月光来信" data-reference-name="月光参考" data-batch-name="5 月 120 首流行" data-complete-time="2026-07-10 16:48:00" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
+                        <div class="task-card-main">
+                            <strong>月光来信</strong>
+                            <span class="task-node">词审核</span>
+                            <span class="task-status status-done">已完成</span>
+                        </div>
+                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000010</span></p>
+                        <p><span class="task-batch-name">5 月 120 首流行</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:48</p>
+                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-success">审核通过</strong></p>
                     </div>
                     <div class="task-card" data-status="进行中" data-song-name="遥远的地方" data-reference-name="遥远参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 15:30:00" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -2859,9 +2918,14 @@ function initTaskProcessingLyricPage() {
     header.appendChild(button);
 }
 
+const taskReferenceSongPageSize = 10;
+let taskReferenceSongCurrentPage = 1;
+let taskReferenceSongFilteredRows = [];
+
 function openTaskReferenceSongModal() {
     const modal = document.getElementById('taskReferenceSongModal');
     if (modal) modal.style.display = 'flex';
+    taskReferenceSongCurrentPage = 1;
     filterTaskReferenceSongs(document.getElementById('taskReferenceSongSearchInput')?.value || '');
 }
 
@@ -2874,18 +2938,64 @@ function filterTaskReferenceSongs(keyword = '') {
     const modal = document.getElementById('taskReferenceSongModal');
     if (!modal) return;
     const searchText = String(keyword).trim().toLowerCase();
-    let firstVisibleRadio = null;
-    modal.querySelectorAll('tbody tr').forEach(row => {
-        const matched = !searchText || row.textContent.toLowerCase().includes(searchText);
-        row.style.display = matched ? '' : 'none';
-        if (matched && !firstVisibleRadio) firstVisibleRadio = row.querySelector('input[type="radio"]');
-    });
+    const rows = Array.from(modal.querySelectorAll('tbody tr'));
+    taskReferenceSongFilteredRows = rows.filter(row => !searchText || row.textContent.toLowerCase().includes(searchText));
+    taskReferenceSongCurrentPage = 1;
 
     const checked = modal.querySelector('input[name="taskReferenceSongRadio"]:checked');
     const checkedRow = checked ? checked.closest('tr') : null;
-    if ((!checked || checkedRow?.style.display === 'none') && firstVisibleRadio) {
-        firstVisibleRadio.checked = true;
+    if (!checkedRow || !taskReferenceSongFilteredRows.includes(checkedRow)) {
+        if (checked) checked.checked = false;
+        const firstMatchedRadio = taskReferenceSongFilteredRows[0]?.querySelector('input[type="radio"]');
+        if (firstMatchedRadio) firstMatchedRadio.checked = true;
     }
+    renderTaskReferenceSongPage();
+}
+
+function renderTaskReferenceSongPage() {
+    const modal = document.getElementById('taskReferenceSongModal');
+    if (!modal) return;
+
+    const total = taskReferenceSongFilteredRows.length;
+    const totalPages = Math.max(1, Math.ceil(total / taskReferenceSongPageSize));
+    taskReferenceSongCurrentPage = Math.min(Math.max(1, taskReferenceSongCurrentPage), totalPages);
+    const start = (taskReferenceSongCurrentPage - 1) * taskReferenceSongPageSize;
+    const currentRows = taskReferenceSongFilteredRows.slice(start, start + taskReferenceSongPageSize);
+
+    modal.querySelectorAll('tbody tr').forEach(row => {
+        row.style.display = currentRows.includes(row) ? '' : 'none';
+    });
+
+    const totalLabel = document.getElementById('taskReferenceSongTotal');
+    if (totalLabel) totalLabel.textContent = `共 ${total} 条`;
+
+    const prevButton = document.getElementById('taskReferenceSongPrev');
+    const nextButton = document.getElementById('taskReferenceSongNext');
+    if (prevButton) prevButton.disabled = taskReferenceSongCurrentPage <= 1;
+    if (nextButton) nextButton.disabled = taskReferenceSongCurrentPage >= totalPages;
+
+    const pageNumbers = document.getElementById('taskReferenceSongPageNumbers');
+    if (pageNumbers) {
+        pageNumbers.innerHTML = '';
+        for (let page = 1; page <= totalPages; page += 1) {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.textContent = page;
+            button.className = page === taskReferenceSongCurrentPage ? 'active' : '';
+            button.onclick = () => goToTaskReferenceSongPage(page);
+            pageNumbers.appendChild(button);
+        }
+    }
+}
+
+function goToTaskReferenceSongPage(page) {
+    taskReferenceSongCurrentPage = page;
+    renderTaskReferenceSongPage();
+}
+
+function changeTaskReferenceSongPage(step) {
+    taskReferenceSongCurrentPage += step;
+    renderTaskReferenceSongPage();
 }
 
 function confirmTaskReferenceSong() {
@@ -2936,6 +3046,138 @@ function selectTaskProcessingTask(card) {
     renderTaskProcessingContent(card.dataset.pageKey, card);
 }
 
+function retryTaskProcessingMachineTask(event, button) {
+    event?.stopPropagation();
+    if (!button || button.disabled) return;
+
+    const card = button.closest('.task-card');
+    const result = card?.querySelector('.task-result-line strong');
+    button.disabled = true;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 执行中';
+    if (result) {
+        result.textContent = '执行中';
+        result.className = 'task-result-running';
+    }
+
+    setTimeout(() => {
+        if (result) {
+            result.textContent = '执行成功';
+            result.className = 'task-result-success';
+        }
+        const statusBadge = card?.querySelector('.task-status');
+        const completedAt = new Date();
+        if (card) {
+            card.dataset.status = '已完成';
+            card.dataset.completeTime = completedAt.toISOString();
+            const time = card.querySelector('.task-card-time');
+            if (time) {
+                const pad = value => String(value).padStart(2, '0');
+                time.textContent = `${pad(completedAt.getMonth() + 1)}-${pad(completedAt.getDate())} ${pad(completedAt.getHours())}:${pad(completedAt.getMinutes())}`;
+            }
+        }
+        if (statusBadge) {
+            statusBadge.textContent = '已完成';
+            statusBadge.className = 'task-status status-done';
+        }
+        button.remove();
+        const wrapper = card?.closest('.task-processing-layout');
+        if (wrapper) {
+            updateTaskProcessingTabCounts(wrapper);
+            applyTaskProcessingFilters(wrapper, false);
+        }
+        showSuccessMessage('入库节点重新执行成功');
+    }, 1000);
+}
+
+function updateTaskProcessingTabCounts(wrapper) {
+    const cards = Array.from(wrapper.querySelectorAll('.task-processing-list .task-card'));
+    wrapper.querySelectorAll('.task-processing-tabs button').forEach(button => {
+        const status = button.dataset.status || '全部';
+        const count = status === '全部'
+            ? cards.length
+            : cards.filter(card => card.dataset.status === status).length;
+        button.textContent = `${status} ${count}`;
+    });
+}
+
+function completeActiveTaskProcessingTask(action = 'submit', reason = '') {
+    const wrapper = document.querySelector('.task-processing-layout');
+    const card = wrapper?.querySelector('.task-processing-list .task-card.active');
+    if (!wrapper || !card) return false;
+
+    const nodeName = card.querySelector('.task-node')?.textContent.trim() || '';
+    let result = '处理完成';
+    if (action === 'abort') {
+        result = '已终止';
+    } else if (action === 'reject') {
+        result = '已打回';
+    } else if (nodeName.includes('审核')) {
+        result = '审核通过';
+    } else if (nodeName.includes('作词') || nodeName.includes('作曲')) {
+        result = '已提交';
+    } else if (nodeName.includes('入库')) {
+        result = '执行成功';
+    }
+
+    const completedAt = new Date();
+    card.dataset.status = '已完成';
+    card.dataset.completeTime = completedAt.toISOString();
+    card.dataset.processResult = result;
+
+    const statusBadge = card.querySelector('.task-status');
+    if (statusBadge) {
+        statusBadge.textContent = '已完成';
+        statusBadge.className = 'task-status status-done';
+    }
+
+    let resultLine = card.querySelector('.task-result-line');
+    if (!resultLine) {
+        resultLine = document.createElement('p');
+        resultLine.className = 'task-result-line';
+        card.appendChild(resultLine);
+    }
+    const resultClass = result === '已终止'
+        ? 'task-result-stopped'
+        : result === '已打回'
+            ? 'task-result-rejected'
+            : 'task-result-success';
+    resultLine.innerHTML = `<span>处理结果：</span><strong class="${resultClass}">${result}</strong>`;
+
+    card.querySelector('.task-result-reason')?.remove();
+    if (action === 'abort' || action === 'reject') {
+        const reasonLabel = action === 'abort' ? '终止原因：' : '打回原因：';
+        const reasonText = reason || (action === 'abort' ? '用户主动终止任务' : '审核未通过');
+        const reasonLine = document.createElement('p');
+        reasonLine.className = 'task-result-reason';
+        reasonLine.title = reasonText;
+        const label = document.createElement('span');
+        label.textContent = reasonLabel;
+        reasonLine.append(label, reasonText);
+        card.appendChild(reasonLine);
+    }
+
+    let time = card.querySelector('.task-card-time');
+    const timeRow = card.querySelector('.task-batch-name')?.parentElement;
+    if (!time && timeRow) {
+        const batchName = timeRow.querySelector('.task-batch-name');
+        timeRow.textContent = '';
+        if (batchName) timeRow.appendChild(batchName);
+        timeRow.appendChild(document.createTextNode('    '));
+        time = document.createElement('span');
+        time.className = 'task-card-time';
+        timeRow.appendChild(time);
+    }
+    if (time) {
+        const pad = value => String(value).padStart(2, '0');
+        time.textContent = `${pad(completedAt.getMonth() + 1)}-${pad(completedAt.getDate())} ${pad(completedAt.getHours())}:${pad(completedAt.getMinutes())}`;
+    }
+
+    updateTaskProcessingTabCounts(wrapper);
+    applyTaskProcessingFilters(wrapper, false);
+    showSuccessMessage(`任务处理完成，处理结果：${result}`);
+    return true;
+}
+
 function filterTaskProcessingTasks(button) {
     if (!button) return;
     const wrapper = button.closest('.task-processing-layout');
@@ -2949,12 +3191,13 @@ function filterTaskProcessingTasks(button) {
 function filterTaskProcessingSearch(input) {
     const wrapper = input?.closest('.task-processing-layout');
     if (!wrapper) return;
+    wrapper.dataset.taskSearchKeyword = (input.value || '').trim();
     applyTaskProcessingFilters(wrapper, false);
 }
 
 function applyTaskProcessingFilters(wrapper, autoSelect = true) {
     const status = wrapper.querySelector('.task-processing-tabs button.active')?.dataset.status || '全部';
-    const keyword = (wrapper.querySelector('.task-processing-search input')?.value || '').trim().toLowerCase();
+    const keyword = (wrapper.dataset.taskSearchKeyword || '').toLowerCase();
     const cards = Array.from(wrapper.querySelectorAll('.task-processing-list .task-card'));
     updateTaskProcessingCardNames(cards);
     const sortedCards = sortTaskProcessingCards(wrapper, cards, status);
@@ -2994,9 +3237,7 @@ function sortTaskProcessingCards(wrapper, cards, activeStatus = '全部') {
     const list = wrapper.querySelector('.task-processing-list');
     const statusOrder = {
         '进行中': 1,
-        '待办': 2,
-        '已完成': 3,
-        '已终止': 4
+        '已完成': 2
     };
     const sortedCards = cards.slice().sort((a, b) => {
         if (activeStatus === '全部') {
@@ -3014,9 +3255,7 @@ function getTaskProcessingSortTime(card) {
     const status = card?.dataset.status || '';
     const timeValue = status === '已完成'
         ? card.dataset.completeTime
-        : status === '已终止'
-            ? card.dataset.stopTime
-            : card.dataset.enterTime;
+        : card.dataset.enterTime;
     return Date.parse(timeValue || card.dataset.enterTime || card.dataset.completeTime || card.dataset.stopTime || '1970-01-01 00:00:00');
 }
 
@@ -3042,7 +3281,7 @@ function setTaskProcessingNullState(message = '暂无任务') {
 }
 
 function isTaskProcessingReadonlyStatus(status) {
-    return status === '已完成' || status === '已终止';
+    return status === '已完成';
 }
 
 function applyTaskProcessingReadonlyState(taskCard) {
@@ -3065,7 +3304,7 @@ function applyTaskProcessingReadonlyState(taskCard) {
     container.querySelectorAll('button').forEach(button => {
         const text = (button.innerText || '').trim();
         const onclick = button.getAttribute('onclick') || '';
-        const shouldHide = /提交|中止|终止|确认|重置|打回|审核通过|生成|重新上传|删除|添加|上传|保存/.test(text)
+        const shouldHide = /提交|终止|确认|重置|打回|审核通过|生成|重新上传|删除|添加|上传|保存/.test(text)
             || /submit|abort|suspend|confirm|delete|upload|generate|save|open.*Modal/i.test(onclick);
 
         if (shouldHide) {
@@ -4150,6 +4389,7 @@ function confirmSubmit() {
             </div>
         `;
     }
+    completeActiveTaskProcessingTask('submit');
 }
 
 function showAbortModal() {
@@ -4186,11 +4426,12 @@ function confirmAbort() {
         container.innerHTML = `
             <div style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 400px; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-sm); flex-direction: column; gap: 16px; padding: 40px;">
                 <div style="font-size: 48px; color: var(--danger);">✕</div>
-                <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">任务已中止</h3>
-                <p style="background: #FFF0F0; color: var(--danger); padding: 10px 16px; border-radius: 6px; font-size: 13px;">中止原因: ${reason}</p>
+                <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">任务已终止</h3>
+                <p style="background: #FFF0F0; color: var(--danger); padding: 10px 16px; border-radius: 6px; font-size: 13px;">终止原因: ${reason}</p>
             </div>
         `;
     }
+    completeActiveTaskProcessingTask('abort', reason);
 }
 
 function switchStep(step) {
@@ -4333,6 +4574,7 @@ function submitReview() {
                     </div>
                 `;
             }
+            completeActiveTaskProcessingTask('reject', remark);
         }
     } else {
         if (confirm('是否确认提交评级结果，如果确认，评级结果将不可修改。')) {
@@ -4347,6 +4589,7 @@ function submitReview() {
                     </div>
                 `;
             }
+            completeActiveTaskProcessingTask('submit', remark);
         }
     }
 }
@@ -4768,6 +5011,7 @@ function confirmCompositionSubmit() {
             </div>
         `;
     }
+    completeActiveTaskProcessingTask('submit', remark);
 }
 
 function showCompositionAbortModal() {
@@ -4785,7 +5029,7 @@ function confirmCompositionAbort() {
     const reason = reasonInput ? reasonInput.value.trim() : '';
 
     if (!reason) {
-        alert('请输入中止任务的原因');
+        alert('请输入终止任务的原因');
         return;
     }
 
@@ -4796,11 +5040,12 @@ function confirmCompositionAbort() {
         container.innerHTML = `
             <div style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 400px; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-sm); flex-direction: column; gap: 16px; padding: 40px;">
                 <div style="font-size: 48px; color: var(--danger);">✕</div>
-                <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">任务已中止</h3>
-                <p style="background: #FFF0F0; color: var(--danger); padding: 10px 16px; border-radius: 6px; font-size: 13px;">中止原因: ${reason}</p>
+                <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">任务已终止</h3>
+                <p style="background: #FFF0F0; color: var(--danger); padding: 10px 16px; border-radius: 6px; font-size: 13px;">终止原因: ${reason}</p>
             </div>
         `;
     }
+    completeActiveTaskProcessingTask('abort', reason);
 }
 
 function simulateCompositionRejected() {
@@ -4907,7 +5152,7 @@ function calculateSongRating() {
         } else if ((!has1 && (total === 10 || total === 11)) || (has1 && (total === 12 || total === 13))) {
             currentSongRating = 'A'; color = 'var(--success)'; bg = 'var(--success-light)'; isSongReviewReject = false;
         } else if (!has0 && total >= 7 && total <= 11) {
-            currentSongRating = 'B+'; color = 'var(--warning)'; bg = 'var(--warning-light)'; isSongReviewReject = false;
+            currentSongRating = 'B+'; color = 'var(--warning)'; bg = 'var(--warning-light)'; isSongReviewReject = true;
         } else {
             currentSongRating = 'C'; color = 'var(--danger)'; bg = 'var(--danger-light)'; isSongReviewReject = true;
         }
@@ -4972,20 +5217,23 @@ function updateSongReviewUI(color, bg, displayRating = currentSongRating) {
 
     const remarkLabel = document.getElementById('srRemarkLabel');
     const remarkInput = document.getElementById('srRemarkInput');
+    const rejectBtn = document.getElementById('srRejectBtn');
     const submitBtn = document.getElementById('srSubmitBtn');
 
-    if (!remarkLabel || !remarkInput || !submitBtn) return;
+    if (!remarkLabel || !remarkInput || !rejectBtn || !submitBtn) return;
 
     if (isSongReviewReject) {
-        remarkLabel.innerHTML = '中止原因 <span style="color: var(--danger);">*</span>';
-        remarkInput.placeholder = '必须清晰填写拒绝的具体原因...';
+        remarkLabel.innerHTML = '原因 <span style="color: var(--danger);">*</span>';
+        remarkInput.placeholder = '请填写打回或终止的具体原因...';
+        rejectBtn.style.display = 'inline-flex';
         submitBtn.className = 'btn-primary';
         submitBtn.style.backgroundColor = 'var(--danger)';
         submitBtn.style.borderColor = 'var(--danger)';
-        submitBtn.textContent = '中止任务';
+        submitBtn.textContent = '终止任务';
     } else {
         remarkLabel.innerHTML = '综合评语 <span style="color: var(--gray-400);">(选填)</span>';
         remarkInput.placeholder = '例如：副歌部分的人声有点闷，但整体情感非常饱满...';
+        rejectBtn.style.display = 'none';
         submitBtn.className = 'btn-primary';
         submitBtn.style.backgroundColor = 'var(--primary)';
         submitBtn.style.borderColor = 'var(--primary)';
@@ -4994,6 +5242,8 @@ function updateSongReviewUI(color, bg, displayRating = currentSongRating) {
 }
 
 function resetSongReview() {
+    isSongReviewReject = false;
+    currentSongRating = '';
     document.querySelectorAll('.stars-rating input').forEach(radio => radio.checked = false);
     document.querySelectorAll('.sr-zero-input').forEach(radio => radio.checked = false);
     updateZeroStarButtonStates();
@@ -5002,6 +5252,8 @@ function resetSongReview() {
     
     const finalSection = document.getElementById('srFinalSection');
     if (finalSection) finalSection.style.display = 'none';
+    const rejectBtn = document.getElementById('srRejectBtn');
+    if (rejectBtn) rejectBtn.style.display = 'none';
 
     document.querySelectorAll('.sr-quick-reject-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -5022,25 +5274,27 @@ function closeSongReviewAbortModal() {
 }
 
 function confirmSongReviewAbort() {
+    const reason = document.getElementById('srRemarkInput')?.value.trim() || '';
     closeSongReviewAbortModal();
 
-    const container = document.querySelector('#song-review-page .content-wrapper');
+    const container = getSongReviewContentContainer();
     if (container) {
         container.innerHTML = `
             <div style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 400px; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-sm); flex-direction: column; gap: 16px; padding: 40px;">
                 <div style="font-size: 48px; color: var(--danger);">✕</div>
-                <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">任务已中止</h3>
-                <p style="color: var(--gray-600); font-size: 14px;">当前任务已中止，工作流将停止继续流转。</p>
+                <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">任务已终止</h3>
+                <p style="color: var(--gray-600); font-size: 14px;">当前任务已终止，工作流将停止继续流转。</p>
             </div>
         `;
     }
+    completeActiveTaskProcessingTask('abort', reason);
 }
 
 function confirmSongReviewSubmit() {
     const remarkInput = document.getElementById('srRemarkInput');
     const remark = remarkInput ? remarkInput.value.trim() : '';
 
-    const container = document.querySelector('#song-review-page .content-wrapper');
+    const container = getSongReviewContentContainer();
     if (container) {
         container.innerHTML = `
             <div style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 400px; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-sm); flex-direction: column; gap: 16px; padding: 40px;">
@@ -5051,10 +5305,46 @@ function confirmSongReviewSubmit() {
             </div>
         `;
     }
+    completeActiveTaskProcessingTask('submit', remark);
+}
+
+function getSongReviewContentContainer() {
+    return document.querySelector('#taskProcessingContent .content-wrapper')
+        || document.querySelector('#song-review-page .content-wrapper');
+}
+
+function rejectSongReview() {
+    if (!isSongReviewReject) return;
+    const reason = document.getElementById('srRemarkInput')?.value.trim() || '';
+    if (!reason) {
+        alert('请填写原因！');
+        document.getElementById('srRemarkInput')?.focus();
+        return;
+    }
+
+    openConfirmDialog('确认打回', '是否确认打回当前任务？', '确认打回', true, () => {
+        const container = getSongReviewContentContainer();
+        if (container) {
+            container.innerHTML = `
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 400px; background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-sm); flex-direction: column; gap: 16px; padding: 40px;">
+                    <div style="font-size: 48px; color: var(--warning);">↩</div>
+                    <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-900);">任务已打回</h3>
+                    <p style="color: var(--gray-600); font-size: 14px;">当前任务已打回，工作流将返回上一处理节点。</p>
+                </div>
+            `;
+        }
+        completeActiveTaskProcessingTask('reject', reason);
+    });
 }
 
 function submitSongReview() {
     if (isSongReviewReject) {
+        const reason = document.getElementById('srRemarkInput')?.value.trim() || '';
+        if (!reason) {
+            alert('请填写原因！');
+            document.getElementById('srRemarkInput')?.focus();
+            return;
+        }
         openSongReviewAbortModal();
     } else {
         confirmSongReviewSubmit();
@@ -5315,13 +5605,15 @@ function renderRefSongsTable() {
     const nameQuery = (document.getElementById('refLibSearchName')?.value || '').trim().toLowerCase();
     const singerQuery = (document.getElementById('refLibSearchSinger')?.value || '').trim().toLowerCase();
     const styleValue = document.getElementById('refLibSearchStyle')?.value || '';
+    const statusValue = document.getElementById('refLibSearchStatus')?.value || '';
     
     // Filter data
     const filtered = refSongsData.filter(item => {
         const nameMatch = !nameQuery || item.name.toLowerCase().includes(nameQuery);
         const singerMatch = !singerQuery || item.singer.toLowerCase().includes(singerQuery);
         const styleMatch = !styleValue || item.styles.includes(styleValue);
-        return nameMatch && singerMatch && styleMatch;
+        const statusMatch = !statusValue || normalizeRefSongStatus(item.status) === statusValue;
+        return nameMatch && singerMatch && styleMatch && statusMatch;
     });
 
     tbody.innerHTML = '';
@@ -5390,9 +5682,11 @@ function resetRefLibSearch() {
     const nameInput = document.getElementById('refLibSearchName');
     const singerInput = document.getElementById('refLibSearchSinger');
     const styleSelect = document.getElementById('refLibSearchStyle');
+    const statusSelect = document.getElementById('refLibSearchStatus');
     if (nameInput) nameInput.value = '';
     if (singerInput) singerInput.value = '';
     if (styleSelect) styleSelect.value = '';
+    if (statusSelect) statusSelect.value = '';
     renderRefSongsTable();
 }
 
@@ -5733,6 +6027,8 @@ const nodeConfigsSchema = {
       { key: 'cover_audio', label: 'cover音频', type: 'string', placeholder: '音频URL...' },
       { key: 'inspo_audio', label: 'inspo音频', type: 'string', placeholder: '音频URL...' },
       { key: 'sample_audio', label: 'sample音频', type: 'string', placeholder: '音频URL...' },
+      { key: 'clip_ids', label: 'clip_ids', type: 'string', placeholder: '请输入 clip_ids' },
+      { key: 'audio_url', label: '音频链接', type: 'string', placeholder: '请输入音频链接' },
       { key: 'version', label: '使用版本', type: 'string', placeholder: 'v3.5...' }
     ],
     extraFields: [
@@ -5758,6 +6054,8 @@ const nodeConfigsSchema = {
         cover_audio: '若云汀 测试 (1).wav,若云汀 测试.wav',
         inspo_audio: '思念的风景.wav,一滴泪的海洋.wav,泪在风中淌.wav',
         sample_audio: '',
+        clip_ids: '',
+        audio_url: '',
         version: '5.0',
         text: '年轻下沉',
         singer: '欣瑶-女，赵雷-男',
@@ -6587,9 +6885,21 @@ function removeNodeConfigUploadedFile(button, fileName) {
 function handleNodeConfigWorkflowChange(select) {
     const wrap = select.closest('.node-config-workflow-field');
     if (!wrap) return;
+    let hasAudioUpload = false;
     wrap.querySelectorAll('.node-config-workflow-audio').forEach(item => {
-        item.style.display = item.getAttribute('data-workflow-audio') === select.value ? 'block' : 'none';
+        const isActive = item.getAttribute('data-workflow-audio') === select.value;
+        item.style.display = isActive ? 'block' : 'none';
+        hasAudioUpload = hasAudioUpload || isActive;
     });
+    const audioMetaFields = wrap.querySelector('.node-config-audio-meta-fields');
+    if (audioMetaFields) {
+        audioMetaFields.style.display = hasAudioUpload ? 'grid' : 'none';
+        if (!hasAudioUpload) {
+            audioMetaFields.querySelectorAll('.dynamic-config-val').forEach(input => {
+                input.value = '';
+            });
+        }
+    }
 }
 
 function toggleNodeConfigSingerDropdown(button) {
@@ -6808,7 +7118,7 @@ function openNodeConfigDrawer(mode, id = null) {
                             <option value="">${f.placeholder || '请选择'}</option>${options}
                         </select>
                         <div class="node-config-workflow-audio" data-workflow-audio="inspo" style="display: none; margin-top: 12px;">
-                            <label>inspo音频</label>
+                            <label>inspo音频${isPromptConfigTab ? ' <span style="color: var(--danger);">*</span>' : ''}</label>
                             <div class="node-config-upload-field">
                                 <input type="hidden" class="dynamic-config-val node-config-file-value" data-key="inspo_audio">
                                 <label class="node-config-upload-zone">
@@ -6823,7 +7133,7 @@ function openNodeConfigDrawer(mode, id = null) {
                             </div>
                         </div>
                         <div class="node-config-workflow-audio" data-workflow-audio="cover" style="display: none; margin-top: 12px;">
-                            <label>cover音频</label>
+                            <label>cover音频${isPromptConfigTab ? ' <span style="color: var(--danger);">*</span>' : ''}</label>
                             <div class="node-config-upload-field">
                                 <input type="hidden" class="dynamic-config-val node-config-file-value" data-key="cover_audio">
                                 <label class="node-config-upload-zone">
@@ -6838,7 +7148,7 @@ function openNodeConfigDrawer(mode, id = null) {
                             </div>
                         </div>
                         <div class="node-config-workflow-audio" data-workflow-audio="sample" style="display: none; margin-top: 12px;">
-                            <label>sample音频</label>
+                            <label>sample音频${isPromptConfigTab ? ' <span style="color: var(--danger);">*</span>' : ''}</label>
                             <div class="node-config-upload-field">
                                 <input type="hidden" class="dynamic-config-val node-config-file-value" data-key="sample_audio">
                                 <label class="node-config-upload-zone">
@@ -6852,6 +7162,17 @@ function openNodeConfigDrawer(mode, id = null) {
                                 <div class="node-config-file-list"></div>
                             </div>
                         </div>
+                        ${isPromptConfigTab ? `
+                        <div class="node-type-field-grid node-config-audio-meta-fields" style="display: none; margin-top: 12px;">
+                            <div class="node-type-field">
+                                <label>clip_ids <span style="color: var(--danger);">*</span></label>
+                                <input type="text" class="input dynamic-config-val" data-key="clip_ids" placeholder="请输入 clip_ids">
+                            </div>
+                            <div class="node-type-field">
+                                <label>音频链接 <span style="color: var(--danger);">*</span></label>
+                                <input type="text" class="input dynamic-config-val" data-key="audio_url" placeholder="请输入音频链接">
+                            </div>
+                        </div>` : ''}
                     </div>`;
             } else if ((isPromptConfigTab && promptUploadFieldKeys.includes(f.key)) || (isAudioConfigTab && audioUploadFieldKeys.includes(f.key))) {
                 return;
@@ -6996,6 +7317,26 @@ function saveNodeConfigDrawer() {
             alert('生成方式为必填项！');
             return;
         }
+        if (currentNodeConfigTab === '提示词获取') {
+            const audioFieldByWorkflow = {
+                inspo: { key: 'inspo_audio', label: 'inspo音频' },
+                cover: { key: 'cover_audio', label: 'cover音频' },
+                sample: { key: 'sample_audio', label: 'sample音频' }
+            };
+            const activeAudioField = audioFieldByWorkflow[rowPayload.workflow];
+            if (activeAudioField && !rowPayload[activeAudioField.key]) {
+                alert(`${activeAudioField.label}为必填项！`);
+                return;
+            }
+            if (activeAudioField && !(rowPayload.clip_ids || '').trim()) {
+                alert('clip_ids为必填项！');
+                return;
+            }
+            if (activeAudioField && !(rowPayload.audio_url || '').trim()) {
+                alert('音频链接为必填项！');
+                return;
+            }
+        }
         if (rowPayload.workflow === 'inspo') {
             rowPayload.cover_audio = '';
             rowPayload.sample_audio = '';
@@ -7003,7 +7344,7 @@ function saveNodeConfigDrawer() {
             rowPayload.inspo_audio = '';
             rowPayload.sample_audio = '';
         } else if (rowPayload.workflow === 'sample') {
-            if (!rowPayload.sample_audio) {
+            if (currentNodeConfigTab === '音频制作' && !rowPayload.sample_audio) {
                 alert('生成方式为 sample 时，请上传 sample 音频！');
                 return;
             }
@@ -7013,6 +7354,8 @@ function saveNodeConfigDrawer() {
             rowPayload.inspo_audio = '';
             rowPayload.cover_audio = '';
             rowPayload.sample_audio = '';
+            rowPayload.clip_ids = '';
+            rowPayload.audio_url = '';
         }
     }
 

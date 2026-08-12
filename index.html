@@ -1011,11 +1011,11 @@
 <div class="modal-overlay" id="modal-suspend" style="display:none">
     <div class="modal modal-md">
         <div class="modal-header">
-            <h3 style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--danger); font-size: 20px;"></span> 中止流水线</h3>
+            <h3 style="display: flex; align-items: center; gap: 8px;"><span style="color: var(--danger); font-size: 20px;"></span> 终止流水线</h3>
             <button class="modal-close" onclick="closeModal('modal-suspend')">&times;</button>
         </div>
         <div class="modal-body" style="font-size:14px; padding:20px 0;">
-            <p style="color: var(--gray-900); font-size: 15px; margin-bottom: 8px;">是否确认中止当前流水线？</p>
+            <p style="color: var(--gray-900); font-size: 15px; margin-bottom: 8px;">是否确认终止当前流水线？</p>
             <p style="color: var(--danger); font-weight: 500; margin-bottom: 16px;">当前未完成节点的进度将丢失！</p>
             
             <div style="background: #FFF7E6; border: 1px solid #FFE58F; padding: 12px; border-radius: 6px;">
@@ -1027,7 +1027,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn-default" onclick="closeModal('modal-suspend')">取消</button>
-            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmSuspend()">确认中止</button>
+            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmSuspend()">确认终止</button>
         </div>
     </div>
 </div>
@@ -1230,12 +1230,12 @@
 <div class="modal-overlay" id="abortModalOverlay" style="display:none">
     <div class="modal modal-md">
         <div class="modal-header">
-            <h3>是否确认中止任务？</h3>
+            <h3>是否确认终止任务？</h3>
             <button class="modal-close" onclick="closeAbortModal()">&times;</button>
         </div>
         <div class="modal-body" style="padding:20px 0;">
             <div class="form-group" style="margin-bottom: 0;">
-                <label>请选择中止任务的原因：(选填)</label>
+                <label>请选择终止任务的原因：(选填)</label>
                 <div style="display: flex; gap: 16px; margin-bottom: 12px; margin-top: 8px;">
                     <label style="display: flex; align-items: center; gap: 8px; font-weight: normal; cursor: pointer;">
                         <input type="radio" name="abortReasonType" value="style" onclick="document.getElementById('otherReasonContainer').style.display='none'"> 对标词风格不对
@@ -1251,7 +1251,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn-default" onclick="closeAbortModal()">取消</button>
-            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmAbort()">确认中止</button>
+            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmAbort()">确认终止</button>
         </div>
     </div>
 </div>
@@ -1280,18 +1280,18 @@
 <div class="modal-overlay" id="compAbortModalOverlay" style="display:none">
     <div class="modal modal-md">
         <div class="modal-header">
-            <h3>中止任务</h3>
+            <h3>终止任务</h3>
             <button class="modal-close" onclick="closeCompositionAbortModal()">&times;</button>
         </div>
         <div class="modal-body" style="padding:20px 0;">
             <div class="form-group" style="margin-bottom: 0;">
-                <label>请输入中止任务的原因：</label>
+                <label>请输入终止任务的原因：</label>
                 <textarea id="compAbortReason" class="input" style="min-height: 80px; width: 100%; padding: 8px; border: 1px solid var(--gray-300); border-radius: 6px;" placeholder="例如：参考音频质量太差，无法跑曲..."></textarea>
             </div>
         </div>
         <div class="modal-footer">
             <button class="btn-default" onclick="closeCompositionAbortModal()">取消</button>
-            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmCompositionAbort()">确认中止</button>
+            <button class="btn-primary" style="background-color: var(--danger); border-color: var(--danger);" onclick="confirmCompositionAbort()">确认终止</button>
         </div>
     </div>
 </div>
@@ -1396,8 +1396,40 @@
                             <td><div class="task-reference-style-tags"><span class="task-reference-style-tag">草原流行</span><span class="task-reference-style-tag">民谣</span></div></td>
                             <td><div class="task-reference-lyric-cell" title="车窗外的山很长，月光落在行李箱；去往遥远的地方，把思念轻轻收藏。">车窗外的山很长，月光落在行李箱；去往遥远的地方，把思念轻轻收藏。</div></td>
                         </tr>
+                        <tr data-song-name="星光归途" data-song-lyrics="[Verse]&#10;晚风翻过旧地图&#10;星光照亮了归途&#10;&#10;[Chorus]&#10;穿过城市的迷雾&#10;终于回到你身处">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td><td>星光归途</td><td><div class="task-reference-style-tags"><span class="task-reference-style-tag">年轻流行</span><span class="task-reference-style-tag">电子</span></div></td><td><div class="task-reference-lyric-cell" title="晚风翻过旧地图，星光照亮了归途；穿过城市的迷雾，终于回到你身处。">晚风翻过旧地图，星光照亮了归途；穿过城市的迷雾，终于回到你身处。</div></td>
+                        </tr>
+                        <tr data-song-name="草原月色" data-song-lyrics="[Verse]&#10;月色落在青草坡&#10;风吹来远方的歌&#10;&#10;[Chorus]&#10;沿着蜿蜒的小河&#10;奔向辽阔的生活">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td><td>草原月色</td><td><div class="task-reference-style-tags"><span class="task-reference-style-tag">草原风</span><span class="task-reference-style-tag">民族</span></div></td><td><div class="task-reference-lyric-cell" title="月色落在青草坡，风吹来远方的歌；沿着蜿蜒的小河，奔向辽阔的生活。">月色落在青草坡，风吹来远方的歌；沿着蜿蜒的小河，奔向辽阔的生活。</div></td>
+                        </tr>
+                        <tr data-song-name="雨巷旧梦" data-song-lyrics="[Verse]&#10;雨落青石的街巷&#10;旧梦在檐下摇晃&#10;&#10;[Chorus]&#10;那封泛黄的信上&#10;还留着你的目光">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td><td>雨巷旧梦</td><td><div class="task-reference-style-tags"><span class="task-reference-style-tag">古风</span><span class="task-reference-style-tag">民谣</span></div></td><td><div class="task-reference-lyric-cell" title="雨落青石的街巷，旧梦在檐下摇晃；那封泛黄的信上，还留着你的目光。">雨落青石的街巷，旧梦在檐下摇晃；那封泛黄的信上，还留着你的目光。</div></td>
+                        </tr>
+                        <tr data-song-name="烟火人间" data-song-lyrics="[Verse]&#10;清晨路边的早餐&#10;点亮普通的一天&#10;&#10;[Chorus]&#10;人来人往的街边&#10;都是温柔的纪念">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td><td>烟火人间</td><td><div class="task-reference-style-tags"><span class="task-reference-style-tag">经典流行</span><span class="task-reference-style-tag">生活</span></div></td><td><div class="task-reference-lyric-cell" title="清晨路边的早餐，点亮普通的一天；人来人往的街边，都是温柔的纪念。">清晨路边的早餐，点亮普通的一天；人来人往的街边，都是温柔的纪念。</div></td>
+                        </tr>
+                        <tr data-song-name="山海之间" data-song-lyrics="[Verse]&#10;翻过高山的边界&#10;看见海面的明灭&#10;&#10;[Chorus]&#10;我们约定的季节&#10;从来不曾被忘却">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td><td>山海之间</td><td><div class="task-reference-style-tags"><span class="task-reference-style-tag">国风</span><span class="task-reference-style-tag">流行</span></div></td><td><div class="task-reference-lyric-cell" title="翻过高山的边界，看见海面的明灭；我们约定的季节，从来不曾被忘却。">翻过高山的边界，看见海面的明灭；我们约定的季节，从来不曾被忘却。</div></td>
+                        </tr>
+                        <tr data-song-name="青春来信" data-song-lyrics="[Verse]&#10;操场边那棵香樟&#10;收藏年少的愿望&#10;&#10;[Chorus]&#10;多年以后再回想&#10;笑容依旧很明亮">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td><td>青春来信</td><td><div class="task-reference-style-tags"><span class="task-reference-style-tag">年轻流行</span><span class="task-reference-style-tag">校园</span></div></td><td><div class="task-reference-lyric-cell" title="操场边那棵香樟，收藏年少的愿望；多年以后再回想，笑容依旧很明亮。">操场边那棵香樟，收藏年少的愿望；多年以后再回想，笑容依旧很明亮。</div></td>
+                        </tr>
+                        <tr data-song-name="故城晚风" data-song-lyrics="[Verse]&#10;晚风经过老城墙&#10;钟声落进旧时光&#10;&#10;[Chorus]&#10;离开多年的故乡&#10;一直住在我心上">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td><td>故城晚风</td><td><div class="task-reference-style-tags"><span class="task-reference-style-tag">中年下沉</span><span class="task-reference-style-tag">怀旧</span></div></td><td><div class="task-reference-lyric-cell" title="晚风经过老城墙，钟声落进旧时光；离开多年的故乡，一直住在我心上。">晚风经过老城墙，钟声落进旧时光；离开多年的故乡，一直住在我心上。</div></td>
+                        </tr>
+                        <tr data-song-name="心跳频率" data-song-lyrics="[Verse]&#10;霓虹闪烁的午夜&#10;节拍连接了世界&#10;&#10;[Chorus]&#10;跟随心跳的强烈&#10;让所有烦恼停歇">
+                            <td><input type="radio" name="taskReferenceSongRadio"></td><td>心跳频率</td><td><div class="task-reference-style-tags"><span class="task-reference-style-tag">DJ</span><span class="task-reference-style-tag">电子</span></div></td><td><div class="task-reference-lyric-cell" title="霓虹闪烁的午夜，节拍连接了世界；跟随心跳的强烈，让所有烦恼停歇。">霓虹闪烁的午夜，节拍连接了世界；跟随心跳的强烈，让所有烦恼停歇。</div></td>
+                        </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="task-reference-pagination">
+                <span id="taskReferenceSongTotal">共 12 条</span>
+                <div class="task-reference-pagination-controls">
+                    <button id="taskReferenceSongPrev" class="btn-default" type="button" onclick="changeTaskReferenceSongPage(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <div id="taskReferenceSongPageNumbers" class="task-reference-page-numbers"></div>
+                    <button id="taskReferenceSongNext" class="btn-default" type="button" onclick="changeTaskReferenceSongPage(1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

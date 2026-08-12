@@ -102,19 +102,45 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     align-items: center;
     gap: 8px;
     margin-bottom: 12px;
+}
+.task-processing-search-input {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    height: 34px;
+    gap: 8px;
     padding: 8px 10px;
     border: 1px solid var(--gray-300);
     border-radius: 6px;
     background: #fff;
     color: var(--gray-400);
+    box-sizing: border-box;
 }
 .task-processing-search input {
-    width: 100%;
+    flex: 1;
+    min-width: 0;
     border: none;
     outline: none;
     color: var(--gray-800);
     font-size: 13px;
 }
+.task-processing-search-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    height: 34px;
+    gap: 4px;
+    padding: 0 10px;
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    background: var(--primary);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+}
+.task-processing-search-btn:hover { background: var(--primary-dark); }
 .task-processing-tabs {
     flex-shrink: 0;
     display: flex;
@@ -206,6 +232,45 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.task-result-line {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+.task-result-line strong {
+    font-weight: 600;
+}
+.task-result-success { color: #389E0D; }
+.task-result-rejected { color: #D46B08; }
+.task-result-stopped { color: #CF1322; }
+.task-result-failed { color: #CF1322; }
+.task-result-running { color: #1677FF; }
+.task-retry-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 24px;
+    margin-left: auto;
+    padding: 0 8px;
+    border: 1px solid #91CAFF;
+    border-radius: 4px;
+    background: #fff;
+    color: #1677FF;
+    cursor: pointer;
+    font-size: 12px;
+}
+.task-retry-btn:hover { background: #E6F4FF; }
+.task-retry-btn:disabled { cursor: default; opacity: 0.7; }
+.task-result-reason {
+    overflow: hidden;
+    color: var(--gray-600) !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.task-result-reason span {
+    color: var(--gray-700);
+    font-weight: 500;
+}
 .task-status {
     flex-shrink: 0;
     padding: 2px 7px;
@@ -214,10 +279,8 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     font-weight: 600;
 }
 .task-status.status-running { border: 1px solid #91CAFF; background: #E6F4FF; color: #1677FF; }
-.task-status.status-pending { border: 1px solid #FFD666; background: #FFF7E6; color: #D48806; }
 .task-status.status-done { border: 1px solid #B7EB8F; background: #E6FFED; color: #52C41A; }
 .task-status.status-recent { border: 1px solid #87E8DE; background: #E6FFFB; color: #08979C; }
-.task-status.status-stopped { border: 1px solid var(--gray-300); background: var(--gray-100); color: var(--gray-600); }
 .task-processing-content {
     min-width: 0;
     height: calc(100vh - 100px);
@@ -1091,6 +1154,46 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     width: 16px;
     height: 16px;
     accent-color: var(--primary);
+}
+.task-reference-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+    color: var(--gray-500);
+    font-size: 13px;
+}
+.task-reference-pagination-controls,
+.task-reference-page-numbers {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.task-reference-pagination-controls > .btn-default,
+.task-reference-page-numbers button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid var(--gray-300);
+    border-radius: 5px;
+    background: #fff;
+    color: var(--gray-700);
+    cursor: pointer;
+    font-size: 13px;
+}
+.task-reference-page-numbers button.active {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+.task-reference-pagination-controls > .btn-default:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
 }
 .task-reference-style-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .task-reference-style-tag { display: inline-flex; align-items: center; min-height: 26px; padding: 3px 9px; border: 1px solid #91CAFF; border-radius: 5px; background: #EBF5FF; color: #1677FF; font-size: 12px; white-space: nowrap; }
