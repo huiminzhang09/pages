@@ -2292,28 +2292,15 @@ pages['task-processing-page'] = {
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000003</span></p>
                         <p><span class="task-batch-name">7 月 60 首国风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:50</p>
                     </div>
-                    <div class="task-card" data-status="进行中" data-song-name="城市晚风" data-reference-name="城市晚风参考" data-batch-name="20 首 DJ" data-enter-time="2026-07-10 17:02:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="已完成" data-song-name="城市晚风" data-reference-name="城市晚风参考" data-batch-name="20 首 DJ" data-complete-time="2026-07-10 17:02:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>城市晚风</strong>
                             <span class="task-node">作曲</span>
-                            <span class="task-status status-running">进行中</span>
+                            <span class="task-status status-done">已完成</span>
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流3">工作流3</span><span>FLOW2026071000011</span></p>
                         <p><span class="task-batch-name">20 首 DJ</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 17:02</p>
                         <p class="task-result-line"><span>处理结果：</span><strong class="task-result-failed">执行失败</strong></p>
-                    </div>
-                    <div class="task-card" data-status="进行中" data-song-name="山河入梦" data-reference-name="山河参考" data-batch-name="7 月 60 首国风" data-enter-time="2026-07-10 17:18:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
-                        <div class="task-card-main">
-                            <strong>山河入梦</strong>
-                            <span class="task-node">入库</span>
-                            <span class="task-status status-running">进行中</span>
-                        </div>
-                        <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000012</span></p>
-                        <p><span class="task-batch-name">7 月 60 首国风</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="task-card-time">07-10 17:18</span></p>
-                        <p class="task-result-line">
-                            <span>处理结果：</span><strong class="task-result-failed">执行失败</strong>
-                            <button type="button" class="task-retry-btn" onclick="retryTaskProcessingMachineTask(event, this)"><i class="fas fa-redo-alt"></i> 重新执行</button>
-                        </p>
                     </div>
                     <div class="task-card" data-status="进行中" data-song-name="山海回声" data-reference-name="山海参考" data-batch-name="20 首 DJ" data-enter-time="2026-07-10 15:08:00" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -3036,7 +3023,10 @@ function renderTaskProcessingContent(pageKey = 'manual-composition-page', taskCa
 
 function initTaskProcessingPage() {
     const wrapper = document.querySelector('.task-processing-layout');
-    if (wrapper) applyTaskProcessingFilters(wrapper, false);
+    if (wrapper) {
+        updateTaskProcessingTabCounts(wrapper);
+        applyTaskProcessingFilters(wrapper, false);
+    }
 }
 
 function selectTaskProcessingTask(card) {
@@ -5881,7 +5871,7 @@ let nodeTypesData = [
   {
     id: "1",
     typeName: "人工作词",
-    nodeType: "作词",
+    nodeType: "词",
     typeAttr: "人工节点",
     isConfigured: "是",
     inputFields: '{"task_desc": "string", "ref_lyrics": "string"}',
@@ -5902,7 +5892,7 @@ let nodeTypesData = [
   {
     id: "2",
     typeName: "AI 作曲",
-    nodeType: "作曲",
+    nodeType: "曲",
     typeAttr: "机器节点",
     isConfigured: "是",
     inputFields: '{"lyrics": "string", "prompt": "string", "style": "string"}',
@@ -5923,7 +5913,7 @@ let nodeTypesData = [
   {
     id: "3",
     typeName: "歌词审核",
-    nodeType: "作词",
+    nodeType: "词审核",
     typeAttr: "机器节点",
     isConfigured: "是",
     inputFields: '{"lyrics_doc": "object", "review_standard": "string"}',
@@ -5944,7 +5934,7 @@ let nodeTypesData = [
   {
     id: "4",
     typeName: "Cover 生成",
-    nodeType: "作曲",
+    nodeType: "曲",
     typeAttr: "机器节点",
     isConfigured: "否",
     inputFields: '{"origin_audio": "url", "singer_prompt": "string"}',
@@ -5976,6 +5966,27 @@ let nodeTypesData = [
     status: "正常",
     creator: "张三",
     createTime: "2026-05-14",
+    retryCount: 3,
+    retryLogic: "FIXED",
+    retryDelay: 10,
+    timeout: 3600,
+    responseTimeout: 600,
+    timeoutPolicy: "TIME_OUT_WF"
+  },
+  {
+    id: "6",
+    typeName: "曲审核",
+    nodeType: "曲审核",
+    typeAttr: "人工节点",
+    isConfigured: "否",
+    inputFields: '{"audio": "url", "lyrics": "string"}',
+    configFields: '{}',
+    outputFields: '{"review_result": "boolean", "comments": "string"}',
+    version: "V1.0.0",
+    changelog: "初始版本",
+    status: "正常",
+    creator: "系统",
+    createTime: "2026-08-13",
     retryCount: 3,
     retryLogic: "FIXED",
     retryDelay: 10,
@@ -6206,7 +6217,7 @@ function renderNodeTypesTable(data = nodeTypesData) {
         tr.innerHTML = `
             <td style="color: var(--gray-600);">${item.id}</td>
             <td style="font-weight: 500;">${item.typeName}</td>
-            <td style="color: var(--gray-600);">${item.nodeType || '作词'}</td>
+            <td style="color: var(--gray-600);">${item.nodeType || '词'}</td>
             <td class="node-type-nowrap-cell">${attrBadge}</td>
             <td class="node-type-nowrap-cell">${configuredBadge}</td>
             <td class="node-type-spec-cell" data-tooltip="${inputFieldsText}" onmouseenter="showNodeSpecTooltip(event, this.dataset.tooltip)" onmousemove="moveNodeSpecTooltip(event)" onmouseleave="hideNodeSpecTooltip()">${inputFieldsText}</td>
@@ -6277,7 +6288,7 @@ function openNodeTypeDrawer(mode, id = null) {
         btn.innerText = '确认新增';
         
         document.getElementById('inputNodeType_typeName').value = '';
-        document.getElementById('inputNodeType_nodeType').value = '作词';
+        document.getElementById('inputNodeType_nodeType').value = '词';
         document.getElementById('inputNodeType_typeAttr').value = '人工节点';
         document.getElementById('inputNodeType_status').value = '正常';
         document.getElementById('inputNodeType_version').value = 'V1.0.0';
@@ -6300,7 +6311,7 @@ function openNodeTypeDrawer(mode, id = null) {
         const item = nodeTypesData.find(n => n.id === id);
         if (item) {
             document.getElementById('inputNodeType_typeName').value = item.typeName;
-            document.getElementById('inputNodeType_nodeType').value = item.nodeType || '作词';
+            document.getElementById('inputNodeType_nodeType').value = item.nodeType || '词';
             document.getElementById('inputNodeType_typeAttr').value = item.typeAttr;
             document.getElementById('inputNodeType_status').value = item.status;
             document.getElementById('inputNodeType_version').value = item.version;
