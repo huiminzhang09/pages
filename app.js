@@ -2388,7 +2388,7 @@ function showPage(pageId) {
 function doLogin() {
     showPage('app-shell');
     // 默认进入工作台
-    navigateTo('workbench-page', document.querySelector('.nav-item[data-page="workbench-page"]'));
+    navigateTo('task-processing-page', document.querySelector('.nav-item[data-page="task-processing-page"]'));
 }
 
 // 导航栏与左侧菜单切换

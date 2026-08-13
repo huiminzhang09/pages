@@ -88,29 +88,9 @@
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">系统菜单</div>
         <nav class="sidebar-nav">
-            <div class="nav-group open">
-                <a class="nav-item nav-group-toggle" onclick="toggleNavGroup(this)">
-                    <i class="fas fa-desktop"></i><span>工作台</span>
-                    <i class="fas fa-chevron-right nav-arrow"></i>
-                </a>
-                <div class="nav-group-children">
-                    <a class="nav-item sub" data-page="task-processing-page" onclick="navigateTo('task-processing-page', this)">
-                        <i class="fas fa-tasks"></i><span>任务处理</span>
-                    </a>
-                    <a class="nav-item sub active" data-page="workbench-page" onclick="navigateTo('workbench-page', this)">
-                        <i class="fas fa-pen"></i><span>人工写词</span>
-                    </a>
-                    <a class="nav-item sub" data-page="lyrics-review-page" onclick="navigateTo('lyrics-review-page', this)">
-                        <i class="fas fa-check-double"></i><span>词审核</span>
-                    </a>
-                    <a class="nav-item sub" data-page="manual-composition-page" onclick="navigateTo('manual-composition-page', this)">
-                        <i class="fas fa-music"></i><span>跑曲</span>
-                    </a>
-                    <a class="nav-item sub" data-page="song-review-page" onclick="navigateTo('song-review-page', this)">
-                        <i class="fas fa-headphones"></i><span>曲审核</span>
-                    </a>
-                </div>
-            </div>
+            <a class="nav-item active" data-page="task-processing-page" onclick="navigateTo('task-processing-page', this)">
+                <i class="fas fa-desktop"></i><span>工作台</span>
+            </a>
             <a class="nav-item" data-page="order-page" onclick="navigateTo('order-page', this)">
                 <i class="fas fa-file-alt"></i><span>订单管理</span>
             </a>
