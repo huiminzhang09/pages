@@ -2300,7 +2300,6 @@ pages['task-processing-page'] = {
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流3">工作流3</span><span>FLOW2026071000011</span></p>
                         <p><span class="task-batch-name">20 首 DJ</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 17:02</p>
-                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-failed">执行失败</strong></p>
                     </div>
                     <div class="task-card" data-status="进行中" data-song-name="山海回声" data-reference-name="山海参考" data-batch-name="20 首 DJ" data-enter-time="2026-07-10 15:08:00" data-page-key="workbench-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -2319,8 +2318,6 @@ pages['task-processing-page'] = {
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000005</span></p>
                         <p><span class="task-batch-name">5 月 120 首流行</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:40</p>
-                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-rejected">已打回</strong></p>
-                        <p class="task-result-reason" title="副歌韵脚不统一，部分歌词表达与歌曲主题不符"><span>打回原因：</span>副歌韵脚不统一，部分歌词表达与歌曲主题不符</p>
                     </div>
                     <div class="task-card" data-status="已完成" data-song-name="星河旅人" data-reference-name="星河参考" data-batch-name="6 月 100 首民谣" data-complete-time="2026-07-10 16:20:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -2330,7 +2327,6 @@ pages['task-processing-page'] = {
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000006</span></p>
                         <p><span class="task-batch-name">6 月 100 首民谣</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:20</p>
-                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-success">已提交</strong></p>
                     </div>
                     <div class="task-card" data-status="已完成" data-song-name="午夜霓虹" data-reference-name="午夜参考" data-batch-name="4 月 500 首草原风" data-complete-time="2026-07-10 15:55:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -2340,8 +2336,6 @@ pages['task-processing-page'] = {
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流1">工作流1</span><span>FLOW2026071000007</span></p>
                         <p><span class="task-batch-name">4 月 500 首草原风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 15:55</p>
-                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-stopped">已终止</strong></p>
-                        <p class="task-result-reason" title="副歌“你的恩情我忘不掉”旋律不流畅；同质化；音频有问题"><span>终止原因：</span>副歌“你的恩情我忘不掉”旋律不流畅；同质化；音频有问题</p>
                     </div>
                     <div class="task-card" data-status="已完成" data-song-name="潮汐回声" data-reference-name="潮汐参考" data-batch-name="30 首草原风" data-complete-time="2026-07-10 16:35:00" data-page-key="song-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -2351,7 +2345,6 @@ pages['task-processing-page'] = {
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流1">工作流1</span><span>FLOW2026071000009</span></p>
                         <p><span class="task-batch-name">30 首草原风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:35</p>
-                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-success">审核通过</strong></p>
                     </div>
                     <div class="task-card" data-status="已完成" data-song-name="月光来信" data-reference-name="月光参考" data-batch-name="5 月 120 首流行" data-complete-time="2026-07-10 16:48:00" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -2361,7 +2354,6 @@ pages['task-processing-page'] = {
                         </div>
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000010</span></p>
                         <p><span class="task-batch-name">5 月 120 首流行</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 16:48</p>
-                        <p class="task-result-line"><span>处理结果：</span><strong class="task-result-success">审核通过</strong></p>
                     </div>
                     <div class="task-card" data-status="进行中" data-song-name="遥远的地方" data-reference-name="遥远参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 15:30:00" data-page-key="lyrics-review-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
@@ -3041,19 +3033,10 @@ function retryTaskProcessingMachineTask(event, button) {
     if (!button || button.disabled) return;
 
     const card = button.closest('.task-card');
-    const result = card?.querySelector('.task-result-line strong');
     button.disabled = true;
     button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 执行中';
-    if (result) {
-        result.textContent = '执行中';
-        result.className = 'task-result-running';
-    }
 
     setTimeout(() => {
-        if (result) {
-            result.textContent = '执行成功';
-            result.className = 'task-result-success';
-        }
         const statusBadge = card?.querySelector('.task-status');
         const completedAt = new Date();
         if (card) {
@@ -3120,31 +3103,8 @@ function completeActiveTaskProcessingTask(action = 'submit', reason = '') {
         statusBadge.className = 'task-status status-done';
     }
 
-    let resultLine = card.querySelector('.task-result-line');
-    if (!resultLine) {
-        resultLine = document.createElement('p');
-        resultLine.className = 'task-result-line';
-        card.appendChild(resultLine);
-    }
-    const resultClass = result === '已终止'
-        ? 'task-result-stopped'
-        : result === '已打回'
-            ? 'task-result-rejected'
-            : 'task-result-success';
-    resultLine.innerHTML = `<span>处理结果：</span><strong class="${resultClass}">${result}</strong>`;
-
+    card.querySelector('.task-result-line')?.remove();
     card.querySelector('.task-result-reason')?.remove();
-    if (action === 'abort' || action === 'reject') {
-        const reasonLabel = action === 'abort' ? '终止原因：' : '打回原因：';
-        const reasonText = reason || (action === 'abort' ? '用户主动终止任务' : '审核未通过');
-        const reasonLine = document.createElement('p');
-        reasonLine.className = 'task-result-reason';
-        reasonLine.title = reasonText;
-        const label = document.createElement('span');
-        label.textContent = reasonLabel;
-        reasonLine.append(label, reasonText);
-        card.appendChild(reasonLine);
-    }
 
     let time = card.querySelector('.task-card-time');
     const timeRow = card.querySelector('.task-batch-name')?.parentElement;
