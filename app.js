@@ -409,38 +409,50 @@ const pages = {
                               <span>灵感参考音频</span>
                             </div>
                             <div style="position: relative;">
-                              <button class="btn-primary" onclick="openCompositionAudioFileModal('inspo')" style="height: 38px; padding: 0 18px; box-shadow: var(--shadow-sm);">
+                              <button class="btn-primary composition-add-audio-button" data-audio-mode="inspo" onclick="openCompositionAudioFileModal('inspo')" style="height: 38px; padding: 0 18px; box-shadow: var(--shadow-sm);">
                                 添加音频文件
                               </button>
                             </div>
                           </div>
-                          <div id="compInspoAudioResourceList" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
-                            <div style="display: flex; flex-direction: column; gap: 14px; min-height: 220px; padding: 16px; border: 1px solid var(--gray-200); border-radius: 8px; background: #fff;">
-                              <div style="display: flex; align-items: center; gap: 18px;">
-                                <span class="badge" style="background: #EFF6FF; color: var(--primary); border: 1px solid #BFDBFE; font-size: 14px; padding: 6px 12px;">文件</span>
-                                <strong style="font-size: 15px; color: var(--gray-900);">若云汀 测试 (1).wav</strong>
+                          <div id="compInspoAudioResourceList" data-audio-mode="inspo" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+                            <div class="composition-audio-resource-card composition-audio-resource-card-readonly" data-audio-source="config" data-audio-file-name="若云汀 测试 (1).wav">
+                              <div class="composition-audio-resource-header">
+                                <span class="badge">文件</span>
+                                <strong title="若云汀 测试 (1).wav">若云汀 测试 (1).wav</strong>
+                                <span class="composition-audio-source-badge">配置带出</span>
                               </div>
-                              <audio controls style="width: 100%; margin-top: auto;">
+                              <div class="composition-audio-meta-readonly">
+                                <div><span>clip-id</span><strong title="clip-inspo-001">clip-inspo-001</strong></div>
+                                <div><span>音频链接</span><strong title="https://cdn.example.com/audio/inspo/ruoyunting-test-1.wav">https://cdn.example.com/audio/inspo/ruoyunting-test-1.wav</strong></div>
+                              </div>
+                              <audio controls>
                                 <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
                               </audio>
-                              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;">
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;"><i class="fas fa-download"></i> 下载</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;">重新上传</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--danger); color: var(--danger); height: 38px;">删除</button>
+                              <input class="composition-audio-reupload-input" type="file" accept=".wav,.mp3,audio/wav,audio/mpeg" style="display:none" onchange="replaceCompositionAddedAudioFile(this)">
+                              <div class="composition-audio-resource-actions">
+                                <button class="btn-primary" onclick="downloadCompositionAudioResource(this)"><i class="fas fa-download"></i> 下载</button>
+                                <button class="btn-primary composition-audio-reupload-button" onclick="this.closest('.composition-audio-resource-card').querySelector('.composition-audio-reupload-input').click()">重新上传</button>
+                                <button class="btn-primary composition-audio-delete-button" onclick="removeCompositionAddedAudioFile(this)">删除</button>
                               </div>
                             </div>
-                            <div style="display: flex; flex-direction: column; gap: 14px; min-height: 180px; padding: 16px; border: 1px solid var(--gray-200); border-radius: 8px; background: #fff;">
-                              <div style="display: flex; align-items: center; gap: 18px;">
-                                <span class="badge" style="background: #EFF6FF; color: var(--primary); border: 1px solid #BFDBFE; font-size: 14px; padding: 6px 12px;">文件</span>
-                                <strong style="font-size: 15px; color: var(--gray-900);">demo.mp3</strong>
+                            <div class="composition-audio-resource-card composition-audio-resource-card-readonly" data-audio-source="config" data-audio-file-name="demo.mp3">
+                              <div class="composition-audio-resource-header">
+                                <span class="badge">文件</span>
+                                <strong title="demo.mp3">demo.mp3</strong>
+                                <span class="composition-audio-source-badge">配置带出</span>
                               </div>
-                              <audio controls style="width: 100%; margin-top: auto;">
+                              <div class="composition-audio-meta-readonly">
+                                <div><span>clip-id</span><strong title="clip-inspo-002">clip-inspo-002</strong></div>
+                                <div><span>音频链接</span><strong title="https://cdn.example.com/audio/inspo/demo.mp3">https://cdn.example.com/audio/inspo/demo.mp3</strong></div>
+                              </div>
+                              <audio controls>
                                 <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
                               </audio>
-                              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: auto;">
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;"><i class="fas fa-download"></i> 下载</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;">重新上传</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--danger); color: var(--danger); height: 38px;">删除</button>
+                              <input class="composition-audio-reupload-input" type="file" accept=".wav,.mp3,audio/wav,audio/mpeg" style="display:none" onchange="replaceCompositionAddedAudioFile(this)">
+                              <div class="composition-audio-resource-actions">
+                                <button class="btn-primary" onclick="downloadCompositionAudioResource(this)"><i class="fas fa-download"></i> 下载</button>
+                                <button class="btn-primary composition-audio-reupload-button" onclick="this.closest('.composition-audio-resource-card').querySelector('.composition-audio-reupload-input').click()">重新上传</button>
+                                <button class="btn-primary composition-audio-delete-button" onclick="removeCompositionAddedAudioFile(this)">删除</button>
                               </div>
                             </div>
                           </div>
@@ -455,24 +467,30 @@ const pages = {
                               <span style="font-size: 15px; color: var(--gray-500); font-weight: 600;">(cover_audio)</span>
                             </div>
                             <div style="position: relative;">
-                              <button class="btn-primary" onclick="openCompositionAudioFileModal('cover')" style="height: 38px; padding: 0 18px; box-shadow: var(--shadow-sm);">
+                              <button class="btn-primary composition-add-audio-button" data-audio-mode="cover" onclick="openCompositionAudioFileModal('cover')" style="height: 38px; padding: 0 18px; box-shadow: var(--shadow-sm);">
                                 添加音频文件
                               </button>
                             </div>
                           </div>
-                          <div id="compCoverAudioResourceList" style="display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px;">
-                            <div style="display: flex; flex-direction: column; gap: 14px; min-height: 220px; padding: 16px; border: 1px solid var(--gray-200); border-radius: 8px; background: #fff;">
-                              <div style="display: flex; align-items: center; gap: 18px;">
-                                <span class="badge" style="background: #EFF6FF; color: var(--primary); border: 1px solid #BFDBFE; font-size: 14px; padding: 6px 12px;">文件</span>
-                                <strong style="font-size: 15px; color: var(--gray-900);">original_song_v1.mp3</strong>
+                          <div id="compCoverAudioResourceList" data-audio-mode="cover" style="display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px;">
+                            <div class="composition-audio-resource-card composition-audio-resource-card-readonly" data-audio-source="config" data-audio-file-name="original_song_v1.mp3">
+                              <div class="composition-audio-resource-header">
+                                <span class="badge">文件</span>
+                                <strong title="original_song_v1.mp3">original_song_v1.mp3</strong>
+                                <span class="composition-audio-source-badge">配置带出</span>
                               </div>
-                              <audio controls style="width: 100%; margin-top: auto;">
+                              <div class="composition-audio-meta-readonly">
+                                <div><span>clip-id</span><strong title="clip-cover-001">clip-cover-001</strong></div>
+                                <div><span>音频链接</span><strong title="https://cdn.example.com/audio/cover/original_song_v1.mp3">https://cdn.example.com/audio/cover/original_song_v1.mp3</strong></div>
+                              </div>
+                              <audio controls>
                                 <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
                               </audio>
-                              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;">
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;"><i class="fas fa-download"></i> 下载</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;">重新上传</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--danger); color: var(--danger); height: 38px;">删除</button>
+                              <input class="composition-audio-reupload-input" type="file" accept=".wav,.mp3,audio/wav,audio/mpeg" style="display:none" onchange="replaceCompositionAddedAudioFile(this)">
+                              <div class="composition-audio-resource-actions">
+                                <button class="btn-primary" onclick="downloadCompositionAudioResource(this)"><i class="fas fa-download"></i> 下载</button>
+                                <button class="btn-primary composition-audio-reupload-button" onclick="this.closest('.composition-audio-resource-card').querySelector('.composition-audio-reupload-input').click()">重新上传</button>
+                                <button class="btn-primary composition-audio-delete-button" onclick="removeCompositionAddedAudioFile(this)">删除</button>
                               </div>
                             </div>
                           </div>
@@ -487,24 +505,30 @@ const pages = {
                               <span style="font-size: 15px; color: var(--gray-500); font-weight: 600;">(sample_audio)</span>
                             </div>
                             <div style="position: relative;">
-                              <button class="btn-primary" onclick="openCompositionAudioFileModal('sample')" style="height: 38px; padding: 0 18px; box-shadow: var(--shadow-sm);">
+                              <button class="btn-primary composition-add-audio-button" data-audio-mode="sample" onclick="openCompositionAudioFileModal('sample')" style="height: 38px; padding: 0 18px; box-shadow: var(--shadow-sm);">
                                 添加音频文件
                               </button>
                             </div>
                           </div>
-                          <div id="compSampleAudioResourceList" style="display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px;">
-                            <div style="display: flex; flex-direction: column; gap: 14px; min-height: 220px; padding: 16px; border: 1px solid var(--gray-200); border-radius: 8px; background: #fff;">
-                              <div style="display: flex; align-items: center; gap: 18px;">
-                                <span class="badge" style="background: #EFF6FF; color: var(--primary); border: 1px solid #BFDBFE; font-size: 14px; padding: 6px 12px;">文件</span>
-                                <strong style="font-size: 15px; color: var(--gray-900);">sample_source_v2.wav</strong>
+                          <div id="compSampleAudioResourceList" data-audio-mode="sample" style="display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px;">
+                            <div class="composition-audio-resource-card composition-audio-resource-card-readonly" data-audio-source="config" data-audio-file-name="sample_source_v2.wav">
+                              <div class="composition-audio-resource-header">
+                                <span class="badge">文件</span>
+                                <strong title="sample_source_v2.wav">sample_source_v2.wav</strong>
+                                <span class="composition-audio-source-badge">配置带出</span>
                               </div>
-                              <audio controls style="width: 100%; margin-top: auto;">
+                              <div class="composition-audio-meta-readonly">
+                                <div><span>clip-id</span><strong title="clip-sample-001">clip-sample-001</strong></div>
+                                <div><span>音频链接</span><strong title="https://cdn.example.com/audio/sample/sample_source_v2.wav">https://cdn.example.com/audio/sample/sample_source_v2.wav</strong></div>
+                              </div>
+                              <audio controls>
                                 <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
                               </audio>
-                              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;">
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;"><i class="fas fa-download"></i> 下载</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;">重新上传</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--danger); color: var(--danger); height: 38px;">删除</button>
+                              <input class="composition-audio-reupload-input" type="file" accept=".wav,.mp3,audio/wav,audio/mpeg" style="display:none" onchange="replaceCompositionAddedAudioFile(this)">
+                              <div class="composition-audio-resource-actions">
+                                <button class="btn-primary" onclick="downloadCompositionAudioResource(this)"><i class="fas fa-download"></i> 下载</button>
+                                <button class="btn-primary composition-audio-reupload-button" onclick="this.closest('.composition-audio-resource-card').querySelector('.composition-audio-reupload-input').click()">重新上传</button>
+                                <button class="btn-primary composition-audio-delete-button" onclick="removeCompositionAddedAudioFile(this)">删除</button>
                               </div>
                             </div>
                           </div>
@@ -2260,9 +2284,22 @@ pages['task-processing-page'] = {
                     <button type="button" class="task-processing-search-btn" onclick="filterTaskProcessingSearch(this.parentElement.querySelector('input'))"><i class="fas fa-search"></i> 搜索</button>
                 </div>
                 <div class="task-processing-tabs">
-                    <button class="active" data-status="全部" onclick="filterTaskProcessingTasks(this)">全部 12</button>
-                    <button data-status="进行中" onclick="filterTaskProcessingTasks(this)">进行中 7</button>
-                    <button data-status="已完成" onclick="filterTaskProcessingTasks(this)">已完成 5</button>
+                    <button class="active" data-status="全部" onclick="filterTaskProcessingTasks(this)">全部 11</button>
+                    <button data-status="进行中" onclick="filterTaskProcessingTasks(this)">进行中 5</button>
+                    <button data-status="已完成" onclick="filterTaskProcessingTasks(this)">已完成 6</button>
+                </div>
+                <div class="task-processing-batch-toolbar">
+                    <div class="task-batch-selection">
+                        <label class="task-batch-select-all">
+                            <input type="checkbox" id="taskBatchSelectAll" onchange="toggleTaskProcessingSelectAll(this)">
+                            <span>全选</span>
+                        </label>
+                        <span id="taskBatchSelectedCount">已选 0 项</span>
+                    </div>
+                    <div class="task-batch-actions">
+                        <button type="button" class="task-batch-action-btn reject" onclick="openTaskProcessingBatchAction('reject')" disabled title="批量打回"><i class="fas fa-undo-alt"></i><span>打回</span></button>
+                        <button type="button" class="task-batch-action-btn terminate" onclick="openTaskProcessingBatchAction('terminate')" disabled title="批量终止"><i class="fas fa-ban"></i><span>终止</span></button>
+                    </div>
                 </div>
                 <div class="task-processing-list">
                     <div class="task-card" data-status="进行中" data-song-name="夜风吹过" data-reference-name="夜风参考" data-batch-name="25 年 4 月 300首" data-enter-time="2026-07-10 14:32:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
@@ -2292,7 +2329,7 @@ pages['task-processing-page'] = {
                         <p class="task-card-workflow-line"><span class="task-workflow-name" title="工作流2">工作流2</span><span>FLOW2026071000003</span></p>
                         <p><span class="task-batch-name">7 月 60 首国风</span>&nbsp;&nbsp;&nbsp;&nbsp;07-10 14:50</p>
                     </div>
-                    <div class="task-card" data-status="已完成" data-song-name="城市晚风" data-reference-name="城市晚风参考" data-batch-name="20 首 DJ" data-complete-time="2026-07-10 17:02:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
+                    <div class="task-card" data-status="已完成" data-node-attr="机器节点" data-process-result="执行失败" data-song-name="城市晚风" data-reference-name="城市晚风参考" data-batch-name="20 首 DJ" data-complete-time="2026-07-10 17:02:00" data-page-key="manual-composition-page" onclick="selectTaskProcessingTask(this)">
                         <div class="task-card-main">
                             <strong>城市晚风</strong>
                             <span class="task-node">作曲</span>
@@ -3001,6 +3038,8 @@ function confirmTaskReferenceSong() {
     }
 }
 
+let pendingTaskProcessingBatchAction = '';
+
 function renderTaskProcessingContent(pageKey = 'manual-composition-page', taskCard = null) {
     const container = document.getElementById('taskProcessingContent');
     const pageData = pages[pageKey];
@@ -3016,9 +3055,197 @@ function renderTaskProcessingContent(pageKey = 'manual-composition-page', taskCa
 function initTaskProcessingPage() {
     const wrapper = document.querySelector('.task-processing-layout');
     if (wrapper) {
+        ensureTaskProcessingBatchSelection(wrapper);
         updateTaskProcessingTabCounts(wrapper);
         applyTaskProcessingFilters(wrapper, false);
     }
+}
+
+function ensureTaskProcessingBatchSelection(wrapper) {
+    wrapper.querySelectorAll('.task-processing-list .task-card').forEach(card => {
+        if (card.querySelector('.task-card-checkbox')) return;
+        const cardMain = card.querySelector('.task-card-main');
+        if (!cardMain) return;
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'task-card-checkbox';
+        checkbox.setAttribute('aria-label', `选择任务 ${card.dataset.songName || ''}`);
+        checkbox.onclick = event => event.stopPropagation();
+        checkbox.onchange = event => {
+            event.stopPropagation();
+            card.classList.toggle('batch-selected', checkbox.checked);
+            updateTaskProcessingBatchSelection(wrapper);
+        };
+        cardMain.prepend(checkbox);
+    });
+    updateTaskProcessingBatchSelection(wrapper);
+}
+
+function getSelectedTaskProcessingCards(wrapper) {
+    return Array.from(wrapper.querySelectorAll('.task-card-checkbox:checked'))
+        .map(checkbox => checkbox.closest('.task-card'))
+        .filter(Boolean);
+}
+
+function updateTaskProcessingBatchSelection(wrapper) {
+    if (!wrapper) return;
+    const isBatchMode = wrapper.classList.contains('task-batch-mode');
+    const visibleCards = Array.from(wrapper.querySelectorAll('.task-processing-list .task-card'))
+        .filter(card => card.style.display !== 'none');
+    const selectedCards = getSelectedTaskProcessingCards(wrapper);
+    const visibleSelectedCount = visibleCards.filter(card => card.querySelector('.task-card-checkbox')?.checked).length;
+    const selectAll = wrapper.querySelector('#taskBatchSelectAll');
+    const count = wrapper.querySelector('#taskBatchSelectedCount');
+
+    if (selectAll) {
+        selectAll.disabled = !isBatchMode || visibleCards.length === 0;
+        selectAll.checked = visibleCards.length > 0 && visibleSelectedCount === visibleCards.length;
+        selectAll.indeterminate = visibleSelectedCount > 0 && visibleSelectedCount < visibleCards.length;
+    }
+    if (count) count.textContent = `已选 ${selectedCards.length} 项`;
+    wrapper.querySelectorAll('.task-batch-action-btn').forEach(button => {
+        button.disabled = !isBatchMode || selectedCards.length === 0;
+    });
+}
+
+function toggleTaskProcessingSelectAll(input) {
+    const wrapper = input?.closest('.task-processing-layout');
+    if (!wrapper?.classList.contains('task-batch-mode')) return;
+    wrapper.querySelectorAll('.task-processing-list .task-card').forEach(card => {
+        if (card.style.display === 'none') return;
+        const checkbox = card.querySelector('.task-card-checkbox');
+        if (!checkbox) return;
+        checkbox.checked = input.checked;
+        card.classList.toggle('batch-selected', input.checked);
+    });
+    updateTaskProcessingBatchSelection(wrapper);
+}
+
+function clearTaskProcessingBatchSelection(wrapper) {
+    if (!wrapper) return;
+    wrapper.querySelectorAll('.task-card-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+        checkbox.closest('.task-card')?.classList.remove('batch-selected');
+    });
+    updateTaskProcessingBatchSelection(wrapper);
+}
+
+function openTaskProcessingBatchAction(action) {
+    const wrapper = document.querySelector('.task-processing-layout');
+    const activeStatus = wrapper?.querySelector('.task-processing-tabs button.active')?.dataset.status;
+    if (activeStatus !== '进行中') {
+        alert('请在“进行中”状态下进行批量操作。');
+        return;
+    }
+    const selectedCards = wrapper ? getSelectedTaskProcessingCards(wrapper) : [];
+    if (!selectedCards.length) {
+        alert('请先选择需要批量处理的任务。');
+        return;
+    }
+
+    const rules = {
+        reject: {
+            title: '批量打回',
+            confirmText: '确认打回',
+            reasonLabel: '打回原因',
+            summary: `确认打回已选择的 ${selectedCards.length} 个进行中任务吗？`,
+            invalidMessage: '请选择状态为进行中的任务。',
+            isValid: card => card.dataset.status === '进行中'
+        },
+        terminate: {
+            title: '批量终止',
+            confirmText: '确认终止',
+            reasonLabel: '终止原因',
+            summary: `确认终止已选择的 ${selectedCards.length} 个进行中任务吗？`,
+            invalidMessage: '请选择状态为进行中的任务。',
+            isValid: card => card.dataset.status === '进行中'
+        }
+    };
+    const config = rules[action];
+    if (!config) return;
+    if (selectedCards.some(card => !config.isValid(card))) {
+        alert(config.invalidMessage);
+        return;
+    }
+
+    pendingTaskProcessingBatchAction = action;
+    document.getElementById('taskBatchActionTitle').textContent = config.title;
+    document.getElementById('taskBatchActionSummary').textContent = config.summary;
+    const reasonGroup = document.getElementById('taskBatchActionReasonGroup');
+    const reasonInput = document.getElementById('taskBatchActionReason');
+    const reasonLabel = document.getElementById('taskBatchActionReasonLabel');
+    const confirmButton = document.getElementById('taskBatchActionConfirmBtn');
+    reasonGroup.style.display = 'block';
+    reasonInput.value = '';
+    reasonLabel.innerHTML = `${config.reasonLabel} <span class="required">*</span>`;
+    reasonInput.placeholder = `请输入${config.reasonLabel}`;
+    confirmButton.textContent = config.confirmText;
+    confirmButton.style.background = action === 'terminate' ? 'var(--danger)' : 'var(--primary)';
+    confirmButton.style.borderColor = action === 'terminate' ? 'var(--danger)' : 'var(--primary)';
+    openModal('taskBatchActionModal');
+}
+
+function closeTaskProcessingBatchActionModal() {
+    closeModal('taskBatchActionModal');
+    pendingTaskProcessingBatchAction = '';
+}
+
+function updateTaskProcessingCardStatus(card, status, result, reason = '', completedAt = new Date()) {
+    if (!card) return;
+    card.dataset.status = status;
+    card.dataset.processResult = result;
+    card.dataset.processReason = reason;
+    if (status === '已完成') card.dataset.completeTime = completedAt.toISOString();
+    if (status === '进行中') card.dataset.enterTime = completedAt.toISOString();
+
+    const badge = card.querySelector('.task-status');
+    if (badge) {
+        badge.textContent = status;
+        badge.className = `task-status ${status === '已完成' ? 'status-done' : 'status-running'}`;
+    }
+
+    let time = card.querySelector('.task-card-time');
+    const timeRow = card.querySelector('.task-batch-name')?.parentElement;
+    if (!time && timeRow) {
+        const batchName = timeRow.querySelector('.task-batch-name');
+        timeRow.textContent = '';
+        if (batchName) timeRow.appendChild(batchName);
+        timeRow.appendChild(document.createTextNode('    '));
+        time = document.createElement('span');
+        time.className = 'task-card-time';
+        timeRow.appendChild(time);
+    }
+    if (time) {
+        const pad = value => String(value).padStart(2, '0');
+        time.textContent = `${pad(completedAt.getMonth() + 1)}-${pad(completedAt.getDate())} ${pad(completedAt.getHours())}:${pad(completedAt.getMinutes())}`;
+    }
+}
+
+function confirmTaskProcessingBatchAction() {
+    const action = pendingTaskProcessingBatchAction;
+    const wrapper = document.querySelector('.task-processing-layout');
+    const selectedCards = wrapper ? getSelectedTaskProcessingCards(wrapper) : [];
+    if (!action || !wrapper || !selectedCards.length) return;
+
+    const reasonInput = document.getElementById('taskBatchActionReason');
+    const reason = (reasonInput?.value || '').trim();
+    if (!reason) {
+        alert('请填写原因。');
+        reasonInput?.focus();
+        return;
+    }
+
+    closeModal('taskBatchActionModal');
+    pendingTaskProcessingBatchAction = '';
+
+    const result = action === 'reject' ? '已打回' : '已终止';
+    const completedAt = new Date();
+    selectedCards.forEach(card => updateTaskProcessingCardStatus(card, '已完成', result, reason, completedAt));
+    clearTaskProcessingBatchSelection(wrapper);
+    updateTaskProcessingTabCounts(wrapper);
+    applyTaskProcessingFilters(wrapper, false);
+    showSuccessMessage(`${action === 'reject' ? '批量打回' : '批量终止'}成功，共 ${selectedCards.length} 个任务`);
 }
 
 function selectTaskProcessingTask(card) {
@@ -3135,6 +3362,7 @@ function filterTaskProcessingTasks(button) {
 
     wrapper.querySelectorAll('.task-processing-tabs button').forEach(item => item.classList.remove('active'));
     button.classList.add('active');
+    clearTaskProcessingBatchSelection(wrapper);
     applyTaskProcessingFilters(wrapper, false);
 }
 
@@ -3142,11 +3370,13 @@ function filterTaskProcessingSearch(input) {
     const wrapper = input?.closest('.task-processing-layout');
     if (!wrapper) return;
     wrapper.dataset.taskSearchKeyword = (input.value || '').trim();
+    clearTaskProcessingBatchSelection(wrapper);
     applyTaskProcessingFilters(wrapper, false);
 }
 
 function applyTaskProcessingFilters(wrapper, autoSelect = true) {
     const status = wrapper.querySelector('.task-processing-tabs button.active')?.dataset.status || '全部';
+    wrapper.classList.toggle('task-batch-mode', status === '进行中');
     const keyword = (wrapper.dataset.taskSearchKeyword || '').toLowerCase();
     const cards = Array.from(wrapper.querySelectorAll('.task-processing-list .task-card'));
     updateTaskProcessingCardNames(cards);
@@ -3154,12 +3384,13 @@ function applyTaskProcessingFilters(wrapper, autoSelect = true) {
     const visibleCards = [];
     sortedCards.forEach(card => {
         const matchedStatus = status === '全部' || card.dataset.status === status;
-        const matchedKeyword = !keyword || card.innerText.toLowerCase().includes(keyword);
+        const matchedKeyword = !keyword || getTaskProcessingSearchText(card).includes(keyword);
         const shouldShow = matchedStatus && matchedKeyword;
         card.style.display = shouldShow ? '' : 'none';
         card.classList.remove('active');
         if (shouldShow) visibleCards.push(card);
     });
+    updateTaskProcessingBatchSelection(wrapper);
 
     if (visibleCards.length && autoSelect) {
         visibleCards[0].classList.add('active');
@@ -3171,13 +3402,44 @@ function applyTaskProcessingFilters(wrapper, autoSelect = true) {
     }
 }
 
+const taskProcessingNodeTitleOptions = {
+    '作词': ['作词配置选择', 'AI 生成歌词', '作词优化'],
+    '词审核': ['作词审核'],
+    '作曲': ['作曲配置选择', '生成音乐', 'Suno 结果初审', '作曲优化'],
+    '曲审核': ['作曲审核']
+};
+
+function getTaskProcessingCardNodeType(card) {
+    return (card.querySelector('.task-node')?.textContent || '').trim();
+}
+
+function getTaskProcessingNodeDisplayName(card) {
+    const nodeType = getTaskProcessingCardNodeType(card);
+    const options = taskProcessingNodeTitleOptions[nodeType] || [];
+    if (options.length === 0) {
+        return (card.dataset.songName || card.dataset.referenceName || '未命名歌曲').trim();
+    }
+    if (!card.dataset.nodeDisplayName || !options.includes(card.dataset.nodeDisplayName)) {
+        card.dataset.nodeDisplayName = options[Math.floor(Math.random() * options.length)];
+    }
+    return card.dataset.nodeDisplayName;
+}
+
+function getTaskProcessingSearchText(card) {
+    return [
+        card.innerText,
+        card.dataset.songName,
+        card.dataset.referenceName,
+        card.dataset.batchName,
+        card.dataset.nodeDisplayName
+    ].filter(Boolean).join(' ').toLowerCase();
+}
+
 function updateTaskProcessingCardNames(cards) {
     cards.forEach(card => {
         const title = card.querySelector('.task-card-main strong');
         if (!title) return;
-        const songName = (card.dataset.songName || '').trim();
-        const referenceName = (card.dataset.referenceName || '').trim();
-        const displayName = songName || referenceName || '未命名歌曲';
+        const displayName = getTaskProcessingNodeDisplayName(card);
         title.innerText = displayName;
         title.title = displayName;
     });
@@ -4678,8 +4940,54 @@ function renderCompositionBusinessInfo(value) {
 
 let currentCompositionAudioMode = 'inspo';
 
+const compositionAudioModeRules = {
+    inspo: { listId: 'compInspoAudioResourceList', limit: 4 },
+    cover: { listId: 'compCoverAudioResourceList', limit: 1 },
+    sample: { listId: 'compSampleAudioResourceList', limit: 1 }
+};
+
+function getCompositionAudioRule(mode = currentCompositionAudioMode) {
+    return compositionAudioModeRules[mode] || compositionAudioModeRules.inspo;
+}
+
+function getCompositionAudioList(mode = currentCompositionAudioMode) {
+    const rule = getCompositionAudioRule(mode);
+    return document.getElementById(rule.listId);
+}
+
+function getCompositionAudioCount(mode = currentCompositionAudioMode) {
+    const list = getCompositionAudioList(mode);
+    return list ? list.querySelectorAll('.composition-audio-resource-card').length : 0;
+}
+
+function updateCompositionAudioAddButton(mode = currentCompositionAudioMode) {
+    const rule = getCompositionAudioRule(mode);
+    const button = document.querySelector(`.composition-add-audio-button[data-audio-mode="${mode}"]`);
+    if (!button) return;
+
+    const count = getCompositionAudioCount(mode);
+    button.style.display = count >= rule.limit ? 'none' : '';
+    button.textContent = mode === 'inspo' ? `添加音频文件（${count}/${rule.limit}）` : '添加音频文件';
+}
+
+function updateCompositionAudioAddButtons() {
+    Object.keys(compositionAudioModeRules).forEach(updateCompositionAudioAddButton);
+}
+
+function isCompositionAudioFileAllowed(file) {
+    if (!file) return false;
+    return /\.(mp3|wav)$/i.test(file.name || '');
+}
+
 function openCompositionAudioFileModal(mode = 'inspo') {
     currentCompositionAudioMode = mode;
+    const rule = getCompositionAudioRule(mode);
+    const count = getCompositionAudioCount(mode);
+    if (count >= rule.limit) {
+        alert(mode === 'inspo' ? '灵感参考音频最多添加 4 组' : '当前生成方式仅支持 1 组音频信息');
+        updateCompositionAudioAddButton(mode);
+        return;
+    }
     openCompositionAudioResourceModal('file');
 }
 
@@ -4702,18 +5010,22 @@ function openCompositionAudioResourceModal(type) {
     const fileForm = document.getElementById('compAudioFileForm');
     const linkForm = document.getElementById('compAudioLinkForm');
     if (menu) menu.style.display = 'none';
-    if (!typeInput || !title || !fileForm || !linkForm) return;
+    if (!typeInput || !title || !fileForm) return;
 
     typeInput.value = 'file';
     title.innerText = '添加音频文件';
     fileForm.style.display = 'block';
-    linkForm.style.display = 'none';
+    if (linkForm) linkForm.style.display = 'none';
+    ['compAudioFileInput', 'compAudioClipId', 'compAudioOptionalUrl', 'compAudioLinkName', 'compAudioLinkUrl'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
     openModal('compAudioResourceModalOverlay');
 }
 
 function closeCompositionAudioResourceModal() {
     closeModal('compAudioResourceModalOverlay');
-    const fields = ['compAudioFileInput', 'compAudioLinkName', 'compAudioLinkUrl'];
+    const fields = ['compAudioFileInput', 'compAudioClipId', 'compAudioOptionalUrl', 'compAudioLinkName', 'compAudioLinkUrl'];
     fields.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
@@ -4736,46 +5048,151 @@ function getCompositionFileNameFromValue(value, fallback = 'audio.mp3') {
     return clean.split('/').filter(Boolean).pop() || fallback;
 }
 
-function getCompositionAudioResourceCard(type, title, value) {
-    const fileName = escapeCompositionText(type === 'file' ? title : getCompositionFileNameFromValue(value, title || 'audio.mp3'));
+function getCompositionAudioEditableMetaHtml(clipId = '', audioUrl = '') {
+    const clipIdValue = escapeCompositionText(clipId);
+    const audioUrlValue = escapeCompositionText(audioUrl);
     return `
-        <div style="display: flex; flex-direction: column; gap: 14px; min-height: 180px; padding: 16px; border: 1px solid var(--gray-200); border-radius: 8px; background: #fff;">
-          <div style="display: flex; align-items: center; gap: 18px;">
-            <span class="badge" style="background: #EFF6FF; color: var(--primary); border: 1px solid #BFDBFE; font-size: 14px; padding: 6px 12px;">文件</span>
-            <strong style="font-size: 15px; color: var(--gray-900); word-break: break-word;">${fileName}</strong>
+          <div class="composition-audio-meta-editable">
+            <div class="form-group">
+              <label>clip-id <span>（选填）</span></label>
+              <input class="input composition-audio-clip-input" type="text" value="${clipIdValue}" placeholder="请输入 clip-id">
+            </div>
+            <div class="form-group">
+              <label>音频链接 <span>（选填）</span></label>
+              <input class="input composition-audio-url-input" type="text" value="${audioUrlValue}" placeholder="请输入音频链接">
+            </div>
+          </div>`;
+}
+
+function setCompositionAudioMetaEditable(card, clipId = '', audioUrl = '') {
+    const meta = card?.querySelector('.composition-audio-meta-readonly, .composition-audio-meta-editable');
+    if (meta) {
+        meta.outerHTML = getCompositionAudioEditableMetaHtml(clipId, audioUrl);
+    }
+}
+
+function getCompositionAudioResourceCard(type, title, value, clipId = '', audioUrl = '') {
+    const fileName = escapeCompositionText(type === 'file' ? title : getCompositionFileNameFromValue(value, title || 'audio.mp3'));
+    const audioSrc = escapeCompositionText(value || audioUrl || 'https://www.w3schools.com/html/horse.mp3');
+    return `
+        <div class="composition-audio-resource-card" data-audio-source="user" data-audio-file-name="${fileName}" data-object-url="${audioSrc}">
+          <div class="composition-audio-resource-header">
+            <span class="badge">文件</span>
+            <strong title="${fileName}">${fileName}</strong>
+            <span class="composition-audio-source-badge composition-audio-source-badge-user">手动添加</span>
           </div>
-          <audio controls style="width: 100%; margin-top: auto;">
-            <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
-          </audio>
-          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: auto;">
-            <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;"><i class="fas fa-download"></i> 下载</button>
-                                <button class="btn-primary" style="background: #fff; border: 1px solid var(--primary); color: var(--primary); height: 38px;">重新上传</button>
-            <button class="btn-primary" style="background: #fff; border: 1px solid var(--danger); color: var(--danger); height: 38px;">删除</button>
+          ${getCompositionAudioEditableMetaHtml(clipId, audioUrl)}
+          <audio controls src="${audioSrc}"></audio>
+          <input class="composition-audio-reupload-input" type="file" accept=".wav,.mp3,audio/wav,audio/mpeg" style="display:none" onchange="replaceCompositionAddedAudioFile(this)">
+          <div class="composition-audio-resource-actions">
+            <button class="btn-primary" onclick="downloadCompositionAudioResource(this)"><i class="fas fa-download"></i> 下载</button>
+            <button class="btn-primary composition-audio-reupload-button" onclick="this.closest('.composition-audio-resource-card').querySelector('.composition-audio-reupload-input').click()">重新上传</button>
+            <button class="btn-primary composition-audio-delete-button" onclick="removeCompositionAddedAudioFile(this)">删除</button>
           </div>
         </div>
     `;
 }
 
+function downloadCompositionAudioResource(button) {
+    const card = button?.closest('.composition-audio-resource-card');
+    if (!card) return;
+    const audio = card.querySelector('audio');
+    const source = audio?.querySelector('source');
+    const href = audio?.currentSrc || audio?.src || source?.src || card.dataset.objectUrl || '';
+    if (!href) {
+        alert('暂无可下载的音频文件');
+        return;
+    }
+    const link = document.createElement('a');
+    link.href = href;
+    link.download = card.dataset.audioFileName || 'audio.mp3';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+}
+
+function replaceCompositionAddedAudioFile(input) {
+    const file = input?.files && input.files[0];
+    const card = input?.closest('.composition-audio-resource-card');
+    if (!file || !card) return;
+    if (!isCompositionAudioFileAllowed(file)) {
+        alert('仅支持上传 wav/mp3 格式的音频文件');
+        input.value = '';
+        return;
+    }
+
+    if (card.dataset.objectUrl && card.dataset.objectUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(card.dataset.objectUrl);
+    }
+    const objectUrl = URL.createObjectURL(file);
+    card.dataset.objectUrl = objectUrl;
+    card.dataset.audioFileName = file.name;
+
+    const nameEl = card.querySelector('.composition-audio-resource-header strong');
+    if (nameEl) {
+        nameEl.textContent = file.name;
+        nameEl.title = file.name;
+    }
+    const audio = card.querySelector('audio');
+    if (audio) {
+        audio.src = objectUrl;
+        audio.load();
+    }
+    setCompositionAudioMetaEditable(card, '', '');
+
+    if (card.dataset.audioSource === 'config') {
+        card.dataset.audioSource = 'user';
+        card.classList.remove('composition-audio-resource-card-readonly');
+        const badge = card.querySelector('.composition-audio-source-badge');
+        if (badge) {
+            badge.textContent = '手动替换';
+            badge.classList.add('composition-audio-source-badge-user');
+        }
+    }
+    input.value = '';
+}
+
+function removeCompositionAddedAudioFile(button) {
+    const card = button?.closest('.composition-audio-resource-card');
+    if (!card) return;
+    const list = card.parentElement;
+    const mode = list?.dataset.audioMode || currentCompositionAudioMode;
+    if (card.dataset.objectUrl && card.dataset.objectUrl.startsWith('blob:')) {
+        URL.revokeObjectURL(card.dataset.objectUrl);
+    }
+    card.remove();
+    updateCompositionAudioAddButton(mode);
+}
+
 function confirmCompositionAudioResource() {
-    const listIdMap = {
-        inspo: 'compInspoAudioResourceList',
-        cover: 'compCoverAudioResourceList',
-        sample: 'compSampleAudioResourceList'
-    };
-    const list = document.getElementById(listIdMap[currentCompositionAudioMode] || 'compInspoAudioResourceList');
+    const rule = getCompositionAudioRule(currentCompositionAudioMode);
+    const list = getCompositionAudioList(currentCompositionAudioMode);
     if (!list) return;
+    if (getCompositionAudioCount(currentCompositionAudioMode) >= rule.limit) {
+        alert(currentCompositionAudioMode === 'inspo' ? '灵感参考音频最多添加 4 组' : '当前生成方式仅支持 1 组音频信息');
+        updateCompositionAudioAddButton(currentCompositionAudioMode);
+        return;
+    }
 
     let title = '';
     let value = '';
     const fileInput = document.getElementById('compAudioFileInput');
-    value = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0].name : '';
-    title = value;
-    if (!value) {
+    const file = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+    if (!file) {
         alert('请选择上传文件');
         return;
     }
+    if (!isCompositionAudioFileAllowed(file)) {
+        alert('仅支持上传 wav/mp3 格式的音频文件');
+        return;
+    }
 
-    list.insertAdjacentHTML('beforeend', getCompositionAudioResourceCard('file', title, value));
+    title = file.name;
+    value = URL.createObjectURL(file);
+    const clipId = document.getElementById('compAudioClipId')?.value || '';
+    const audioUrl = document.getElementById('compAudioOptionalUrl')?.value || '';
+    list.insertAdjacentHTML('beforeend', getCompositionAudioResourceCard('file', title, value, clipId, audioUrl));
+    updateCompositionAudioAddButton(currentCompositionAudioMode);
     closeCompositionAudioResourceModal();
 }
 
@@ -4808,6 +5225,7 @@ function handleCompositionPromptChange(value) {
         } else if (value === 'sample') {
             sampleCard.style.display = 'flex';
         }
+        updateCompositionAudioAddButtons();
     } else {
         configArea.style.display = 'none';
         resultCard.style.display = 'none';
@@ -6833,6 +7251,132 @@ function updateNodeConfigFileDisplay(input) {
     }
 }
 
+function escapeNodeConfigHtml(value) {
+    return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function parseNodeConfigPromptAudioGroups(value) {
+    if (Array.isArray(value)) return value;
+    if (!value) return [];
+    try {
+        const parsed = JSON.parse(value);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function getNodeConfigPromptAudioGroups(container) {
+    if (!container) return [];
+    return Array.from(container.querySelectorAll('.node-config-audio-group')).map(group => ({
+        audio_file: (group.querySelector('.node-config-audio-group-file')?.value || '').trim(),
+        clip_id: (group.querySelector('.node-config-audio-group-clip-id')?.value || '').trim(),
+        audio_url: (group.querySelector('.node-config-audio-group-url')?.value || '').trim()
+    }));
+}
+
+function syncNodeConfigPromptAudioGroups(element) {
+    const container = element?.closest('.node-config-prompt-audio-groups') || element;
+    if (!container?.classList?.contains('node-config-prompt-audio-groups')) return;
+    const valueInput = container.querySelector('.node-config-audio-groups-value');
+    if (valueInput) valueInput.value = JSON.stringify(getNodeConfigPromptAudioGroups(container));
+}
+
+function renderNodeConfigPromptAudioGroups(container, groups = []) {
+    if (!container) return;
+    const list = container.querySelector('.node-config-audio-group-list');
+    if (!list) return;
+    const workflow = container.closest('.node-config-workflow-field')?.querySelector('select[data-key="workflow"]')?.value || '';
+    const maxGroups = workflow === 'inspo' ? 4 : 1;
+    const normalizedGroups = (groups.length ? groups : [{}]).slice(0, maxGroups).map(group => ({
+        audio_file: group.audio_file || group.audio || group.file || '',
+        clip_id: group.clip_id || group.clip_ids || '',
+        audio_url: group.audio_url || ''
+    }));
+
+    list.innerHTML = normalizedGroups.map((group, index) => `
+        <div class="node-config-audio-group">
+            <div class="node-config-audio-group-header">
+                <strong>音频信息 ${index + 1}</strong>
+                ${workflow === 'inspo' && normalizedGroups.length > 1 ? `<button type="button" class="node-config-audio-group-remove" onclick="removeNodeConfigPromptAudioGroup(this)"><i class="fas fa-trash-alt"></i> 删除本组</button>` : ''}
+            </div>
+            <div class="node-config-upload-field">
+                <label>音频文件 <span style="color: var(--danger);">*</span></label>
+                <input type="hidden" class="node-config-file-value node-config-audio-group-file" value="${escapeNodeConfigHtml(group.audio_file)}">
+                <label class="node-config-upload-zone node-config-upload-zone-compact">
+                    <input type="file" accept=".wav,.mp3,audio/wav,audio/mpeg" onchange="handleNodeConfigFileUpload(this)">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span class="node-config-upload-copy">
+                        <span>选择文件</span>
+                        <small>每组仅支持上传一个 wav/mp3 格式的音频</small>
+                    </span>
+                </label>
+                <div class="node-config-file-list"></div>
+            </div>
+            <div class="node-config-audio-group-meta">
+                <div class="node-type-field">
+                    <label>clip-id</label>
+                    <input type="text" class="input node-config-audio-group-clip-id" value="${escapeNodeConfigHtml(group.clip_id)}" placeholder="请输入 clip-id（选填）" oninput="syncNodeConfigPromptAudioGroups(this)">
+                </div>
+                <div class="node-type-field">
+                    <label>音频链接</label>
+                    <input type="text" class="input node-config-audio-group-url" value="${escapeNodeConfigHtml(group.audio_url)}" placeholder="请输入音频链接（选填）" oninput="syncNodeConfigPromptAudioGroups(this)">
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    list.querySelectorAll('.node-config-audio-group-file').forEach(updateNodeConfigFileDisplay);
+    const addButton = container.querySelector('.node-config-add-audio-group');
+    if (addButton) {
+        addButton.style.display = workflow === 'inspo' && normalizedGroups.length < maxGroups ? 'inline-flex' : 'none';
+    }
+    syncNodeConfigPromptAudioGroups(container);
+}
+
+function addNodeConfigPromptAudioGroup(button) {
+    const container = button?.closest('.node-config-prompt-audio-groups');
+    if (!container) return;
+    const workflow = container.closest('.node-config-workflow-field')?.querySelector('select[data-key="workflow"]')?.value || '';
+    const groups = getNodeConfigPromptAudioGroups(container);
+    if (workflow !== 'inspo' || groups.length >= 4) return;
+    groups.push({ audio_file: '', clip_id: '', audio_url: '' });
+    renderNodeConfigPromptAudioGroups(container, groups);
+}
+
+function removeNodeConfigPromptAudioGroup(button) {
+    const container = button?.closest('.node-config-prompt-audio-groups');
+    const group = button?.closest('.node-config-audio-group');
+    if (!container || !group) return;
+    const workflow = container.closest('.node-config-workflow-field')?.querySelector('select[data-key="workflow"]')?.value || '';
+    const groups = getNodeConfigPromptAudioGroups(container);
+    if (workflow !== 'inspo' || groups.length <= 1) return;
+    const index = Array.from(container.querySelectorAll('.node-config-audio-group')).indexOf(group);
+    if (index >= 0) groups.splice(index, 1);
+    renderNodeConfigPromptAudioGroups(container, groups);
+}
+
+function getNodeConfigPromptAudioGroupsFromRow(rowData) {
+    const savedGroups = parseNodeConfigPromptAudioGroups(rowData?.audio_groups);
+    if (savedGroups.length) return savedGroups;
+
+    const workflow = rowData?.workflow || '';
+    const legacyAudio = rowData?.[`${workflow}_audio`] || '';
+    const files = getNodeConfigMultiValueList(legacyAudio);
+    const clipIds = getNodeConfigMultiValueList(rowData?.clip_ids || '');
+    const audioUrls = getNodeConfigMultiValueList(rowData?.audio_url || '');
+    return files.map((fileName, index) => ({
+        audio_file: fileName,
+        clip_id: clipIds[index] || '',
+        audio_url: audioUrls[index] || ''
+    }));
+}
+
 function handleNodeConfigFileUpload(fileInput) {
     const wrap = fileInput.closest('.node-config-upload-field');
     const valueInput = wrap ? wrap.querySelector('.node-config-file-value') : null;
@@ -6842,6 +7386,7 @@ function handleNodeConfigFileUpload(fileInput) {
     const files = Array.from(fileInput.files || []).map(file => file.name);
     valueInput.value = allowMultiple ? files.join('、') : (files[0] || '');
     updateNodeConfigFileDisplay(valueInput);
+    syncNodeConfigPromptAudioGroups(fileInput);
 }
 
 function removeNodeConfigUploadedFile(button, fileName) {
@@ -6851,11 +7396,52 @@ function removeNodeConfigUploadedFile(button, fileName) {
     const files = getNodeConfigMultiValueList(valueInput.value).filter(item => item !== fileName);
     valueInput.value = files.join('、');
     updateNodeConfigFileDisplay(valueInput);
+    syncNodeConfigPromptAudioGroups(button);
 }
 
 function handleNodeConfigWorkflowChange(select) {
     const wrap = select.closest('.node-config-workflow-field');
     if (!wrap) return;
+    const promptAudioGroups = wrap.querySelector('.node-config-prompt-audio-groups');
+    if (promptAudioGroups) {
+        const nextWorkflow = select.value;
+        const previousWorkflow = select.dataset.previousWorkflow || '';
+        const currentGroups = getNodeConfigPromptAudioGroups(promptAudioGroups);
+        const requiresSingleGroupConfirm = previousWorkflow === 'inspo'
+            && ['sample', 'cover'].includes(nextWorkflow)
+            && currentGroups.length > 1;
+        if (requiresSingleGroupConfirm) {
+            select.value = previousWorkflow;
+            promptAudioGroups.style.display = 'block';
+            renderNodeConfigPromptAudioGroups(promptAudioGroups, currentGroups);
+            openConfirmDialog(
+                '确认切换生成方式',
+                '当前生成方式仅支持 1 组音频信息，切换后仅保留第一组音频信息，其他信息将被删除，是否继续？',
+                '确认切换',
+                false,
+                () => {
+                    select.value = nextWorkflow;
+                    select.dataset.previousWorkflow = nextWorkflow;
+                    promptAudioGroups.style.display = 'block';
+                    renderNodeConfigPromptAudioGroups(promptAudioGroups, currentGroups.slice(0, 1));
+                }
+            );
+            return;
+        }
+
+        select.dataset.previousWorkflow = nextWorkflow;
+        const isActive = Boolean(nextWorkflow) && nextWorkflow !== 'prompt';
+        promptAudioGroups.style.display = isActive ? 'block' : 'none';
+        if (isActive) {
+            let groups = currentGroups;
+            if (!groups.length) {
+                groups = parseNodeConfigPromptAudioGroups(promptAudioGroups.querySelector('.node-config-audio-groups-value')?.value);
+            }
+            if (nextWorkflow !== 'inspo') groups = groups.slice(0, 1);
+            renderNodeConfigPromptAudioGroups(promptAudioGroups, groups);
+        }
+        return;
+    }
     let hasAudioUpload = false;
     wrap.querySelectorAll('.node-config-workflow-audio').forEach(item => {
         const isActive = item.getAttribute('data-workflow-audio') === select.value;
@@ -7082,14 +7668,16 @@ function openNodeConfigDrawer(mode, id = null) {
                 const options = (f.options || [])
                     .map(option => `<option value="${option}">${option}</option>`)
                     .join('');
-                formHtml += `
-                    <div class="node-type-field node-type-field-full node-config-workflow-field">
-                        <label>${f.label}</label>
-                        <select class="input dynamic-config-val" data-key="${f.key}" onchange="handleNodeConfigWorkflowChange(this)">
-                            <option value="">${f.placeholder || '请选择'}</option>${options}
-                        </select>
+                const workflowAudioHtml = isPromptConfigTab ? `
+                        <div class="node-config-prompt-audio-groups" style="display: none; margin-top: 12px;">
+                            <input type="hidden" class="dynamic-config-val node-config-audio-groups-value" data-key="audio_groups" value="[]">
+                            <div class="node-config-audio-group-list"></div>
+                            <button type="button" class="btn-default node-config-add-audio-group" onclick="addNodeConfigPromptAudioGroup(this)">
+                                <i class="fas fa-plus"></i> 添加一组音频（最多 4 组）
+                            </button>
+                        </div>` : `
                         <div class="node-config-workflow-audio" data-workflow-audio="inspo" style="display: none; margin-top: 12px;">
-                            <label>inspo音频${isPromptConfigTab ? ' <span style="color: var(--danger);">*</span>' : ''}</label>
+                            <label>inspo音频</label>
                             <div class="node-config-upload-field">
                                 <input type="hidden" class="dynamic-config-val node-config-file-value" data-key="inspo_audio">
                                 <label class="node-config-upload-zone">
@@ -7104,7 +7692,7 @@ function openNodeConfigDrawer(mode, id = null) {
                             </div>
                         </div>
                         <div class="node-config-workflow-audio" data-workflow-audio="cover" style="display: none; margin-top: 12px;">
-                            <label>cover音频${isPromptConfigTab ? ' <span style="color: var(--danger);">*</span>' : ''}</label>
+                            <label>cover音频</label>
                             <div class="node-config-upload-field">
                                 <input type="hidden" class="dynamic-config-val node-config-file-value" data-key="cover_audio">
                                 <label class="node-config-upload-zone">
@@ -7119,7 +7707,7 @@ function openNodeConfigDrawer(mode, id = null) {
                             </div>
                         </div>
                         <div class="node-config-workflow-audio" data-workflow-audio="sample" style="display: none; margin-top: 12px;">
-                            <label>sample音频${isPromptConfigTab ? ' <span style="color: var(--danger);">*</span>' : ''}</label>
+                            <label>sample音频</label>
                             <div class="node-config-upload-field">
                                 <input type="hidden" class="dynamic-config-val node-config-file-value" data-key="sample_audio">
                                 <label class="node-config-upload-zone">
@@ -7132,18 +7720,14 @@ function openNodeConfigDrawer(mode, id = null) {
                                 </label>
                                 <div class="node-config-file-list"></div>
                             </div>
-                        </div>
-                        ${isPromptConfigTab ? `
-                        <div class="node-type-field-grid node-config-audio-meta-fields" style="display: none; margin-top: 12px;">
-                            <div class="node-type-field">
-                                <label>clip_ids <span style="color: var(--danger);">*</span></label>
-                                <input type="text" class="input dynamic-config-val" data-key="clip_ids" placeholder="请输入 clip_ids">
-                            </div>
-                            <div class="node-type-field">
-                                <label>音频链接 <span style="color: var(--danger);">*</span></label>
-                                <input type="text" class="input dynamic-config-val" data-key="audio_url" placeholder="请输入音频链接">
-                            </div>
-                        </div>` : ''}
+                        </div>`;
+                formHtml += `
+                    <div class="node-type-field node-type-field-full node-config-workflow-field">
+                        <label>${f.label}</label>
+                        <select class="input dynamic-config-val" data-key="${f.key}" onchange="handleNodeConfigWorkflowChange(this)">
+                            <option value="">${f.placeholder || '请选择'}</option>${options}
+                        </select>
+                        ${workflowAudioHtml}
                     </div>`;
             } else if ((isPromptConfigTab && promptUploadFieldKeys.includes(f.key)) || (isAudioConfigTab && audioUploadFieldKeys.includes(f.key))) {
                 return;
@@ -7234,6 +7818,13 @@ function openNodeConfigDrawer(mode, id = null) {
                     handleNodeConfigWorkflowChange(inp);
                 }
             });
+            if (isPromptConfigTab) {
+                const promptAudioGroups = dynamicArea.querySelector('.node-config-prompt-audio-groups');
+                if (promptAudioGroups) {
+                    renderNodeConfigPromptAudioGroups(promptAudioGroups, getNodeConfigPromptAudioGroupsFromRow(rowData));
+                    promptAudioGroups.style.display = rowData.workflow && rowData.workflow !== 'prompt' ? 'block' : 'none';
+                }
+            }
         }
     }
 
@@ -7289,33 +7880,46 @@ function saveNodeConfigDrawer() {
             return;
         }
         if (currentNodeConfigTab === '提示词获取') {
-            const audioFieldByWorkflow = {
-                inspo: { key: 'inspo_audio', label: 'inspo音频' },
-                cover: { key: 'cover_audio', label: 'cover音频' },
-                sample: { key: 'sample_audio', label: 'sample音频' }
-            };
-            const activeAudioField = audioFieldByWorkflow[rowPayload.workflow];
-            if (activeAudioField && !rowPayload[activeAudioField.key]) {
-                alert(`${activeAudioField.label}为必填项！`);
-                return;
+            rowPayload.inspo_audio = '';
+            rowPayload.cover_audio = '';
+            rowPayload.sample_audio = '';
+            if (rowPayload.workflow === 'prompt') {
+                rowPayload.audio_groups = '[]';
+                rowPayload.clip_ids = '';
+                rowPayload.audio_url = '';
+            } else {
+                const promptAudioGroups = document.querySelector('.node-config-prompt-audio-groups');
+                const audioGroups = getNodeConfigPromptAudioGroups(promptAudioGroups);
+                if (rowPayload.workflow === 'inspo' && audioGroups.length > 4) {
+                    alert('生成方式为 inspo 时，音频信息最多添加 4 组！');
+                    return;
+                }
+                if (rowPayload.workflow !== 'inspo' && audioGroups.length !== 1) {
+                    alert(`生成方式为 ${rowPayload.workflow} 时，只能维护 1 组音频信息！`);
+                    return;
+                }
+                const missingAudioIndex = audioGroups.findIndex(group => !group.audio_file);
+                if (!audioGroups.length || missingAudioIndex >= 0) {
+                    alert(`第 ${missingAudioIndex >= 0 ? missingAudioIndex + 1 : 1} 组音频文件为必填项！`);
+                    return;
+                }
+
+                rowPayload.audio_groups = JSON.stringify(audioGroups);
+                rowPayload.clip_ids = audioGroups.map(group => group.clip_id).filter(Boolean).join('、');
+                rowPayload.audio_url = audioGroups.map(group => group.audio_url).filter(Boolean).join('、');
+                const activeAudioKey = `${rowPayload.workflow}_audio`;
+                if (['inspo_audio', 'cover_audio', 'sample_audio'].includes(activeAudioKey)) {
+                    rowPayload[activeAudioKey] = audioGroups.map(group => group.audio_file).join('、');
+                }
             }
-            if (activeAudioField && !(rowPayload.clip_ids || '').trim()) {
-                alert('clip_ids为必填项！');
-                return;
-            }
-            if (activeAudioField && !(rowPayload.audio_url || '').trim()) {
-                alert('音频链接为必填项！');
-                return;
-            }
-        }
-        if (rowPayload.workflow === 'inspo') {
+        } else if (rowPayload.workflow === 'inspo') {
             rowPayload.cover_audio = '';
             rowPayload.sample_audio = '';
         } else if (rowPayload.workflow === 'cover') {
             rowPayload.inspo_audio = '';
             rowPayload.sample_audio = '';
         } else if (rowPayload.workflow === 'sample') {
-            if (currentNodeConfigTab === '音频制作' && !rowPayload.sample_audio) {
+            if (!rowPayload.sample_audio) {
                 alert('生成方式为 sample 时，请上传 sample 音频！');
                 return;
             }
@@ -7325,8 +7929,6 @@ function saveNodeConfigDrawer() {
             rowPayload.inspo_audio = '';
             rowPayload.cover_audio = '';
             rowPayload.sample_audio = '';
-            rowPayload.clip_ids = '';
-            rowPayload.audio_url = '';
         }
     }
 

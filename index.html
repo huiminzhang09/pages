@@ -471,6 +471,27 @@
     </div>
 </div>
 
+<!-- Task Batch Action Modal -->
+<div class="modal-overlay" id="taskBatchActionModal" style="display:none; z-index:2000;" onclick="closeTaskProcessingBatchActionModal()">
+    <div class="modal modal-sm" style="width: 480px;" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3 id="taskBatchActionTitle">批量处理</h3>
+            <button class="modal-close" onclick="closeTaskProcessingBatchActionModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p id="taskBatchActionSummary" style="margin: 0 0 16px; color: var(--gray-700); line-height: 1.6;"></p>
+            <div class="form-group" id="taskBatchActionReasonGroup">
+                <label id="taskBatchActionReasonLabel">原因 <span class="required">*</span></label>
+                <textarea id="taskBatchActionReason" class="input" style="width: 100%; min-height: 96px; resize: vertical;" placeholder="请输入原因"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-default" onclick="closeTaskProcessingBatchActionModal()">取消</button>
+            <button class="btn-primary" id="taskBatchActionConfirmBtn" onclick="confirmTaskProcessingBatchAction()">确认</button>
+        </div>
+    </div>
+</div>
+
 <!-- Batch Finish Confirm Modal -->
 <div class="modal-overlay" id="modal-batch-finish-confirm" style="display:none; z-index:2000;">
     <div class="modal batch-finish-confirm-modal">
@@ -1306,9 +1327,17 @@
         <div class="modal-body" style="padding:20px 24px;">
             <input type="hidden" id="compAudioResourceType" value="file">
             <div id="compAudioFileForm">
+                <div class="form-group">
+                    <label>上传文件 <span class="required">*</span></label>
+                    <input id="compAudioFileInput" class="input" type="file" accept=".wav,.mp3,audio/wav,audio/mpeg">
+                </div>
+                <div class="form-group">
+                    <label>clip-id <span style="color: var(--gray-400); font-weight: 400;">（选填）</span></label>
+                    <input id="compAudioClipId" class="input" type="text" placeholder="请输入 clip-id">
+                </div>
                 <div class="form-group" style="margin-bottom: 0;">
-                    <label>上传文件</label>
-                    <input id="compAudioFileInput" class="input" type="file" accept="audio/*">
+                    <label>音频链接 <span style="color: var(--gray-400); font-weight: 400;">（选填）</span></label>
+                    <input id="compAudioOptionalUrl" class="input" type="text" placeholder="请输入音频链接">
                 </div>
             </div>
             <div id="compAudioLinkForm" style="display:none;">

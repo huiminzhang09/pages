@@ -73,14 +73,14 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
 /* Workbench task processing */
 .task-processing-layout {
     display: grid;
-    grid-template-columns: minmax(220px, 20%) minmax(0, 1fr);
+    grid-template-columns: minmax(200px, 20%) minmax(0, 1fr);
     gap: 20px;
     min-height: calc(100vh - 100px);
 }
 .task-processing-sidebar {
     display: flex;
     flex-direction: column;
-    min-width: 0;
+    min-width: 200px;
     height: calc(100vh - 100px);
     overflow: hidden;
     padding: 16px;
@@ -162,6 +162,188 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
     background: var(--primary-light);
     color: var(--primary);
 }
+.task-processing-batch-toolbar {
+    display: none;
+    flex-shrink: 0;
+    margin-bottom: 12px;
+    padding: 9px;
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    background: var(--gray-50);
+}
+.task-processing-layout.task-batch-mode .task-processing-batch-toolbar {
+    display: block;
+}
+.task-batch-selection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: var(--gray-600);
+    font-size: 12px;
+}
+.task-batch-select-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--gray-700);
+    cursor: pointer;
+}
+.task-batch-select-all input,
+.task-card-checkbox {
+    accent-color: var(--primary);
+}
+.task-batch-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+.task-batch-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    height: 28px;
+    gap: 4px;
+    padding: 0 4px;
+    border: 1px solid var(--gray-300);
+    border-radius: 5px;
+    background: #fff;
+    color: var(--gray-700);
+    cursor: pointer;
+    font-size: 11px;
+    white-space: nowrap;
+}
+.task-batch-action-btn.reject { border-color: #FFD591; color: #D46B08; }
+.task-batch-action-btn.terminate { border-color: #FFA39E; color: var(--danger); }
+.task-batch-action-btn:disabled {
+    border-color: var(--gray-200);
+    background: var(--gray-100);
+    color: var(--gray-400);
+    cursor: not-allowed;
+}
+
+/* Workbench composition audio resources */
+.composition-audio-resource-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 260px;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    background: #fff;
+}
+.composition-audio-resource-card-readonly {
+    background: linear-gradient(180deg, #fff 0%, var(--gray-50) 100%);
+}
+.composition-audio-resource-header {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 10px;
+}
+.composition-audio-resource-header .badge {
+    flex-shrink: 0;
+    background: #EFF6FF;
+    color: var(--primary);
+    border: 1px solid #BFDBFE;
+    font-size: 13px;
+    padding: 5px 10px;
+}
+.composition-audio-resource-header strong {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--gray-900);
+    font-size: 15px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.composition-audio-source-badge {
+    flex-shrink: 0;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--gray-100);
+    color: var(--gray-600);
+    font-size: 12px;
+    font-weight: 600;
+}
+.composition-audio-source-badge-user {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+.composition-audio-meta-readonly {
+    display: grid;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+}
+.composition-audio-meta-readonly > div {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: 10px;
+    min-width: 0;
+    align-items: center;
+    font-size: 13px;
+}
+.composition-audio-meta-readonly span,
+.composition-audio-meta-editable label span {
+    color: var(--gray-500);
+    font-weight: 400;
+}
+.composition-audio-meta-readonly strong {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--gray-800);
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.composition-audio-meta-editable {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+}
+.composition-audio-meta-editable .form-group {
+    margin-bottom: 0;
+}
+.composition-audio-resource-card audio {
+    width: 100%;
+    margin-top: auto;
+}
+.composition-audio-resource-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+.composition-audio-resource-actions-readonly {
+    grid-template-columns: minmax(100px, 160px);
+    justify-content: end;
+}
+.composition-audio-resource-actions .btn-primary {
+    height: 38px;
+    background: #fff;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+.composition-audio-resource-actions .composition-audio-delete-button {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+@media (max-width: 1100px) {
+    #compInspoAudioResourceList,
+    #compCoverAudioResourceList,
+    #compSampleAudioResourceList {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
 .task-processing-list {
     display: flex;
     flex-direction: column;
@@ -187,6 +369,20 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
 .task-card.active {
     border-color: var(--primary);
     background: var(--primary-light);
+}
+.task-card.batch-selected {
+    border-color: #69B1FF;
+    box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.08);
+}
+.task-card-checkbox {
+    display: none;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.task-processing-layout.task-batch-mode .task-card-checkbox {
+    display: inline-block;
 }
 .task-card-main {
     display: flex;
@@ -1603,6 +1799,62 @@ input, select, textarea { font-family: inherit; font-size: 14px; }
 .node-config-file-action:hover,
 .node-config-file-delete:hover {
     text-decoration: underline;
+}
+.node-config-prompt-audio-groups {
+    padding-top: 4px;
+}
+.node-config-audio-group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.node-config-audio-group {
+    padding: 14px;
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    background: var(--gray-50);
+}
+.node-config-audio-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+.node-config-audio-group-header strong {
+    color: var(--gray-900);
+    font-size: 14px;
+}
+.node-config-audio-group-remove {
+    border: none;
+    background: transparent;
+    color: var(--danger);
+    font-size: 13px;
+    cursor: pointer;
+}
+.node-config-audio-group-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+.node-config-audio-group-meta .node-type-field {
+    gap: 6px;
+}
+.node-config-add-audio-group {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+    border-style: dashed;
+    color: var(--primary);
+    text-align: center;
+}
+@media (max-width: 900px) {
+    .node-config-audio-group-meta {
+        grid-template-columns: 1fr;
+    }
 }
 .batch-inline-audio {
     display: inline-flex;
