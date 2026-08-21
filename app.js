@@ -2516,8 +2516,11 @@ function setCopyrightInputValue(id, value, isDate = false) {
 
 function setCopyrightSelectValue(id, value) {
     const select = document.getElementById(id);
-    const normalizedValue = normalizeCopyrightValue(value);
+    let normalizedValue = normalizeCopyrightValue(value);
     if (!select) return;
+    if (id === 'copyrightAuthRegion' || id === 'copyrightIssueRegion') {
+        normalizedValue = normalizedValue === '中国大陆' ? '中国大陆' : (normalizedValue ? '海外' : '');
+    }
     if (!normalizedValue) {
         select.selectedIndex = 0;
         return;
@@ -6245,134 +6248,116 @@ function confirmImportPlaylist() {
 // 节点配置管理 (节点类型库 & 节点配置库) 数据与逻辑
 // ==========================================
 
-let nodeTypesData = [
+const nodeTypeListSeeds = [
   {
-    id: "1",
-    typeName: "人工作词",
-    nodeType: "词",
+    typeName: "作词配置选择",
+    nodeType: "作词",
     typeAttr: "人工节点",
     isConfigured: "是",
-    inputFields: '{"task_desc": "string", "ref_lyrics": "string"}',
-    configFields: '{"word_count": "integer", "style_tags": "array"}',
-    outputFields: '{"lyrics_doc": "object"}',
-    version: "V1.0.0",
-    changelog: "初始版本",
-    status: "正常",
-    creator: "张三",
-    createTime: "2026-05-10",
-    retryCount: 3,
-    retryLogic: "FIXED",
-    retryDelay: 10,
-    timeout: 3600,
-    responseTimeout: 600,
-    timeoutPolicy: "TIME_OUT_WF"
+    inputFields: '{"batch_id": "string", "reference_song": "object", "customer_requirement": "string"}',
+    configFields: '{"lyric_config_id": "string", "style_tags": "array"}',
+    outputFields: '{"selected_config": "object", "task_context": "object"}',
+    changelog: "新增作词配置选择节点"
   },
   {
-    id: "2",
-    typeName: "AI 作曲",
-    nodeType: "曲",
+    typeName: "AI 生成歌词",
+    nodeType: "作词",
     typeAttr: "机器节点",
     isConfigured: "是",
-    inputFields: '{"lyrics": "string", "prompt": "string", "style": "string"}',
-    configFields: '{"model_version": "string", "influence": "number"}',
-    outputFields: '{"demo_audio": "url"}',
-    version: "V1.0.0",
-    changelog: "基础能力构建",
-    status: "正常",
-    creator: "李四",
-    createTime: "2026-05-11",
-    retryCount: 3,
-    retryLogic: "FIXED",
-    retryDelay: 10,
-    timeout: 3600,
-    responseTimeout: 600,
-    timeoutPolicy: "TIME_OUT_WF"
+    inputFields: '{"selected_config": "object", "reference_lyrics": "string"}',
+    configFields: '{"model": "string", "system_prompt": "string", "user_prompt": "string"}',
+    outputFields: '{"lyrics": "string", "generation_log": "object"}',
+    changelog: "新增 AI 生成歌词节点"
   },
   {
-    id: "3",
-    typeName: "歌词审核",
-    nodeType: "词审核",
-    typeAttr: "机器节点",
-    isConfigured: "是",
-    inputFields: '{"lyrics_doc": "object", "review_standard": "string"}',
-    configFields: '{"dimension_weights": "object"}',
-    outputFields: '{"review_result": "boolean", "comments": "string"}',
-    version: "V1.0.0",
-    changelog: "添加维稳校验",
-    status: "正常",
-    creator: "王五",
-    createTime: "2026-05-12",
-    retryCount: 3,
-    retryLogic: "FIXED",
-    retryDelay: 10,
-    timeout: 3600,
-    responseTimeout: 600,
-    timeoutPolicy: "TIME_OUT_WF"
-  },
-  {
-    id: "4",
-    typeName: "Cover 生成",
-    nodeType: "曲",
-    typeAttr: "机器节点",
+    typeName: "作词优化",
+    nodeType: "作词",
+    typeAttr: "人工节点",
     isConfigured: "否",
-    inputFields: '{"origin_audio": "url", "singer_prompt": "string"}',
-    configFields: '{"vocal_params": "object", "version": "string"}',
-    outputFields: '{"cover_audio": "url"}',
-    version: "V1.0.0",
-    changelog: "修复音轨重叠",
-    status: "已禁用",
-    creator: "赵六",
-    createTime: "2026-05-13",
-    retryCount: 3,
-    retryLogic: "FIXED",
-    retryDelay: 10,
-    timeout: 3600,
-    responseTimeout: 600,
-    timeoutPolicy: "TIME_OUT_WF"
+    inputFields: '{"lyrics": "string", "optimization_reason": "string"}',
+    configFields: '{}',
+    outputFields: '{"optimized_lyrics": "string", "remark": "string"}',
+    changelog: "新增作词优化节点"
   },
   {
-    id: "5",
-    typeName: "人工混音",
+    typeName: "作词审核",
+    nodeType: "词审核",
+    typeAttr: "人工节点",
+    isConfigured: "否",
+    inputFields: '{"lyrics": "string", "review_standard": "string"}',
+    configFields: '{}',
+    outputFields: '{"review_result": "string", "comments": "string"}',
+    changelog: "新增作词审核节点"
+  },
+  {
+    typeName: "作曲配置选择",
+    nodeType: "作曲",
+    typeAttr: "人工节点",
+    isConfigured: "是",
+    inputFields: '{"lyrics": "string", "reference_audio": "array"}',
+    configFields: '{"prompt_config_id": "string", "workflow": "string"}',
+    outputFields: '{"selected_prompt_config": "object", "audio_groups": "array"}',
+    changelog: "新增作曲配置选择节点"
+  },
+  {
+    typeName: "生成音乐",
+    nodeType: "作曲",
+    typeAttr: "机器节点",
+    isConfigured: "是",
+    inputFields: '{"lyrics": "string", "prompt": "string", "audio_groups": "array"}',
+    configFields: '{"model": "string", "workflow": "string", "influence": "number"}',
+    outputFields: '{"candidate_audios": "array", "generation_status": "string"}',
+    changelog: "新增生成音乐节点"
+  },
+  {
+    typeName: "Suno 结果初审",
     nodeType: "作曲",
     typeAttr: "人工节点",
     isConfigured: "否",
-    inputFields: '{"vocal_track": "url", "inst_track": "url"}',
-    configFields: '{"mix_template": "string", "effects": "array"}',
-    outputFields: '{"final_mix": "url"}',
-    version: "V1.0.0",
-    changelog: "初始版本",
-    status: "正常",
-    creator: "张三",
-    createTime: "2026-05-14",
-    retryCount: 3,
-    retryLogic: "FIXED",
-    retryDelay: 10,
-    timeout: 3600,
-    responseTimeout: 600,
-    timeoutPolicy: "TIME_OUT_WF"
+    inputFields: '{"candidate_audios": "array", "lyrics": "string"}',
+    configFields: '{}',
+    outputFields: '{"selected_audio": "object", "initial_review_result": "string"}',
+    changelog: "新增 Suno 结果初审节点"
   },
   {
-    id: "6",
-    typeName: "曲审核",
+    typeName: "作曲优化",
+    nodeType: "作曲",
+    typeAttr: "人工节点",
+    isConfigured: "否",
+    inputFields: '{"selected_audio": "object", "optimization_reason": "string"}',
+    configFields: '{}',
+    outputFields: '{"optimized_audio": "object", "remark": "string"}',
+    changelog: "新增作曲优化节点"
+  },
+  {
+    typeName: "作曲审核",
     nodeType: "曲审核",
     typeAttr: "人工节点",
     isConfigured: "否",
-    inputFields: '{"audio": "url", "lyrics": "string"}',
+    inputFields: '{"audio": "object", "lyrics": "string", "review_standard": "string"}',
     configFields: '{}',
-    outputFields: '{"review_result": "boolean", "comments": "string"}',
-    version: "V1.0.0",
-    changelog: "初始版本",
-    status: "正常",
-    creator: "系统",
-    createTime: "2026-08-13",
-    retryCount: 3,
-    retryLogic: "FIXED",
-    retryDelay: 10,
-    timeout: 3600,
-    responseTimeout: 600,
-    timeoutPolicy: "TIME_OUT_WF"
+    outputFields: '{"review_result": "string", "comments": "string"}',
+    changelog: "新增作曲审核节点"
   }
 ];
+
+let nodeTypesData = nodeTypeListSeeds.map((item, index) => {
+  const isMachineNode = item.typeAttr === "机器节点";
+  return {
+    id: String(index + 1),
+    version: "V1.0.0",
+    status: "正常",
+    creator: "系统",
+    createTime: `2026-05-${String(index + 10).padStart(2, "0")}`,
+    retryCount: isMachineNode ? 3 : 0,
+    retryLogic: isMachineNode ? "FIXED" : "NONE",
+    retryDelay: isMachineNode ? 10 : 0,
+    timeout: isMachineNode ? 3600 : 86400,
+    responseTimeout: isMachineNode ? 600 : 0,
+    timeoutPolicy: isMachineNode ? "TIME_OUT_WF" : "WAIT_MANUAL",
+    ...item
+  };
+});
 
 const nodeConfigsSchema = {
   '歌词生成配置': {
@@ -6666,7 +6651,7 @@ function openNodeTypeDrawer(mode, id = null) {
         btn.innerText = '确认新增';
         
         document.getElementById('inputNodeType_typeName').value = '';
-        document.getElementById('inputNodeType_nodeType').value = '词';
+        document.getElementById('inputNodeType_nodeType').value = '作词';
         document.getElementById('inputNodeType_typeAttr').value = '人工节点';
         document.getElementById('inputNodeType_status').value = '正常';
         document.getElementById('inputNodeType_version').value = 'V1.0.0';
@@ -6689,7 +6674,7 @@ function openNodeTypeDrawer(mode, id = null) {
         const item = nodeTypesData.find(n => n.id === id);
         if (item) {
             document.getElementById('inputNodeType_typeName').value = item.typeName;
-            document.getElementById('inputNodeType_nodeType').value = item.nodeType || '词';
+            document.getElementById('inputNodeType_nodeType').value = item.nodeType || '作词';
             document.getElementById('inputNodeType_typeAttr').value = item.typeAttr;
             document.getElementById('inputNodeType_status').value = item.status;
             document.getElementById('inputNodeType_version').value = item.version;
