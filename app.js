@@ -1640,8 +1640,8 @@ const pages = {
                 <div class="filter-row">
                     <div class="filter-item"><label>批次编号</label><input type="text" placeholder="搜索批次编号"></div>
                     <div class="filter-item"><label>生产进度</label><select><option>全部</option><option>待生产</option><option>生产中</option><option>待交付</option><option>已终止</option><option>部分交付</option><option>已交付</option><option>已完结</option></select></div>
-                    <div class="filter-item"><label>订单名称</label><select><option>全部</option></select></div>
-                    <div class="filter-item"><label>工作流</label><select><option>全部</option></select></div>
+                    <div class="filter-item"><label>订单名称</label><input type="text" placeholder="请输入订单名称"></div>
+                    <div class="filter-item"><label>工作流</label><input type="text" placeholder="请输入工作流"></div>
                     <div class="filter-actions"><button class="btn-primary">查询</button><button class="btn-default">重置</button></div>
                 </div>
             </div>
